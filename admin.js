@@ -40,6 +40,11 @@ Kirim WhatsApp
 
 });
 
+});
+})
+.catch((error)=>{
+    list.innerHTML="Error: "+error;
+});
 
 function updateStatus(id,status){
 
