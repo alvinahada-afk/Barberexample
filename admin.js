@@ -39,6 +39,10 @@ db.collection("booking")
         Chat WhatsApp
         </a>
 
+<a href="https://wa.me/6283892513500?text=Booking%20Baru%0A%0ANama:%20${data.nama}%0ANomor:%20${data.nomor}%0ATanggal:%20${data.tanggal}%0AJam:%20${data.jam}" target="_blank">
+Notifikasi Pemilik
+</a>
+
         </div>
         `;
 
