@@ -1,3 +1,8 @@
+firebase.auth().onAuthStateChanged((user)=>{
+  if(!user){
+    window.location="login.html";
+  }
+});
 const list = document.getElementById("bookingList");
 
 db.collection("booking")
