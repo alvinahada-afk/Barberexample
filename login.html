@@ -17,25 +17,25 @@
 
 <button onclick="login()">Masuk</button>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script src="firebase.js"></script>
 <script src="firebase.js"></script>
 
 <script>
 function login(){
 
 firebase.auth().signInWithEmailAndPassword(
-email.value,
-password.value
+document.getElementById("email").value,
+document.getElementById("password").value
 )
 .then(()=>{
 window.location="admin.html";
 })
-.catch(()=>{
-alert("Login gagal");
+.catch((error)=>{
+alert(error.message);
 });
 
 }
-</script>
-
-</body>
-</html>
