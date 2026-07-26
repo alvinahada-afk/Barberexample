@@ -1,1 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Login</title>
 
+<style>
+body{
+background:#111;
+color:white;
+font-family:Arial;
+text-align:center;
+padding:50px;
+}
+
+input{
+padding:12px;
+margin:10px;
+width:250px;
+}
+
+button{
+padding:12px 30px;
+background:#d4af37;
+border:none;
+font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Login Admin</h1>
+
+<input id="email" placeholder="Email">
+<br>
+
+<input id="password" type="password" placeholder="Password">
+<br>
+
+<button onclick="login()">Login</button>
+
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script src="firebase.js"></script>
+
+<script>
+
+function login(){
+
+firebase.auth()
+.signInWithEmailAndPassword(
+email.value,
+password.value
+)
+
+.then(()=>{
+alert("Login berhasil");
+window.location="admin.html";
+})
+
+.catch((error)=>{
+alert(error.message);
+});
+
+}
+
+</script>
+
+</body>
+</html>
