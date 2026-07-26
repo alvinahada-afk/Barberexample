@@ -1,21 +1,28 @@
+// Tombol WhatsApp lama
 function booking(){
 
-let pesan =
+let pesan = 
 "Halo Alvin Barber Studio, saya ingin melakukan booking haircut.";
 
-let nomor =
-"628123456789";
+let nomor = "628123456789";
 
 window.open(
 "https://wa.me/"+nomor+"?text="+pesan
 );
 
 }
+
+
+// Sistem Booking Firebase
+
 const form = document.getElementById("bookingForm");
 
-form.addEventListener("submit", (e) => {
+if(form){
+
+form.addEventListener("submit", (e)=>{
 
 e.preventDefault();
+
 
 db.collection("booking").add({
 
@@ -30,13 +37,15 @@ jam: document.getElementById("jam").value,
 status: "Menunggu"
 
 })
-.then(() => {
+
+.then(()=>{
 
 alert("Booking berhasil!");
 
 form.reset();
 
 })
+
 .catch((error)=>{
 
 alert(error);
@@ -44,3 +53,5 @@ alert(error);
 });
 
 });
+
+}
