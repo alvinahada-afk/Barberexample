@@ -352,3 +352,13 @@ display:none;
     color:#25D366;
     font-weight:bold;
 }
+
+body{
+  background:#000;
+  color:white;
+  font-family:Arial, sans-serif;
+}
+
+h1{
+  color:#d4af37;
+}
