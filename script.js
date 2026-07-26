@@ -11,3 +11,36 @@ window.open(
 );
 
 }
+const form = document.getElementById("bookingForm");
+
+form.addEventListener("submit", (e) => {
+
+e.preventDefault();
+
+db.collection("booking").add({
+
+nama: document.getElementById("nama").value,
+
+nomor: document.getElementById("nomor").value,
+
+tanggal: document.getElementById("tanggal").value,
+
+jam: document.getElementById("jam").value,
+
+status: "Menunggu"
+
+})
+.then(() => {
+
+alert("Booking berhasil!");
+
+form.reset();
+
+})
+.catch((error)=>{
+
+alert(error);
+
+});
+
+});
