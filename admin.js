@@ -4,8 +4,15 @@ db.collection("booking")
 .get()
 .then((snapshot)=>{
 
-    list.innerHTML += `
+list.innerHTML = "";
+
+snapshot.forEach((doc)=>{
+
+let data = doc.data();
+
+list.innerHTML += `
 <div class="card">
+
 <h3>${data.nama}</h3>
 
 <p>WhatsApp: ${data.nomor}</p>
@@ -24,14 +31,19 @@ Terima Booking
 Tolak Booking
 </button>
 
-<a href="https://wa.me/6283892513500?text=Booking%20Baru%0A%0ANama:%20${data.nama}%0ANomor:%20${data.nomor}%0ATanggal:%20${data.tanggal}%0AJam:%20${data.jam}" target="_blank">
-Kirim Notifikasi WhatsApp
+<a href="https://wa.me/${data.nomor}?text=Booking%20Anda%20${data.nama}%20${data.tanggal}%20${data.jam}">
+Kirim WhatsApp
 </a>
 
 </div>
 `;
 
-    });
+});
+
+})
+.catch((error)=>{
+list.innerHTML="Error: "+error;
+});
 
 })
 .catch((error)=>{
