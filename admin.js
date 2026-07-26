@@ -31,6 +31,10 @@ db.collection("booking")
         Tolak Booking
         </button>
 
+<button onclick="hapusBooking('${doc.id}')">
+Hapus
+</button>
+
         <br><br>
 
         <a href="https://wa.me/${data.nomor}">
@@ -49,7 +53,27 @@ db.collection("booking")
 
 
 function updateStatus(id,status){
+function hapusBooking(id){
 
+let yakin = confirm("Hapus booking ini?");
+
+if(yakin){
+
+db.collection("booking")
+.doc(id)
+.delete()
+.then(()=>{
+alert("Booking berhasil dihapus");
+location.reload();
+})
+.catch((error)=>{
+alert(error);
+});
+
+}
+
+}
+    
 db.collection("booking")
 .doc(id)
 .update({
