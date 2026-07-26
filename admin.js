@@ -4,67 +4,63 @@ db.collection("booking")
 .get()
 .then((snapshot)=>{
 
-list.innerHTML = "";
+    list.innerHTML = "";
 
-snapshot.forEach((doc)=>{
+    snapshot.forEach((doc)=>{
 
-let data = doc.data();
+        let data = doc.data();
 
-list.innerHTML += `
-<div class="card">
+        list.innerHTML += `
+        <div class="card">
 
-<h3>${data.nama}</h3>
+        <h3>${data.nama}</h3>
 
-<p>WhatsApp: ${data.nomor}</p>
+        <p>WhatsApp: ${data.nomor}</p>
 
-<p>Tanggal: ${data.tanggal}</p>
+        <p>Tanggal: ${data.tanggal}</p>
 
-<p>Jam: ${data.jam}</p>
+        <p>Jam: ${data.jam}</p>
 
-<p>Status: ${data.status}</p>
+        <p>Status: ${data.status}</p>
 
-<button onclick="updateStatus('${doc.id}','Diterima')">
-Terima Booking
-</button>
+        <button onclick="updateStatus('${doc.id}','Diterima')">
+        Terima Booking
+        </button>
 
-<button onclick="updateStatus('${doc.id}','Ditolak')">
-Tolak Booking
-</button>
+        <button onclick="updateStatus('${doc.id}','Ditolak')">
+        Tolak Booking
+        </button>
 
-<a href="https://wa.me/${data.nomor}?text=Booking%20Anda%20${data.nama}%20${data.tanggal}%20${data.jam}">
-Kirim WhatsApp
-</a>
+        <br><br>
 
-</div>
-`;
+        <a href="https://wa.me/${data.nomor}">
+        Chat WhatsApp
+        </a>
 
-});
+        </div>
+        `;
 
-});
+    });
+
 })
 .catch((error)=>{
-    list.innerHTML="Error: "+error;
+    list.innerHTML = "Error: " + error.message;
 });
+
 
 function updateStatus(id,status){
 
 db.collection("booking")
 .doc(id)
 .update({
-status: status
+    status: status
 })
 .then(()=>{
-
-alert("Status booking berhasil diubah");
-
-location.reload();
-
+    alert("Status booking berhasil diubah");
+    location.reload();
 })
-
 .catch((error)=>{
-
-alert(error);
-
+    alert(error);
 });
 
 }
