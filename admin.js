@@ -26,14 +26,12 @@ db.collection("booking")
         <button onclick="updateStatus('${doc.id}','Diterima')">
         Terima Booking
         </button>
-
         <button onclick="updateStatus('${doc.id}','Ditolak')">
         Tolak Booking
         </button>
-
-<button onclick="hapusBooking('${doc.id}')">
-Hapus
-</button>
+        <button onclick="hapusBooking('${doc.id}')">
+        Hapus
+        </button>
 
         <br><br>
 
@@ -86,5 +84,26 @@ db.collection("booking")
 .catch((error)=>{
     alert(error);
 });
+
+}
+
+function hapusBooking(id){
+
+let yakin = confirm("Yakin hapus booking ini?");
+
+if(yakin){
+
+db.collection("booking")
+.doc(id)
+.delete()
+.then(()=>{
+alert("Booking berhasil dihapus");
+location.reload();
+})
+.catch((error)=>{
+alert(error);
+});
+
+}
 
 }
