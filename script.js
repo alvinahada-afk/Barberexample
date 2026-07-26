@@ -4,7 +4,7 @@ function booking(){
 let pesan = 
 "Halo Alvin Barber Studio, saya ingin melakukan booking haircut.";
 
-let nomor = "628123456789";
+let nomor = "6283892513500";
 
 window.open(
 "https://wa.me/"+nomor+"?text="+pesan
