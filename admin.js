@@ -106,10 +106,10 @@ Hapus
 </button>
 
 <a 
-href="https://wa.me/${data.nomor}?text=Halo ${data.nama}, booking kamu di Barber Studio"
+href="https://wa.me/${data.nomor}?text=Halo%20saya%20ingin%20konfirmasi%20booking"
 target="_blank"
 class="wa-button">
-Chat WhatsApp
+💬 Chat WhatsApp
 </a>
 <br><br>
 
