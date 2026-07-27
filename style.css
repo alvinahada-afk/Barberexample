@@ -741,12 +741,12 @@ font-size:14px;
 
 /* WhatsApp */
 .wa-button{
-display:inline-block;
-background:#25D366;
-color:white;
-padding:12px 18px;
-border-radius:10px;
-font-weight:bold;
-text-decoration:none;
-margin:5px;
+    display:inline-block;
+    background:#25D366;
+    color:white;
+    padding:12px 25px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:bold;
+    margin-top:15px;
 }
