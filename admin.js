@@ -1,3 +1,4 @@
+let semuaBooking = [];
 let total = 0;
 let pending = 0;
 let accepted = 0;
@@ -31,7 +32,10 @@ list.innerHTML="";
 
 snapshot.forEach((doc)=>{
 
-let data = doc.data();
+let data = doc.data();semuaBooking.push({
+id:doc.id,
+...data
+});
 
 total++;
 
@@ -293,5 +297,48 @@ alert("Logout gagal: "+error.message);
 
 });
 
+
+}
+
+function filterBooking(status){
+
+let hasil = "";
+
+semuaBooking.forEach((data)=>{
+
+if(status=="Semua" || data.status==status){
+
+hasil += `
+
+<div class="card">
+
+<h3>${data.nama}</h3>
+
+<p>WhatsApp: ${data.nomor}</p>
+
+<p>Tanggal: ${data.tanggal}</p>
+
+<p>Jam: ${data.jam}</p>
+
+<p>Capster: ${data.capster}</p>
+
+<p>Layanan: ${data.layanan}</p>
+
+<p>Status:
+<span class="${data.status}">
+${data.status}
+</span>
+</p>
+
+</div>
+
+`;
+
+}
+
+});
+
+
+document.getElementById("bookingList").innerHTML = hasil;
 
 }
