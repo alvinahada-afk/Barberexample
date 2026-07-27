@@ -73,7 +73,12 @@ list.innerHTML += `
 <p>Jam: ${data.jam || "-"}</p>
 
 
-<p>Status: ${data.status || "Pending"}</p>
+<p>
+Status:
+<span class="status ${data.status}">
+${data.status}
+</span>
+</p>
 
 
 
