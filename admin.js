@@ -138,7 +138,7 @@ document.getElementById("rejectedBooking").innerHTML = ditolak;
 .catch((error)=>{
 
 
-list.innerHTML="Error: "+error.message;
+console.log(error.message);
 
 
 });
