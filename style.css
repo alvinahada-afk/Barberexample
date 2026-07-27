@@ -487,3 +487,77 @@ cursor:pointer;
 .filter button:hover{
 opacity:0.8;
 }
+
+/* Dashboard Statistik */
+.dashboard{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin:20px 0;
+}
+
+.stat-card{
+background:#222;
+border:1px solid #555;
+border-radius:15px;
+padding:20px;
+text-align:center;
+}
+
+.stat-card h2{
+font-size:35px;
+color:#d4af37;
+margin:5px;
+}
+
+
+/* Filter */
+.filter{
+display:flex;
+gap:10px;
+margin:20px 0;
+flex-wrap:wrap;
+}
+
+.filter button{
+padding:12px 25px;
+border-radius:10px;
+background:#d4af37;
+border:none;
+font-weight:bold;
+}
+
+
+/* Card Booking */
+.card{
+background:#181818;
+border:1px solid #444;
+border-radius:15px;
+padding:20px;
+margin:20px 0;
+max-width:500px;
+}
+
+
+.card button{
+padding:12px 18px;
+margin:5px;
+border-radius:10px;
+background:#d4af37;
+border:none;
+font-weight:bold;
+}
+
+
+/* HP */
+@media(max-width:700px){
+
+.dashboard{
+grid-template-columns:repeat(2,1fr);
+}
+
+.card{
+width:90%;
+}
+
+}
