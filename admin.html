@@ -52,7 +52,28 @@ alert("Tombol berfungsi");
 <button onclick="logout()">
 Logout
 </button>
-<div id="bookingList">
+
+  <div class="filter">
+
+<button onclick="filterBooking('Semua')">
+Semua
+</button>
+
+<button onclick="filterBooking('Pending')">
+Pending
+</button>
+
+<button onclick="filterBooking('Diterima')">
+Diterima
+</button>
+
+<button onclick="filterBooking('Ditolak')">
+Ditolak
+</button>
+
+</div>
+  
+  <div id="bookingList">
 Memuat data...
 </div>
 
