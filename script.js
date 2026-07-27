@@ -1,4 +1,3 @@
-alert("script.js aktif");
 function booking(){
 
 let pesan = 
@@ -13,9 +12,8 @@ window.open(
 }
 
 
-// Sistem Booking Firebase
-
 const form = document.getElementById("bookingForm");
+
 
 if(form){
 
@@ -23,48 +21,51 @@ form.addEventListener("submit",(e)=>{
 
 e.preventDefault();
 
+
 let nama = document.getElementById("nama").value;
 let nomor = document.getElementById("nomor").value;
+let layanan = document.getElementById("layanan").value;
+let catatan = document.getElementById("catatan").value;
 let tanggal = document.getElementById("tanggal").value;
 let jam = document.getElementById("jam").value;
+let capster = document.getElementById("capster").value;
+
 
 
 db.collection("booking").add({
 
-nama: nama,
-nomor: nomor,
-tanggal: tanggal,
-jam: jam,
-status: "Pending"
+nama:nama,
+nomor:nomor,
+layanan:layanan,
+catatan:catatan,
+tanggal:tanggal,
+jam:jam,
+capster:capster,
+status:"Pending"
 
 })
+
 .then(()=>{
+
 
 alert("✅ Booking berhasil dikirim!");
 
 form.reset();
 
+
 })
+
+
 .catch((error)=>{
+
 
 alert("❌ Error: "+error.message);
 
-});
-
-
-alert("✅ Booking berhasil dikirim!");
-
-form.reset();
-
-
-})
-.catch((error)=>{
-
-alert("❌ Firebase Error: "+error.message);
 
 });
 
 
 });
+
 
 }
