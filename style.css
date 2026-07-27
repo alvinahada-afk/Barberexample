@@ -678,3 +678,75 @@ font-size:28px;
 .filter-container button:hover{
     opacity:0.8;
 }
+
+/* Booking Card */
+.card{
+background:#1f1f1f;
+border:1px solid #444;
+border-radius:18px;
+padding:20px;
+margin-bottom:20px;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+.card h3{
+color:#d8b22c;
+margin-top:0;
+font-size:22px;
+}
+
+.card p{
+color:white;
+line-height:1.5;
+}
+
+
+/* Status Badge */
+.Pending{
+background:#d8b22c;
+color:black;
+padding:6px 12px;
+border-radius:20px;
+font-weight:bold;
+}
+
+.Diterima{
+background:#20c970;
+color:white;
+padding:6px 12px;
+border-radius:20px;
+font-weight:bold;
+}
+
+.Ditolak{
+background:#e74c3c;
+color:white;
+padding:6px 12px;
+border-radius:20px;
+font-weight:bold;
+}
+
+
+/* Tombol */
+.card button{
+background:#d8b22c;
+color:#111;
+border:none;
+padding:12px 18px;
+border-radius:10px;
+font-weight:bold;
+margin:5px;
+}
+
+
+/* WhatsApp */
+.wa-button{
+display:inline-block;
+background:#25D366;
+color:white;
+padding:12px 18px;
+border-radius:10px;
+font-weight:bold;
+text-decoration:none;
+margin:5px;
+}
