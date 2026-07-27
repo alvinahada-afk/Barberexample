@@ -16,13 +16,11 @@ window.open(
 
 const form = document.getElementById("bookingForm");
 
-
 if(form){
 
 form.addEventListener("submit",(e)=>{
 
 e.preventDefault();
-
 
 let nama = document.getElementById("nama").value;
 let nomor = document.getElementById("nomor").value;
@@ -30,19 +28,15 @@ let tanggal = document.getElementById("tanggal").value;
 let jam = document.getElementById("jam").value;
 
 
-// Simpan booking ke Firebase
-
 db.collection("booking").add({
 
-nama:nama,
-nomor:nomor,
-tanggal:tanggal,
-jam:jam,
-status:"Pending"
+nama: nama,
+nomor: nomor,
+tanggal: tanggal,
+jam: jam,
+status: "Pending"
 
 })
-
-
 .then(()=>{
 
 
@@ -55,7 +49,7 @@ let pesan =
 "Status: Pending";
 
 
-let nomorPemilik = "6283892513500";
+let nomorPemilik="6283892513500";
 
 
 window.open(
@@ -70,16 +64,13 @@ form.reset();
 
 
 })
-
-
 .catch((error)=>{
 
-alert("❌ Error: "+error.message);
+alert("❌ Firebase Error: "+error.message);
 
 });
 
 
 });
-
 
 }
