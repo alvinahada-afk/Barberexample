@@ -342,20 +342,19 @@ ${data.status}
 
 
 
-<button onclick="updateStatus('${data.id}','Diterima')">
-Terima Booking
+<button class="btn-terima" onclick="updateStatus('${doc.id}','Diterima')">
+✅ Terima Booking
 </button>
 
 
-<button onclick="updateStatus('${data.id}','Ditolak')">
-Tolak Booking
+<button class="btn-tolak" onclick="updateStatus('${doc.id}','Ditolak')">
+❌ Tolak Booking
 </button>
 
 
-<button onclick="hapusBooking('${data.id}')">
-Hapus
+<button class="btn-hapus" onclick="hapusBooking('${doc.id}')">
+🗑 Hapus
 </button>
-
 
 <br><br>
 
