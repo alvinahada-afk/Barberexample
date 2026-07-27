@@ -75,7 +75,7 @@ list.innerHTML += `
 
 <p>
 Status:
-<span class="status status-${data.status}">
+<span class="${data.status}">
 ${data.status}
 </span>
 </p>
