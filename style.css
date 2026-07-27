@@ -561,3 +561,41 @@ width:90%;
 }
 
 }
+
+.admin-layout{
+display:flex;
+gap:25px;
+align-items:flex-start;
+}
+
+
+/* Statistik kiri */
+.stats{
+width:220px;
+}
+
+
+/* Booking kanan */
+.booking-area{
+flex:1;
+}
+
+
+/* Card booking */
+.card{
+max-width:none;
+}
+
+
+/* HP */
+@media(max-width:700px){
+
+.admin-layout{
+flex-direction:column;
+}
+
+.stats{
+width:100%;
+}
+
+}
