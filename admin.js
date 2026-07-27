@@ -3,153 +3,256 @@ let pending = 0;
 let accepted = 0;
 let rejected = 0;
 
+
 firebase.auth().onAuthStateChanged((user)=>{
-  if(!user){
-    window.location="login.html";
-  }
+
+if(!user){
+
+window.location.href="login.html";
+
+}
+
 });
 
+
 const list = document.getElementById("bookingList");
+
 
 db.collection("booking")
 .get()
 .then((snapshot)=>{
 
+
 list.innerHTML="";
+
 
 snapshot.forEach((doc)=>{
 
+
 let data = doc.data();
 
+
 total++;
+
+
+/* Hitung status */
 
 if(data.status=="Pending"){
 pending++;
 }
 
+
 if(data.status=="Diterima"){
 accepted++;
 }
+
 
 if(data.status=="Ditolak"){
 rejected++;
 }
 
 
+
+/* Tampilkan booking */
+
+
 list.innerHTML += `
 
 <div class="card">
 
-<h3>${data.nama}</h3>
 
-<p>WhatsApp: ${data.nomor}</p>
+<h3>${data.nama || "-"}</h3>
 
-<p>Tanggal: ${data.tanggal}</p>
 
-<p>Jam: ${data.jam}</p>
+<p>WhatsApp: ${data.nomor || "-"}</p>
 
-<p>Status: ${data.status}</p>
+
+<p>Tanggal: ${data.tanggal || "-"}</p>
+
+
+<p>Jam: ${data.jam || "-"}</p>
+
+
+<p>Status: ${data.status || "Pending"}</p>
+
 
 
 <button onclick="updateStatus('${doc.id}','Diterima')">
+
 Terima Booking
+
 </button>
+
 
 
 <button onclick="updateStatus('${doc.id}','Ditolak')">
+
 Tolak Booking
+
 </button>
+
 
 
 <button onclick="hapusBooking('${doc.id}')">
+
 Hapus
+
 </button>
+
 
 
 <br><br>
 
 
-<a href="https://wa.me/${data.nomor}">
+<a href="https://wa.me/${data.nomor}" target="_blank">
+
 Chat WhatsApp
+
 </a>
+
 
 
 </div>
 
+
 `;
 
+
 });
+
 
 
 document.getElementById("totalBooking").innerHTML=total;
+
 document.getElementById("pending").innerHTML=pending;
+
 document.getElementById("accepted").innerHTML=accepted;
+
 document.getElementById("rejected").innerHTML=rejected;
 
 
+
 })
+
 .catch((error)=>{
+
 
 list.innerHTML="Error: "+error.message;
 
+
 });
+
+
 
 
 
 function updateStatus(id,status){
 
+
 db.collection("booking")
 .doc(id)
 .update({
+
 status:status
+
 })
+
+
 .then(()=>{
 
+
 alert("Status berhasil diubah");
+
+
 location.reload();
+
+
+})
+
+
+.catch((error)=>{
+
+
+alert(error.message);
+
 
 });
 
+
 }
+
+
 
 
 
 function hapusBooking(id){
 
-let yakin=confirm("Hapus booking ini?");
+
+let yakin = confirm("Hapus booking ini?");
+
 
 if(yakin){
+
 
 db.collection("booking")
 .doc(id)
 .delete()
+
+
 .then(()=>{
 
+
 alert("Booking berhasil dihapus");
+
+
 location.reload();
+
+
+})
+
+
+.catch((error)=>{
+
+
+alert(error.message);
+
 
 });
 
-}
 
 }
+
+
+}
+
 
 
 
 function logout(){
 
-    firebase.auth().signOut()
-    .then(function(){
 
-        alert("Berhasil logout");
+firebase.auth().signOut()
 
-        window.location.href="login.html";
 
-    })
-    .catch(function(error){
+.then(()=>{
 
-        alert("Logout gagal: " + error.message);
 
-    });
+alert("Berhasil logout");
+
+
+window.location.href="login.html";
+
+
+})
+
+
+.catch((error)=>{
+
+
+alert("Logout gagal: "+error.message);
+
+
+});
+
 
 }
