@@ -69,6 +69,8 @@ list.innerHTML += `
 
 <p>Jam: ${data.jam || "-"}</p>
 
+<p>Capster: ${data.capster || "-"}</p>
+
 <p>Layanan: ${data.layanan || "-"}</p>
 
 <p>Catatan: ${data.catatan || "-"}</p>
