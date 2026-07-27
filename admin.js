@@ -48,17 +48,6 @@ ditolak++;
 }
 
 
-if(data.status=="Diterima"){
-accepted++;
-}
-
-
-if(data.status=="Ditolak"){
-rejected++;
-}
-
-
-
 /* Tampilkan booking */
 
 
