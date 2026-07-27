@@ -697,9 +697,9 @@ font-size:22px;
 
 .card p{
 color:white;
-line-height:1.5;
+line-height:1.6;
+font-size:16px;
 }
-
 
 /* Status Badge */
 .Pending{
@@ -732,12 +732,12 @@ font-weight:bold;
 background:#d8b22c;
 color:#111;
 border:none;
-padding:12px 18px;
-border-radius:10px;
+padding:13px 20px;
+border-radius:12px;
 font-weight:bold;
-margin:5px;
+margin:6px 4px;
+font-size:14px;
 }
-
 
 /* WhatsApp */
 .wa-button{
