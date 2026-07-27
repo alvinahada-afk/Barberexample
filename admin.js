@@ -20,7 +20,10 @@ const list = document.getElementById("bookingList");
 
 db.collection("booking")
 .get()
-.then((snapshot)=>{
+.then((snapshot)=>{let total = 0;
+let pending = 0;
+let diterima = 0;
+let ditolak = 0;
 
 
 list.innerHTML="";
@@ -28,17 +31,20 @@ list.innerHTML="";
 
 snapshot.forEach((doc)=>{
 
-
 let data = doc.data();
-
 
 total++;
 
-
-/* Hitung status */
-
 if(data.status=="Pending"){
 pending++;
+}
+
+if(data.status=="Diterima"){
+diterima++;
+}
+
+if(data.status=="Ditolak"){
+ditolak++;
 }
 
 
