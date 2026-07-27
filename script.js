@@ -1,3 +1,4 @@
+alert("script.js aktif");
 function booking(){
 
 let pesan = 
