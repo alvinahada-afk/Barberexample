@@ -39,23 +39,16 @@ status: "Pending"
 })
 .then(()=>{
 
+alert("✅ Booking berhasil dikirim!");
 
-let pesan =
-"🔔 Booking Baru Alvin Barber Studio\n\n"+
-"Nama: "+nama+"\n"+
-"WhatsApp: "+nomor+"\n"+
-"Tanggal: "+tanggal+"\n"+
-"Jam: "+jam+"\n"+
-"Status: Pending";
+form.reset();
 
+})
+.catch((error)=>{
 
-let nomorPemilik="6283892513500";
+alert("❌ Error: "+error.message);
 
-
-window.open(
-"https://wa.me/"+nomorPemilik+"?text="+encodeURIComponent(pesan),
-"_blank"
-);
+});
 
 
 alert("✅ Booking berhasil dikirim!");
