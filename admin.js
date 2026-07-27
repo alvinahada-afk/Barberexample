@@ -116,3 +116,15 @@ alert(error);
 }
 
 }
+function logout(){
+
+firebase.auth().signOut()
+.then(()=>{
+
+alert("Berhasil logout");
+
+window.location="login.html";
+
+});
+
+}
