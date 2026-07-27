@@ -56,9 +56,27 @@ status:"Pending"
 
 .then(()=>{
 
-console.log("DATA BERHASIL MASUK FIREBASE");
+let pesan =
+"🔔 Booking Baru Alvin Barber Studio\n\n"+
+"Nama: "+nama+"\n"+
+"WhatsApp: "+nomor+"\n"+
+"Tanggal: "+tanggal+"\n"+
+"Jam: "+jam+"\n\n"+
+"Status: Pending";
+
+
+let nomorPemilik = "6283892513500";
+
+
+window.open(
+"https://wa.me/"+nomorPemilik+"?text="+encodeURIComponent(pesan),
+"_blank"
+);
+
 
 alert("Booking berhasil dikirim!");
+
+form.reset();
 
 })
 
