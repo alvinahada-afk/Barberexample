@@ -39,22 +39,49 @@ let jam = document.getElementById("jam").value;
 
 
 
+db.collection("booking")
+.where("tanggal","==",tanggal)
+.where("jam","==",jam)
+.get()
+.then((snapshot)=>{
+
+
+if(!snapshot.empty){
+
+alert("❌ Jam tersebut sudah dibooking. Silakan pilih jam lain.");
+
+return;
+
+}
+
+db.collection("booking")
+.where("tanggal","==",tanggal)
+.where("jam","==",jam)
+.get()
+.then((snapshot)=>{
+
+
+if(!snapshot.empty){
+
+alert("❌ Jam tersebut sudah dibooking. Silakan pilih jam lain.");
+
+return;
+
+}
+
+
 db.collection("booking").add({
 
 nama:nama,
-
 nomor:nomor,
-
 tanggal:tanggal,
-
 jam:jam,
-
 status:"Pending"
 
 })
 
-
 .then(()=>{
+
 
 let pesan =
 "🔔 Booking Baru Alvin Barber Studio\n\n"+
@@ -78,18 +105,15 @@ alert("Booking berhasil dikirim!");
 
 form.reset();
 
+
 })
 
 .catch((error)=>{
 
-
 alert("Gagal: "+error.message);
 
-
 });
 
 
 });
-
-
 }
