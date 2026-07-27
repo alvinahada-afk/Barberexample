@@ -153,32 +153,49 @@ list.innerHTML="Error: "+error.message;
 
 function updateStatus(id,status){
 
+db.collection("booking")
+.doc(id)
+.get()
+.then((doc)=>{
+
+let data = doc.data();
+
 
 db.collection("booking")
 .doc(id)
 .update({
-
 status:status
-
 })
-
-
 .then(()=>{
+
+
+if(status=="Diterima"){
+
+
+let pesan =
+"Halo "+data.nama+" 👋\n\n"+
+"Booking Alvin Barber Studio kamu sudah DITERIMA ✅\n\n"+
+"Tanggal: "+data.tanggal+"\n"+
+"Jam: "+data.jam+"\n\n"+
+"Kami tunggu kedatangannya.\n"+
+"Terima kasih 🙏";
+
+
+window.open(
+"https://wa.me/"+data.nomor+"?text="+encodeURIComponent(pesan),
+"_blank"
+);
+
+
+}
 
 
 alert("Status berhasil diubah");
 
-
 location.reload();
 
 
-})
-
-
-.catch((error)=>{
-
-
-alert(error.message);
+});
 
 
 });
