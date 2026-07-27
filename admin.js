@@ -63,15 +63,15 @@ list.innerHTML += `
 
 <h3>${data.nama || "-"}</h3>
 
-
 <p>WhatsApp: ${data.nomor || "-"}</p>
-
 
 <p>Tanggal: ${data.tanggal || "-"}</p>
 
-
 <p>Jam: ${data.jam || "-"}</p>
 
+<p>Layanan: ${data.layanan || "-"}</p>
+
+<p>Catatan: ${data.catatan || "-"}</p>
 
 <p>
 Status:
