@@ -101,7 +101,12 @@ Hapus
 
 </button>
 
-
+<a 
+href="https://wa.me/${data.nomor}" 
+target="_blank"
+class="wa-button">
+Chat WhatsApp
+</a>
 
 <br><br>
 
