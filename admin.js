@@ -1,3 +1,7 @@
+let total = 0;
+let pending = 0;
+let accepted = 0;
+let rejected = 0;
 firebase.auth().onAuthStateChanged((user)=>{
   if(!user){
     window.location="login.html";
@@ -7,7 +11,19 @@ const list = document.getElementById("bookingList");
 
 db.collection("booking")
 .get()
-.then((snapshot)=>{
+.then((snapshot)=>{total++;
+
+if(data.status=="Menunggu"){
+pending++;
+}
+
+if(data.status=="Diterima"){
+accepted++;
+}
+
+if(data.status=="Ditolak"){
+rejected++;
+}
 
     list.innerHTML = "";
 
@@ -54,7 +70,12 @@ Notifikasi Pemilik
     });
 
 })
-.catch((error)=>{
+document.getElementById("totalBooking").innerHTML = total;
+document.getElementById("pending").innerHTML = pending;
+document.getElementById("accepted").innerHTML = accepted;
+document.getElementById("rejected").innerHTML = rejected;
+
+  .catch((error)=>{
     list.innerHTML = "Error: " + error.message;
 });
 
