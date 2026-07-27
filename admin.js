@@ -61,21 +61,20 @@ db.collection("booking")
         <div class="card">
 
 
-        <h3>${data.nama || "-"}</h3>
+        <h3>👤 ${data.nama || "-"}</h3>
 
 
-        <p>WhatsApp: ${data.nomor || "-"}</p>
+<p>📱 WhatsApp: ${data.nomor || "-"}</p>
 
-        <p>Tanggal: ${data.tanggal || "-"}</p>
+<p>📅 Tanggal: ${data.tanggal || "-"}</p>
 
-        <p>Jam: ${data.jam || "-"}</p>
+<p>⏰ Jam: ${data.jam || "-"}</p>
 
-        <p>Capster: ${data.capster || "-"}</p>
+<p>💈 Capster: ${data.capster || "-"}</p>
 
-        <p>Layanan: ${data.layanan || "-"}</p>
+<p>✂️ Layanan: ${data.layanan || "-"}</p>
 
-        <p>Catatan: ${data.catatan || "-"}</p>
-
+<p>📝 Catatan: ${data.catatan || "-"}</p>
 
         <p>
         Status:
