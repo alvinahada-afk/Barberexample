@@ -106,7 +106,7 @@ Hapus
 </button>
 
 <a 
-href="https://wa.me/${data.nomor}?text=Halo%20${data.nama},%0A%0ABooking%20Alvin%20Barber%20Studio%20kamu:%0A%0ATanggal:%20${data.tanggal}%0AJam:%20${data.jam}%0ALayanan:%20${data.layanan}%0ACapster:%20${data.capster}%0A%0ATerima%20kasih%20🙏"
+href="https://wa.me/${data.nomor}?text=Halo ${data.nama}, booking kamu di Barber Studio"
 target="_blank"
 class="wa-button">
 Chat WhatsApp
