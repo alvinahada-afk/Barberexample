@@ -32,16 +32,54 @@ let layanan = document.getElementById("layanan").value;
   let catatan = document.getElementById("catatan").value;
 
 
-db.collection("booking").add({
+db.collection("booking")
+.where("tanggal","==",tanggal)
+.where("jam","==",jam)
+.get()
+.then((snapshot)=>{
 
-nama:nama,
-nomor:nomor,
-layanan:layanan,
-catatan:catatan,
-tanggal:tanggal,
-jam:jam,
-capster:capster,
-status:"Pending"
+    if(!snapshot.empty){
+
+        alert("❌ Jam tersebut sudah dibooking. Silakan pilih jam lain.");
+        return;
+
+    }
+
+
+    // Jika jam masih kosong, simpan booking
+
+    db.collection("booking").add({
+
+        nama:nama,
+        nomor:nomor,
+        tanggal:tanggal,
+        jam:jam,
+        capster:capster,
+        status:"Pending"
+
+    })
+
+    .then(()=>{
+
+        alert("✅ Booking berhasil dikirim!");
+
+        form.reset();
+
+    })
+
+    .catch((error)=>{
+
+        alert("Gagal menyimpan booking: "+error.message);
+
+    });
+
+
+})
+.catch((error)=>{
+
+    alert("Error cek jadwal: "+error.message);
+
+});
 
 })
 
