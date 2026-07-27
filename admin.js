@@ -26,8 +26,25 @@ rejected++;
 }
 
     list.innerHTML = "";
+let total = 0;
+let pending = 0;
+let accepted = 0;
+let rejected = 0;
+    snapshot.forEach((doc)=>{total++;
 
-    snapshot.forEach((doc)=>{
+let data = doc.data();
+
+if(data.status=="Pending"){
+pending++;
+}
+
+if(data.status=="Diterima"){
+accepted++;
+}
+
+if(data.status=="Ditolak"){
+rejected++;
+}
 
         let data = doc.data();
 
