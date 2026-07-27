@@ -26,25 +26,21 @@ let nama = document.getElementById("nama").value;
 let nomor = document.getElementById("nomor").value;
 let tanggal = document.getElementById("tanggal").value;
 let jam = document.getElementById("jam").value;
+let capster = document.getElementById("capster").value;
 let layanan = document.getElementById("layanan").value;
 
-let catatan = document.getElementById("catatan").value;
+  let catatan = document.getElementById("catatan").value;
 
 
 db.collection("booking").add({
 
 nama:nama,
-
 nomor:nomor,
-
 layanan:layanan,
-
 catatan:catatan,
-
 tanggal:tanggal,
-
 jam:jam,
-
+capster:capster,
 status:"Pending"
 
 })
