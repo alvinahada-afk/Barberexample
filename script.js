@@ -12,6 +12,8 @@ window.open(
 }
 
 
+// Sistem Booking Firebase
+
 const form = document.getElementById("bookingForm");
 
 
@@ -26,32 +28,46 @@ let nama = document.getElementById("nama").value;
 let nomor = document.getElementById("nomor").value;
 let tanggal = document.getElementById("tanggal").value;
 let jam = document.getElementById("jam").value;
-let capster = document.getElementById("capster").value;
-let layanan = document.getElementById("layanan").value;
-
-  let catatan = document.getElementById("catatan").value;
 
 
-db.collection("booking")
-.where("tanggal","==",tanggal)
-.where("jam","==",jam)
-.get()
+// Simpan booking ke Firebase
 
-})
-.catch((error)=>{
+db.collection("booking").add({
 
-    alert("Error cek jadwal: "+error.message);
-
-});
+nama:nama,
+nomor:nomor,
+tanggal:tanggal,
+jam:jam,
+status:"Pending"
 
 })
 
 
 .then(()=>{
 
-alert("✅ Booking berhasil!");
+
+let pesan =
+"🔔 Booking Baru Alvin Barber Studio\n\n"+
+"Nama: "+nama+"\n"+
+"WhatsApp: "+nomor+"\n"+
+"Tanggal: "+tanggal+"\n"+
+"Jam: "+jam+"\n"+
+"Status: Pending";
+
+
+let nomorPemilik = "6283892513500";
+
+
+window.open(
+"https://wa.me/"+nomorPemilik+"?text="+encodeURIComponent(pesan),
+"_blank"
+);
+
+
+alert("✅ Booking berhasil dikirim!");
 
 form.reset();
+
 
 })
 
