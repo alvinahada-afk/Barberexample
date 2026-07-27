@@ -653,3 +653,28 @@ font-size:28px;
 }
 
 }
+
+/* Filter Button */
+.filter-container{
+    display:flex;
+    gap:12px;
+    margin:20px 0;
+    overflow-x:auto;
+    padding-bottom:5px;
+}
+
+.filter-container button{
+    flex-shrink:0;
+    background:#d9b437;
+    color:#111;
+    border:none;
+    padding:12px 25px;
+    border-radius:12px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.filter-container button:hover{
+    opacity:0.8;
+}
