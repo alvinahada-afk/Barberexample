@@ -105,10 +105,7 @@ Hapus
 
 </button>
 
-<a 
-href="https://wa.me/${data.nomor}?text=Halo%20saya%20ingin%20konfirmasi%20booking"
-target="_blank"
-class="wa-button">
+<a class="wa-button" href="${waLink}" target="_blank">
 💬 Chat WhatsApp
 </a>
 <br><br>
