@@ -106,13 +106,24 @@ db.collection("booking")
 
 
         <a class="wa-button" 
-        href="${waLink}" 
-        target="_blank">
+href="https://wa.me/${data.nomor}?text=${encodeURIComponent(
+`Halo ${data.nama} 👋
 
-        💬 Chat WhatsApp
+Terima kasih sudah booking Alvin Barber Studio.
 
-        </a>
+Detail Booking:
+Tanggal: ${data.tanggal}
+Jam: ${data.jam}
+Layanan: ${data.layanan || "-"}
+Capster: ${data.capster || "-"}
 
+Kami tunggu kedatangannya 🙏`
+)}"
+target="_blank">
+
+💬 Chat WhatsApp
+
+</a>
 
         </div>
 
