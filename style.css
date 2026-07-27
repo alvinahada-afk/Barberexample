@@ -496,18 +496,30 @@ gap:15px;
 margin:20px 0;
 }
 
+.dashboard{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
 .stat-card{
 background:#222;
 border:1px solid #555;
-border-radius:15px;
+border-radius:20px;
 padding:20px;
 text-align:center;
 }
 
 .stat-card h2{
-font-size:35px;
-color:#d4af37;
-margin:5px;
+font-size:32px;
+color:#d8b22c;
+margin:0;
+}
+
+.stat-card p{
+font-size:16px;
+color:white;
+margin-top:10px;
 }
 
 
