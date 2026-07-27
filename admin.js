@@ -171,16 +171,32 @@ status:status
 .then(()=>{
 
 
+let pesan = "";
+
 if(status=="Diterima"){
 
-
-let pesan =
+pesan =
 "Halo "+data.nama+" 👋\n\n"+
 "Booking Alvin Barber Studio kamu sudah DITERIMA ✅\n\n"+
-"Tanggal: "+data.tanggal+"\n"+
-"Jam: "+data.jam+"\n\n"+
-"Kami tunggu kedatangannya.\n"+
+"Tanggal : "+data.tanggal+"\n"+
+"Jam : "+data.jam+"\n"+
+"Layanan : "+(data.layanan || "-")+"\n"+
+"Capster : "+(data.capster || "-")+"\n\n"+
+"Kami tunggu kedatangannya 🙏";
+
+
+}
+
+else if(status=="Ditolak"){
+
+pesan =
+"Halo "+data.nama+" 👋\n\n"+
+"Maaf booking Alvin Barber Studio kamu DITOLAK ❌\n\n"+
+"Silakan hubungi kami untuk jadwal lain.\n\n"+
 "Terima kasih 🙏";
+
+}
+
 
 
 window.open(
@@ -189,10 +205,7 @@ window.open(
 );
 
 
-}
-
-
-alert("Status berhasil diubah");
+alert("Status berhasil diubah!");
 
 location.reload();
 
