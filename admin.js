@@ -124,14 +124,13 @@ Chat WhatsApp
 
 
 
-document.getElementById("totalBooking").innerHTML=total;
+document.getElementById("totalBooking").innerHTML = total;
 
-document.getElementById("pending").innerHTML=pending;
+document.getElementById("pendingBooking").innerHTML = pending;
 
-document.getElementById("accepted").innerHTML=accepted;
+document.getElementById("acceptedBooking").innerHTML = diterima;
 
-document.getElementById("rejected").innerHTML=rejected;
-
+document.getElementById("rejectedBooking").innerHTML = ditolak;
 
 
 })
