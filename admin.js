@@ -138,13 +138,18 @@ location.reload();
 
 function logout(){
 
-firebase.auth().signOut()
-.then(()=>{
+    firebase.auth().signOut()
+    .then(function(){
 
-alert("Berhasil logout");
+        alert("Berhasil logout");
 
-window.location="login.html";
+        window.location.href="login.html";
 
-});
+    })
+    .catch(function(error){
+
+        alert("Logout gagal: " + error.message);
+
+    });
 
 }
