@@ -599,3 +599,45 @@ width:100%;
 }
 
 }
+
+.dashboard{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin:20px 0;
+}
+
+.stat-card{
+background:#222;
+border:1px solid #555;
+border-radius:15px;
+padding:20px;
+text-align:center;
+}
+
+.stat-card h2{
+font-size:35px;
+color:#d4af37;
+margin:0;
+}
+
+.stat-card p{
+font-size:16px;
+color:white;
+}
+
+@media(max-width:600px){
+
+.dashboard{
+grid-template-columns:repeat(2,1fr);
+}
+
+.stat-card{
+padding:15px;
+}
+
+.stat-card h2{
+font-size:28px;
+}
+
+}
