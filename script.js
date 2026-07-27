@@ -56,15 +56,11 @@ status:"Pending"
 
 .then(()=>{
 
+console.log("DATA BERHASIL MASUK FIREBASE");
 
 alert("Booking berhasil dikirim!");
 
-
-form.reset();
-
-
 })
-
 
 .catch((error)=>{
 
