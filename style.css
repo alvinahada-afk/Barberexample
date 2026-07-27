@@ -362,3 +362,53 @@ body{
 h1{
   color:#d4af37;
 }
+
+.dashboard{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+margin:20px 0;
+}
+
+.dashboard > div{
+background:#222;
+border:1px solid #555;
+border-radius:15px;
+padding:20px;
+width:140px;
+text-align:center;
+}
+
+.dashboard h2{
+font-size:32px;
+color:#d8b333;
+margin:0;
+}
+
+.dashboard p{
+color:white;
+margin-top:8px;
+}
+
+
+/* Tombol logout */
+button{
+background:#d8b333;
+color:black;
+border:none;
+padding:12px 25px;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+}
+
+
+/* Tampilan kartu booking */
+.card{
+background:#151515;
+border:1px solid #444;
+border-radius:15px;
+padding:20px;
+margin-top:15px;
+color:white;
+}
