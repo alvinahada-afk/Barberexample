@@ -106,22 +106,11 @@ Hapus
 </button>
 
 <a 
-href="https://wa.me/${data.nomor}?text=${encodeURIComponent(
-`Halo ${data.nama}, 
-Booking Alvin Barber Studio:
-
-Tanggal: ${data.tanggal}
-Jam: ${data.jam}
-Capster: ${data.capster}
-Layanan: ${data.layanan}
-
-Terima kasih 🙏`
-)}"
+href="https://wa.me/${data.nomor}?text=Halo%20${data.nama},%0A%0ABooking%20Alvin%20Barber%20Studio%20kamu:%0A%0ATanggal:%20${data.tanggal}%0AJam:%20${data.jam}%0ALayanan:%20${data.layanan}%0ACapster:%20${data.capster}%0A%0ATerima%20kasih%20🙏"
 target="_blank"
 class="wa-button">
 Chat WhatsApp
 </a>
-
 <br><br>
 
 
