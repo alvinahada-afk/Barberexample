@@ -1,222 +1,150 @@
-// CEK LOGIN ADMIN
+let total = 0;
+let pending = 0;
+let accepted = 0;
+let rejected = 0;
+
 firebase.auth().onAuthStateChanged((user)=>{
-    if(!user){
-        window.location="login.html";
-    }
+  if(!user){
+    window.location="login.html";
+  }
 });
 
-
-// AMBIL ELEMENT
 const list = document.getElementById("bookingList");
 
-
-// LOAD DATA BOOKING
 db.collection("booking")
 .get()
 .then((snapshot)=>{
 
-    let total = 0;
-    let pending = 0;
-    let accepted = 0;
-    let rejected = 0;
+list.innerHTML="";
 
-    list.innerHTML = "";
+snapshot.forEach((doc)=>{
 
+let data = doc.data();
 
-    snapshot.forEach((doc)=>{
+total++;
 
-        let data = doc.data();
+if(data.status=="Pending"){
+pending++;
+}
 
-        total++;
+if(data.status=="Diterima"){
+accepted++;
+}
 
-
-        if(data.status == "Pending" || data.status == "Menunggu"){
-            pending++;
-        }
-
-        if(data.status == "Diterima"){
-            accepted++;
-        }
-
-        if(data.status == "Ditolak"){
-            rejected++;
-        }
+if(data.status=="Ditolak"){
+rejected++;
+}
 
 
-        list.innerHTML += `
+list.innerHTML += `
 
-        <div class="card">
+<div class="card">
 
-        <h3>${data.nama}</h3>
+<h3>${data.nama}</h3>
 
-        <p>WhatsApp: ${data.nomor}</p>
+<p>WhatsApp: ${data.nomor}</p>
 
-        <p>Tanggal: ${data.tanggal}</p>
+<p>Tanggal: ${data.tanggal}</p>
 
-        <p>Jam: ${data.jam}</p>
+<p>Jam: ${data.jam}</p>
 
-        <p>Status: ${data.status}</p>
-
-
-        <button onclick="updateStatus('${doc.id}','Diterima')">
-        Terima Booking
-        </button>
+<p>Status: ${data.status}</p>
 
 
-        <button onclick="updateStatus('${doc.id}','Ditolak')">
-        Tolak Booking
-        </button>
+<button onclick="updateStatus('${doc.id}','Diterima')">
+Terima Booking
+</button>
 
 
-        <button onclick="hapusBooking('${doc.id}')">
-        Hapus
-        </button>
+<button onclick="updateStatus('${doc.id}','Ditolak')">
+Tolak Booking
+</button>
 
 
-        <br><br>
+<button onclick="hapusBooking('${doc.id}')">
+Hapus
+</button>
 
 
-        <a href="https://wa.me/${data.nomor}" target="_blank">
-        Chat WhatsApp Pelanggan
-        </a>
+<br><br>
 
 
-        <br><br>
+<a href="https://wa.me/${data.nomor}">
+Chat WhatsApp
+</a>
 
 
-        <a href="https://wa.me/6283892513500?text=Booking%20Baru%0A%0ANama:%20${data.nama}%0ANomor:%20${data.nomor}%0ATanggal:%20${data.tanggal}%0AJam:%20${data.jam}" target="_blank">
+</div>
 
-        Notifikasi Pemilik
+`;
 
-        </a>
-
-
-        </div>
-
-        `;
+});
 
 
-    });
-
-
-
-    // UPDATE STATISTIK
-
-    document.getElementById("totalBooking").innerHTML = total;
-
-    document.getElementById("pending").innerHTML = pending;
-
-    document.getElementById("accepted").innerHTML = accepted;
-
-    document.getElementById("rejected").innerHTML = rejected;
-
+document.getElementById("totalBooking").innerHTML=total;
+document.getElementById("pending").innerHTML=pending;
+document.getElementById("accepted").innerHTML=accepted;
+document.getElementById("rejected").innerHTML=rejected;
 
 
 })
-
 .catch((error)=>{
 
-    list.innerHTML = "Error: " + error.message;
+list.innerHTML="Error: "+error.message;
 
 });
 
 
 
-
-// UBAH STATUS BOOKING
-
 function updateStatus(id,status){
-
 
 db.collection("booking")
 .doc(id)
 .update({
-
-    status: status
-
+status:status
 })
-
-
 .then(()=>{
 
-alert("Status booking berhasil diubah");
-
+alert("Status berhasil diubah");
 location.reload();
 
-})
-
-
-.catch((error)=>{
-
-alert(error);
-
 });
-
 
 }
 
 
 
-
-// HAPUS BOOKING
-
 function hapusBooking(id){
 
-
-let yakin = confirm("Yakin hapus booking ini?");
-
+let yakin=confirm("Hapus booking ini?");
 
 if(yakin){
-
 
 db.collection("booking")
 .doc(id)
 .delete()
-
-
 .then(()=>{
 
 alert("Booking berhasil dihapus");
-
 location.reload();
-
-})
-
-
-.catch((error)=>{
-
-alert(error);
 
 });
 
+}
 
 }
 
 
-}
-
-
-
-
-// LOGOUT
 
 function logout(){
 
-
-firebase.auth()
-.signOut()
-
-
+firebase.auth().signOut()
 .then(()=>{
-
 
 alert("Berhasil logout");
 
-
 window.location="login.html";
 
-
 });
-
 
 }
