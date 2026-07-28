@@ -893,3 +893,18 @@ margin-bottom:20px;
 font-weight:bold;
 
 }
+
+.notif-box{
+
+background:#d4af37;
+color:black;
+padding:12px;
+border-radius:15px;
+font-weight:bold;
+margin:15px;
+
+display:none;
+
+text-align:center;
+
+}
