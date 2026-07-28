@@ -24,9 +24,10 @@ function loadBooking(){
 db.collection("booking")
 .onSnapshot((snapshot)=>{
 
+console.log("JUMLAH DATA:", snapshot.size);
+
 
 if(snapshot.size > jumlahBookingLama){
-
 notifSound.play();
 
 bookingBaru = snapshot.size - jumlahBookingLama;
@@ -120,7 +121,7 @@ document.getElementById("totalPendapatan").innerHTML=
 
 
 loadBooking();
-
+console.log("ADMIN JS JALAN");
 
 
 
