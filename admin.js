@@ -1,78 +1,52 @@
-const db = firebase.firestore();
+const bookingRef = db.collection("booking");
+
+const totalPesanan = document.getElementById("totalPesanan");
+const pesananBaru = document.getElementById("pesananBaru");
+const pelanggan = document.getElementById("pelanggan");
+const tabelPesanan = document.getElementById("tabelPesanan");
 
 
-firebase.auth().onAuthStateChanged(function(user){
-
-if(!user){
-
-window.location.href="login.html";
-
-}
-
-});
-
-
-
-db.collection("booking").onSnapshot(function(snapshot){
+bookingRef.onSnapshot((snapshot)=>{
 
 let total = snapshot.size;
-
-document.getElementById("totalPesanan").innerHTML = total;
-
-
 let baru = 0;
-let html = "";
+let pelangganData = [];
+
+tabelPesanan.innerHTML="";
 
 
-snapshot.forEach(function(doc){
-
+snapshot.forEach((doc)=>{
 
 let data = doc.data();
 
-
-if(data.status == "Diterima" || data.status == "Baru"){
+if(data.status == "Diterima" || data.status == "Pending"){
 baru++;
 }
 
 
-html += `
+if(data.nama){
+pelangganData.push(data.nama);
+}
+
+
+tabelPesanan.innerHTML += `
+
 <tr>
 <td>${data.nama || "-"}</td>
 <td>${data.layanan || "-"}</td>
 <td>${data.status || "-"}</td>
 </tr>
-`;
-
-
-});
-
-
-document.getElementById("pesananBaru").innerHTML = baru;
-
-
-document.querySelector("table").innerHTML = `
-
-<tr>
-<th>Nama</th>
-<th>Layanan</th>
-<th>Status</th>
-</tr>
-
-${html}
 
 `;
 
-
 });
 
 
-function logout(){
+totalPesanan.innerHTML = total;
 
-firebase.auth().signOut()
-.then(function(){
+pesananBaru.innerHTML = baru;
 
-window.location.href="login.html";
+pelanggan.innerHTML = [...new Set(pelangganData)].length;
+
 
 });
-
-}
