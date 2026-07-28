@@ -21,23 +21,25 @@ firebase.auth().onAuthStateChanged((user)=>{
 
 function loadBooking(){
 
-
 db.collection("booking")
-.onSnapshot((snapshot)=>{if(snapshot.size > jumlahBookingLama){
+.onSnapshot((snapshot)=>{
 
-    notifSound.play();
 
-    bookingBaru = snapshot.size - jumlahBookingLama;
+if(snapshot.size > jumlahBookingLama){
 
-    document.getElementById("notifCount").innerHTML = bookingBaru;
+notifSound.play();
 
-    document.getElementById("notifBox").style.display="block";
+bookingBaru = snapshot.size - jumlahBookingLama;
+
+document.getElementById("notifCount").innerHTML = bookingBaru;
+
+document.getElementById("notifBox").style.display="block";
 
 }
 
-}
 
 jumlahBookingLama = snapshot.size;
+
 
 let total = 0;
 let pending = 0;
@@ -45,10 +47,10 @@ let diterima = 0;
 let ditolak = 0;
 let pendapatan = 0;
 
-list.innerHTML = "";
+
+list.innerHTML="";
 
 semuaBooking = [];
-
 
 
 snapshot.forEach((doc)=>{
@@ -65,7 +67,6 @@ id:doc.id,
 });
 
 
-
 total++;
 
 
@@ -76,71 +77,42 @@ pending++;
 
 if(data.status=="Diterima"){
 diterima++;
+
+// hitung pendapatan
+if(data.harga){
+pendapatan += Number(data.harga);
 }
 
-if(data.status=="Diterima"){
-
-    diterima++;
-
-    let harga = 0;
-
-    if(data.layanan.includes("35.000")){
-        harga = 35000;
-    }
-
-    if(data.layanan.includes("50.000")){
-        harga = 50000;
-    }
-
-    if(data.layanan.includes("70.000")){
-        harga = 70000;
-    }
-
-
-    pendapatan += harga;
-
 }
-    
+
+
 if(data.status=="Ditolak"){
 ditolak++;
 }
 
 
-
-tampilkanBooking(data,doc.id);
-
+tampilkanBooking(data);
 
 
 });
 
 
+document.getElementById("totalBooking").innerHTML=total;
 
-document.getElementById("totalBooking").innerHTML = total;
+document.getElementById("pendingBooking").innerHTML=pending;
 
-document.getElementById("pendingBooking").innerHTML = pending;
+document.getElementById("acceptedBooking").innerHTML=diterima;
 
-document.getElementById("acceptedBooking").innerHTML = diterima;
+document.getElementById("rejectedBooking").innerHTML=ditolak;
 
-document.getElementById("rejectedBooking").innerHTML = ditolak;
-
-document.getElementById("totalPendapatan").innerHTML =
-"Rp" + pendapatan.toLocaleString("id-ID");
-
-})
-
-.catch((error)=>{
-
-console.log("FIREBASE ERROR:", error);
-
-alert(error.message);
-
-});
-
-
-list.innerHTML="Gagal mengambil data";
+document.getElementById("totalPendapatan").innerHTML=
+"Rp"+pendapatan.toLocaleString("id-ID");
 
 
 });
+
+
+}
 
 
 }
