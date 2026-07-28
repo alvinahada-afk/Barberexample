@@ -27,6 +27,14 @@ db.collection("booking")
 
     notifSound.play();
 
+    bookingBaru = snapshot.size - jumlahBookingLama;
+
+    document.getElementById("notifCount").innerHTML = bookingBaru;
+
+    document.getElementById("notifBox").style.display="block";
+
+}
+
 }
 
 jumlahBookingLama = snapshot.size;
