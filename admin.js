@@ -52,9 +52,7 @@ table.innerHTML += `
 <td>${data.nama || "-"}</td>
 
 <td>
-${layanan}
-<br>
-<span class="harga">${harga}</span>
+${d.layanan || d.service || d.jasa || "Belum memilih"}
 </td>
 
 <td>
