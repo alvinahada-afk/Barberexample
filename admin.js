@@ -149,6 +149,159 @@ list.innerHTML += `
 
 <p>⏰ Jam: ${data.jam || "-"}</p>
 
+function loadBooking(){
+
+db.collection("booking")
+.onSnapshot((snapshot)=>{
+
+console.log("JUMLAH DATA:", snapshot.size);
+
+
+if(snapshot.size > jumlahBookingLama){
+
+notifSound.play().catch(()=>{});
+
+bookingBaru = snapshot.size - jumlahBookingLama;
+
+let notif = document.getElementById("notifCount");
+
+if(notif){
+notif.innerHTML = bookingBaru;
+}
+
+
+let box = document.getElementById("notifBox");
+
+if(box){
+box.style.display="block";
+}
+
+}
+
+
+jumlahBookingLama = snapshot.size;
+
+
+let total = 0;
+let pending = 0;
+let diterima = 0;
+let ditolak = 0;
+let pendapatan = 0;
+
+
+list.innerHTML="";
+
+semuaBooking=[];
+
+
+snapshot.forEach((doc)=>{
+
+
+let data = doc.data();
+
+
+semuaBooking.push({
+
+id:doc.id,
+...data
+
+});
+
+
+total++;
+
+
+if(data.status=="Pending"){
+pending++;
+}
+
+
+if(data.status=="Diterima"){
+
+diterima++;
+
+
+if(data.harga){
+
+pendapatan += Number(data.harga);
+
+}
+
+}
+
+
+
+if(data.status=="Ditolak"){
+
+ditolak++;
+
+}
+
+
+
+tampilkanBooking(data, doc.id);
+
+
+
+});
+
+
+
+document.getElementById("totalBooking").innerHTML=total;
+
+document.getElementById("pendingBooking").innerHTML=pending;
+
+document.getElementById("acceptedBooking").innerHTML=diterima;
+
+document.getElementById("rejectedBooking").innerHTML=ditolak;
+
+
+document.getElementById("totalPendapatan").innerHTML =
+"Rp"+pendapatan.toLocaleString("id-ID");
+
+
+
+},(error)=>{
+
+console.log("FIREBASE ERROR:",error);
+
+});
+
+
+
+}
+
+
+
+loadBooking();
+
+console.log("ADMIN JS JALAN");
+
+
+
+
+// TAMPILKAN BOOKING
+
+function tampilkanBooking(data,id){
+
+
+list.innerHTML += `
+
+
+<div class="card">
+
+
+<h3>👤 ${data.nama || "-"}</h3>
+
+
+<p>📱 WhatsApp: ${data.nomor || "-"}</p>
+
+
+<p>📅 Tanggal: ${data.tanggal || "-"}</p>
+
+
+<p>⏰ Jam: ${data.jam || "-"}</p>
+
 
 <p>💈 Capster: ${data.capster || "-"}</p>
 
@@ -163,8 +316,8 @@ list.innerHTML += `
 <p>
 Status:
 
-<span class="${data.status}">
-${data.status}
+<span class="${data.status || ''}">
+${data.status || "Pending"}
 </span>
 
 </p>
@@ -213,16 +366,9 @@ target="_blank">
 </div>
 
 
-
 `;
 
-
-
 }
-
-
-
-
 
 
 
