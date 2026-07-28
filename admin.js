@@ -40,17 +40,13 @@ console.log("JUMLAH DATA:", snapshot.size);
 
 
 
-// NOTIFIKASI BOOKING BARU
-
 if(!pertamaLoad && snapshot.size > jumlahBookingLama){
 
 
 let jumlahBaru = snapshot.size - jumlahBookingLama;
 
 
-
 notifSound.play().catch(()=>{});
-
 
 
 let notif = document.getElementById("notifCount");
@@ -76,17 +72,11 @@ box.style.display="block";
 }
 
 
-
-alert("🔔 Ada "+jumlahBaru+" booking baru!");
-
-
-
 }
 
 
 
 jumlahBookingLama = snapshot.size;
-
 
 pertamaLoad = false;
 
@@ -108,6 +98,9 @@ list.innerHTML = "";
 
 semuaBooking = [];
 
+daftarNotif = [];
+
+
 
 
 
@@ -117,16 +110,10 @@ snapshot.forEach((doc)=>{
 let data = doc.data();
 
 
-
 data.id = doc.id;
 
 
-
 semuaBooking.push(data);
-
-
-
-total++;
 
 
 
@@ -134,13 +121,11 @@ if(data.status=="Pending"){
 
 pending++;
 
-}
-
-if(data.status=="Pending"){
-
 daftarNotif.push(data);
 
 }
+
+
 
 if(data.status=="Diterima"){
 
@@ -170,6 +155,9 @@ ditolak++;
 
 
 
+total++;
+
+
 tampilkanBooking(data);
 
 
@@ -179,24 +167,17 @@ tampilkanBooking(data);
 
 
 
-
 document.getElementById("totalBooking").innerHTML = total;
-
 
 document.getElementById("pendingBooking").innerHTML = pending;
 
-
 document.getElementById("acceptedBooking").innerHTML = diterima;
-
 
 document.getElementById("rejectedBooking").innerHTML = ditolak;
 
 
-
 document.getElementById("totalPendapatan").innerHTML =
-
 "Rp"+pendapatan.toLocaleString("id-ID");
-
 
 
 
@@ -206,9 +187,7 @@ document.getElementById("totalPendapatan").innerHTML =
 console.log("FIREBASE ERROR:",error);
 
 
-
 });
-
 
 
 }
@@ -218,6 +197,11 @@ console.log("FIREBASE ERROR:",error);
 loadBooking();
 
 console.log("ADMIN JS JALAN");
+
+
+
+
+
 // TAMPILKAN BOOKING
 
 
@@ -251,10 +235,7 @@ list.innerHTML += `
 <p>📝 Catatan : ${data.catatan || "-"}</p>
 
 
-
-<p>
-
-Status :
+<p>Status :
 
 <span class="${data.status}">
 
@@ -263,8 +244,6 @@ ${data.status || "Pending"}
 </span>
 
 </p>
-
-
 
 
 <button onclick="updateStatus('${data.id}','Diterima')">
@@ -290,10 +269,7 @@ Hapus
 </button>
 
 
-
-
 <br><br>
-
 
 
 <a class="wa-button"
@@ -307,23 +283,13 @@ target="_blank">
 </a>
 
 
-
 </div>
 
 
 `;
 
 
-
 }
-
-
-
-
-
-
-
-
 // UPDATE STATUS + WHATSAPP
 
 
@@ -417,6 +383,7 @@ window.open(
 
 
 
+
 // HAPUS BOOKING
 
 
@@ -479,14 +446,13 @@ window.location.href="login.html";
 
 
 
-
-// FILTER
+// FILTER STATUS
 
 
 function filterBooking(status){
 
 
-let hasil = "";
+let hasil="";
 
 
 
@@ -514,12 +480,13 @@ hasil += `
 <p>⏰ ${data.jam || "-"}</p>
 
 
+<p>💈 ${data.capster || "-"}</p>
+
+
 <p>✂️ ${data.layanan || "-"}</p>
 
 
-
 <p>Status : ${data.status}</p>
-
 
 
 <button onclick="updateStatus('${data.id}','Diterima')">
@@ -529,13 +496,11 @@ Terima
 </button>
 
 
-
 <button onclick="updateStatus('${data.id}','Ditolak')">
 
 Tolak
 
 </button>
-
 
 
 <button onclick="hapusBooking('${data.id}')">
@@ -549,7 +514,6 @@ Hapus
 
 
 `;
-
 
 
 }
@@ -569,8 +533,7 @@ list.innerHTML = hasil;
 
 
 
-
-// SEARCH
+// SEARCH BOOKING
 
 
 function searchBooking(){
@@ -593,19 +556,9 @@ let hasil="";
 semuaBooking.forEach((data)=>{
 
 
-let nama =
+let nama = (data.nama || "").toLowerCase();
 
-(data.nama || "")
-
-.toLowerCase();
-
-
-
-let nomor =
-
-(data.nomor || "")
-
-.toLowerCase();
+let nomor = (data.nomor || "").toLowerCase();
 
 
 
@@ -616,7 +569,6 @@ nama.includes(keyword) ||
 nomor.includes(keyword)
 
 ){
-
 
 
 hasil += `
@@ -631,6 +583,12 @@ hasil += `
 <p>📱 ${data.nomor}</p>
 
 
+<p>📅 ${data.tanggal}</p>
+
+
+<p>⏰ ${data.jam}</p>
+
+
 <p>✂️ ${data.layanan}</p>
 
 
@@ -641,7 +599,6 @@ hasil += `
 
 
 `;
-
 
 
 }
@@ -655,16 +612,131 @@ list.innerHTML = hasil;
 
 }
 
+
+
+
+
+
+
+// FILTER JADWAL BERDASARKAN TANGGAL
+
+
+function filterTanggalAdmin(){
+
+
+let tanggal = 
+
+document.getElementById("tanggalAdmin").value;
+
+
+
+if(!tanggal){
+
+loadBooking();
+
+return;
+
+}
+
+
+
+let hasil="";
+
+
+
+semuaBooking
+
+.sort((a,b)=>{
+
+return a.jam.localeCompare(b.jam);
+
+})
+
+.forEach((data)=>{
+
+
+if(data.tanggal == tanggal){
+
+
+hasil += `
+
+
+<div class="card">
+
+
+<h3>👤 ${data.nama}</h3>
+
+
+<p>⏰ Jam : ${data.jam}</p>
+
+
+<p>💈 Capster : ${data.capster}</p>
+
+
+<p>✂️ Layanan : ${data.layanan}</p>
+
+
+<p>Status : ${data.status}</p>
+
+
+
+<button onclick="updateStatus('${data.id}','Diterima')">
+
+Terima
+
+</button>
+
+
+<button onclick="updateStatus('${data.id}','Ditolak')">
+
+Tolak
+
+</button>
+
+
+</div>
+
+
+`;
+
+
+}
+
+
+});
+
+
+
+list.innerHTML = hasil;
+
+
+}
+
+
+
+
+
+
+
+
+// NOTIFIKASI DROPDOWN
+
+
 function bukaNotif(){
+
 
 let box = document.getElementById("notifBox");
 
 
+
 if(box.style.display=="block"){
+
 
 box.style.display="none";
 
+
 return;
+
 
 }
 
@@ -673,9 +745,12 @@ return;
 let area = document.getElementById("notifList");
 
 
+
 if(daftarNotif.length==0){
 
+
 area.innerHTML="Tidak ada booking baru";
+
 
 }else{
 
@@ -683,28 +758,41 @@ area.innerHTML="Tidak ada booking baru";
 let html="";
 
 
+
 daftarNotif.forEach((data)=>{
 
 
 html += `
 
+
 <div class="notif-item">
 
+
 <b>${data.nama}</b>
+
 
 <br>
 
 📅 ${data.tanggal}
 
+
 <br>
 
 ⏰ ${data.jam}
+
+
+<br>
+
+💈 ${data.capster}
+
 
 <br>
 
 ✂️ ${data.layanan}
 
+
 </div>
+
 
 `;
 
@@ -712,7 +800,7 @@ html += `
 });
 
 
-area.innerHTML=html;
+area.innerHTML = html;
 
 
 }
