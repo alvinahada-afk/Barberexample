@@ -1,14 +1,15 @@
-// ambil data booking Firebase
+console.log("ADMIN JS AKTIF");
+
+setTimeout(()=>{
 
 const db = firebase.firestore();
 
-db.collection("booking").onSnapshot((snapshot)=>{
+console.log("FIREBASE AKTIF");
 
-let total = snapshot.size;
+db.collection("booking").get()
+.then((snapshot)=>{
 
-document.getElementById("totalPesanan").innerHTML = total;
-document.getElementById("pesananBaru").innerHTML = total;
-
+console.log("JUMLAH DATA:", snapshot.size);
 
 let tabel = document.querySelector("table");
 
@@ -20,24 +21,32 @@ tabel.innerHTML = `
 </tr>
 `;
 
-
 snapshot.forEach((doc)=>{
 
-let data = doc.data();
+let d = doc.data();
+
+console.log(d);
 
 tabel.innerHTML += `
 <tr>
-<td>${data.nama || "-"}</td>
-<td>${data.layanan || "-"}</td>
-<td>${data.status || "-"}</td>
+<td>${d.nama}</td>
+<td>${d.layanan}</td>
+<td>${d.status}</td>
 </tr>
 `;
 
 });
 
 
-}).catch((error)=>{
+document.getElementById("totalPesanan").innerHTML = snapshot.size;
 
-console.log(error);
+
+})
+.catch((error)=>{
+
+console.log("ERROR FIREBASE:",error);
 
 });
+
+
+},1000);
