@@ -1,149 +1,91 @@
 let semuaBooking = [];
 
+const list = document.getElementById("bookingList");
 
+
+// CEK LOGIN
 firebase.auth().onAuthStateChanged((user)=>{
-    if(!user){
-        window.location.href="login.html";
-    }
+
+if(!user){
+window.location.href="login.html";
+}
+
 });
 
 
-const list = document.getElementById("bookingList");
-let semuaBooking = [];
+
+// AMBIL DATA BOOKING
 
 db.collection("booking")
 .get()
 .then((snapshot)=>{
-    
-    let total = 0;
-    let pending = 0;
-    let diterima = 0;
-    let ditolak = 0;
-
-    list.innerHTML="";
 
 
-    snapshot.forEach((doc)=>{
-
-        let data = doc.data();
-
-
-        semuaBooking.push({
-            id:doc.id,
-            ...data
-        });
+let total = 0;
+let pending = 0;
+let diterima = 0;
+let ditolak = 0;
 
 
-        total++;
+list.innerHTML="";
 
-
-        if(data.status=="Pending"){
-            pending++;
-        }
-
-        if(data.status=="Diterima"){
-            diterima++;
-        }
-
-        if(data.status=="Ditolak"){
-            ditolak++;
-        }
+semuaBooking = [];
 
 
 
-        let waLink =
-        "https://wa.me/"+data.nomor;
+snapshot.forEach((doc)=>{
+
+
+let data = doc.data();
+
+
+semuaBooking.push({
+
+id:doc.id,
+...data
+
+});
+
+
+total++;
+
+
+if(data.status=="Pending"){
+pending++;
+}
+
+
+if(data.status=="Diterima"){
+diterima++;
+}
+
+
+if(data.status=="Ditolak"){
+ditolak++;
+}
 
 
 
-        list.innerHTML += `
 
-        <div class="card">
-
-
-        <h3>👤 ${data.nama || "-"}</h3>
-
-
-<p>📱 WhatsApp: ${data.nomor || "-"}</p>
-
-<p>📅 Tanggal: ${data.tanggal || "-"}</p>
-
-<p>⏰ Jam: ${data.jam || "-"}</p>
-
-<p>💈 Capster: ${data.capster || "-"}</p>
-
-<p>✂️ Layanan: ${data.layanan || "-"}</p>
-
-<p>📝 Catatan: ${data.catatan || "-"}</p>
-
-        <p>
-        Status:
-        <span class="${data.status}">
-        ${data.status}
-        </span>
-        </p>
+tampilkanBooking(data);
 
 
 
-        <button onclick="updateStatus('${doc.id}','Diterima')">
-        Terima Booking
-        </button>
-
-
-        <button onclick="updateStatus('${doc.id}','Ditolak')">
-        Tolak Booking
-        </button>
-
-
-        <button onclick="hapusBooking('${doc.id}')">
-        Hapus
-        </button>
+});
 
 
 
-        <br><br>
+document.getElementById("totalBooking").innerHTML=total;
 
+document.getElementById("pendingBooking").innerHTML=pending;
 
-        <a class="wa-button" 
-href="https://wa.me/${data.nomor}?text=${encodeURIComponent(
-`Halo ${data.nama} 👋
+document.getElementById("acceptedBooking").innerHTML=diterima;
 
-Terima kasih sudah booking Alvin Barber Studio.
+document.getElementById("rejectedBooking").innerHTML=ditolak;
 
-Detail Booking:
-Tanggal: ${data.tanggal}
-Jam: ${data.jam}
-Layanan: ${data.layanan || "-"}
-Capster: ${data.capster || "-"}
-
-Kami tunggu kedatangannya 🙏`
-)}"
-target="_blank">
-
-💬 Chat WhatsApp
-
-</a>
-
-        </div>
-
-        `;
-
-
-    });
-
-
-
-    document.getElementById("totalBooking").innerHTML = total;
-
-    document.getElementById("pendingBooking").innerHTML = pending;
-
-    document.getElementById("acceptedBooking").innerHTML = diterima;
-
-    document.getElementById("rejectedBooking").innerHTML = ditolak;
 
 
 })
-
 .catch((error)=>{
 
 console.log(error.message);
@@ -154,162 +96,19 @@ console.log(error.message);
 
 
 
+// TAMPILKAN CARD
 
-function updateStatus(id,status){
+function tampilkanBooking(data){
 
 
-db.collection("booking")
-.doc(id)
-.get()
+list.innerHTML += `
 
-.then((doc)=>{
-
-
-let data = doc.data();
-
-
-
-db.collection("booking")
-.doc(id)
-.update({
-
-status:status
-
-})
-
-
-.then(()=>{
-
-
-let pesan="";
-
-
-
-if(status=="Diterima"){
-
-
-pesan =
-"Halo "+data.nama+" 👋\n\n"+
-"Booking Alvin Barber Studio kamu sudah DITERIMA ✅\n\n"+
-"Tanggal : "+data.tanggal+"\n"+
-"Jam : "+data.jam+"\n"+
-"Layanan : "+data.layanan+"\n"+
-"Capster : "+data.capster+"\n\n"+
-"Kami tunggu kedatangannya 🙏";
-
-
-}
-
-
-
-if(status=="Ditolak"){
-
-
-pesan =
-"Halo "+data.nama+" 👋\n\n"+
-"Maaf booking Alvin Barber Studio kamu DITOLAK ❌\n\n"+
-"Silakan hubungi kami untuk jadwal lain.\n\n"+
-"Terima kasih 🙏";
-
-
-}
-
-
-
-window.open(
-"https://wa.me/"+data.nomor+
-"?text="+encodeURIComponent(pesan),
-"_blank"
-);
-
-
-
-alert("Status berhasil diubah!");
-
-location.reload();
-
-
-
-});
-
-
-});
-
-
-}
-
-
-
-
-
-
-function hapusBooking(id){
-
-
-if(confirm("Hapus booking ini?")){
-
-
-db.collection("booking")
-.doc(id)
-.delete()
-
-.then(()=>{
-
-
-alert("Booking berhasil dihapus");
-
-location.reload();
-
-
-});
-
-
-}
-
-
-}
-
-
-
-
-
-
-function logout(){
-
-
-firebase.auth()
-.signOut()
-
-.then(()=>{
-
-
-window.location.href="login.html";
-
-
-});
-
-
-}
-
-
-
-
-
-
-function filterBooking(status){
-console.log("Filter dipencet:", status);
-console.log(semuaBooking);
-let hasil = "";
-
-semuaBooking.forEach((data)=>{
-
-if(status=="Semua" || data.status==status){
-
-hasil += `
 
 <div class="card">
 
-<h3>${data.nama || "-"}</h3>
+
+<h3>👤 ${data.nama || "-"}</h3>
+
 
 <p>📱 WhatsApp: ${data.nomor || "-"}</p>
 
@@ -323,192 +122,50 @@ hasil += `
 
 <p>📝 Catatan: ${data.catatan || "-"}</p>
 
+
 <p>
 Status:
 <span class="${data.status}">
 ${data.status}
 </span>
+
 </p>
+
 
 
 <button onclick="updateStatus('${data.id}','Diterima')">
+
 Terima Booking
+
 </button>
+
 
 
 <button onclick="updateStatus('${data.id}','Ditolak')">
+
 Tolak Booking
+
 </button>
+
 
 
 <button onclick="hapusBooking('${data.id}')">
+
 Hapus
+
 </button>
 
-
-</div>
-
-`;
-
-}
-
-});
-
-
-document.getElementById("bookingList").innerHTML = hasil;
-
-}
-
-
-let hasil="";
-
-
-
-semuaBooking.forEach((data)=>{
-
-
-
-if(status=="Semua" || data.status==status){
-
-
-
-hasil += `
-
-
-<div class="card">
-
-
-<h3>${data.nama || "-"}</h3>
-
-
-<p>WhatsApp: ${data.nomor || "-"}</p>
-
-<p>Tanggal: ${data.tanggal || "-"}</p>
-
-<p>Jam: ${data.jam || "-"}</p>
-
-<p>Capster: ${data.capster || "-"}</p>
-
-<p>Layanan: ${data.layanan || "-"}</p>
-
-<p>Catatan: ${data.catatan || "-"}</p>
-
-
-<p>
-Status:
-<span class="${data.status}">
-${data.status}
-</span>
-</p>
-
-
-
-<button class="btn-terima" onclick="updateStatus('${doc.id}','Diterima')">
-✅ Terima Booking
-</button>
-
-
-<button class="btn-tolak" onclick="updateStatus('${doc.id}','Ditolak')">
-❌ Tolak Booking
-</button>
-
-
-<button class="btn-hapus" onclick="hapusBooking('${doc.id}')">
-🗑 Hapus
-</button>
 
 <br><br>
 
 
+
 <a class="wa-button"
+
 href="https://wa.me/${data.nomor}"
+
 target="_blank">
 
 💬 Chat WhatsApp
 
-</a>
-
-
-</div>
-
-
-
-`;
-
-
-
-}
-
-
-});
-
-
-
-document.getElementById("bookingList").innerHTML=hasil;
-
-
-}
-
-function searchBooking(){
-
-let keyword = document
-.getElementById("searchBooking")
-.value
-.toLowerCase();
-
-
-let hasil = "";
-
-
-semuaBooking.forEach((data)=>{
-
-
-let nama = (data.nama || "").toLowerCase();
-
-let nomor = (data.nomor || "").toLowerCase();
-
-
-
-if(
-nama.includes(keyword) ||
-nomor.includes(keyword)
-){
-
-
-hasil += `
-
-<div class="card">
-
-<h3>👤 ${data.nama || "-"}</h3>
-
-<p>📱 WhatsApp: ${data.nomor || "-"}</p>
-
-<p>📅 Tanggal: ${data.tanggal || "-"}</p>
-
-<p>⏰ Jam: ${data.jam || "-"}</p>
-
-<p>💈 Capster: ${data.capster || "-"}</p>
-
-<p>✂️ Layanan: ${data.layanan || "-"}</p>
-
-<p>
-Status:
-<span class="${data.status}">
-${data.status}
-</span>
-</p>
-
-</div>
-
-`;
-
-}
-
-
-});
-
-
-document.getElementById("bookingList").innerHTML = hasil;
-
-
-}
+</
