@@ -1,51 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-
-<title>Admin Login</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="stylesheet" href="style.css">
-
-</head>
+function login(){
 
 
-<body>
+let email = document.getElementById("email").value;
 
-
-<div class="login-box">
-
-<h1>Admin Login</h1>
-
-
-<input id="email" type="email" placeholder="Email">
-
-
-<input id="password" type="password" placeholder="Password">
-
-
-<button onclick="login()">Login</button>
-
-
-<p id="pesan"></p>
-
-
-</div>
+let password = document.getElementById("password").value;
 
 
 
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+auth.signInWithEmailAndPassword(email,password)
 
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+.then(()=>{
 
 
-<script src="firebase.js"></script>
-
-<script src="login.js"></script>
+window.location.href = "admin.html";
 
 
-</body>
-</html>
+})
+
+
+.catch((error)=>{
+
+
+document.getElementById("pesan").innerHTML =
+"Login gagal: " + error.message;
+
+
+});
+
+
+}
