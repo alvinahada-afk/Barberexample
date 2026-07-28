@@ -1318,3 +1318,28 @@ background:#d4af37;
 color:black;
 
 }
+
+#bulanKalender{
+
+background:#181818;
+color:#d4af37;
+
+border:2px solid #d4af37;
+
+padding:12px 15px;
+
+border-radius:10px;
+
+font-size:18px;
+
+font-weight:bold;
+
+}
+
+
+#bulanKalender option{
+
+background:#181818;
+color:white;
+
+}
