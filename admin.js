@@ -1,19 +1,21 @@
 console.log("ADMIN JS AKTIF");
 
-setTimeout(()=>{
-
 const db = firebase.firestore();
 
-console.log("FIREBASE AKTIF");
+db.collection("booking").onSnapshot((snapshot)=>{
 
-db.collection("booking").get()
-.then((snapshot)=>{
+console.log("DATA MASUK:", snapshot.size);
 
-console.log("JUMLAH DATA:", snapshot.size);
 
-let tabel = document.querySelector("table");
+document.getElementById("totalPesanan").innerHTML = snapshot.size;
+document.getElementById("pesananBaru").innerHTML = snapshot.size;
 
-tabel.innerHTML = `
+
+let pelanggan = new Set();
+
+let table = document.querySelector("table");
+
+table.innerHTML = `
 <tr>
 <th>Nama</th>
 <th>Layanan</th>
@@ -21,32 +23,39 @@ tabel.innerHTML = `
 </tr>
 `;
 
+
 snapshot.forEach((doc)=>{
 
-let d = doc.data();
+let data = doc.data();
 
-console.log(d);
+console.log(data);
 
-tabel.innerHTML += `
+
+pelanggan.add(data.nomor);
+
+
+table.innerHTML += `
+
 <tr>
-<td>${d.nama}</td>
-<td>${d.layanan}</td>
-<td>${d.status}</td>
+
+<td>${data.nama || "-"}</td>
+
+<td>${data.layanan || "-"}</td>
+
+<td>${data.status || "-"}</td>
+
 </tr>
+
 `;
 
 });
 
 
-document.getElementById("totalPesanan").innerHTML = snapshot.size;
+document.getElementById("pelanggan").innerHTML = pelanggan.size;
 
 
-})
-.catch((error)=>{
+},(error)=>{
 
-console.log("ERROR FIREBASE:",error);
+console.log("FIREBASE ERROR:",error);
 
 });
-
-
-},1000);
