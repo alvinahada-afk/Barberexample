@@ -908,3 +908,59 @@ display:none;
 text-align:center;
 
 }
+
+#notifArea{
+position:relative;
+margin:10px;
+}
+
+
+#notifButton{
+
+background:#e5b82b;
+border:none;
+padding:10px 15px;
+border-radius:50px;
+font-size:18px;
+cursor:pointer;
+
+}
+
+
+
+#notifCount{
+
+background:red;
+color:white;
+border-radius:50%;
+padding:3px 7px;
+font-size:12px;
+
+}
+
+
+
+.notif-dropdown{
+
+display:none;
+position:absolute;
+top:45px;
+left:0;
+background:white;
+color:black;
+width:280px;
+padding:15px;
+border-radius:10px;
+box-shadow:0 5px 15px #0003;
+z-index:999;
+
+}
+
+
+
+.notif-item{
+
+padding:10px;
+border-bottom:1px solid #ddd;
+
+}
