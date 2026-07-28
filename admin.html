@@ -3,25 +3,167 @@
 <head>
 <title>AlvinStudio Admin</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#f5f5f5;
+}
 
-<link rel="stylesheet" href="admin.css">
+.sidebar{
+position:fixed;
+width:240px;
+height:100vh;
+background:#111;
+color:white;
+padding:20px;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+margin-bottom:40px;
+}
+
+.menu a{
+display:block;
+color:white;
+padding:15px;
+text-decoration:none;
+border-radius:10px;
+}
+
+.menu a:hover{
+background:#333;
+}
+
+.logout{
+margin-top:40px;
+background:red;
+border:none;
+color:white;
+padding:15px;
+width:100%;
+border-radius:10px;
+}
+
+.content{
+margin-left:280px;
+padding:30px;
+}
+
+.cards{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:20px;
+width:220px;
+box-shadow:0 5px 20px #ddd;
+}
+
+.card h3{
+color:#555;
+}
+
+.number{
+font-size:35px;
+font-weight:bold;
+}
+
+table{
+width:100%;
+background:white;
+border-radius:15px;
+overflow:hidden;
+margin-top:30px;
+}
+
+th{
+background:#111;
+color:white;
+padding:15px;
+}
+
+td{
+padding:15px;
+text-align:center;
+}
+
+.status{
+padding:5px 10px;
+border-radius:20px;
+}
+
+.Diterima{
+background:#b8f7c1;
+}
+
+.Pending{
+background:#ffe9a8;
+}
+
+.Ditolak{
+background:#ffb0b0;
+}
+
+@media(max-width:700px){
+
+.sidebar{
+position:relative;
+width:auto;
+height:auto;
+}
+
+.content{
+margin:0;
+}
+
+.cards{
+flex-direction:column;
+}
+
+.card{
+width:auto;
+}
+
+}
+</style>
 
 </head>
+
 
 <body>
 
 
 <div class="sidebar">
 
-<h1>AlvinStudio</h1>
+<div class="logo">
+AlvinStudio
+</div>
 
-<a href="#">Dashboard</a>
-<a href="#">Pesanan</a>
-<a href="#">Layanan</a>
-<a href="#">Pelanggan</a>
 
-<button onclick="logout()">Logout</button>
+<div class="menu">
+
+<a href="#dashboard">Dashboard</a>
+
+<a href="#pesanan">Pesanan</a>
+
+<a href="#layanan">Layanan</a>
+
+<a href="#pelanggan">Pelanggan</a>
+
+</div>
+
+
+<button class="logout">
+Logout
+</button>
+
 
 </div>
 
@@ -29,27 +171,48 @@
 
 <div class="content">
 
-<h2>Dashboard Admin</h2>
+
+<h1 id="dashboard">
+Dashboard Admin
+</h1>
 
 
-<div class="card-container">
+
+<div class="cards">
 
 
 <div class="card">
+
 <h3>Total Pesanan</h3>
-<p id="totalPesanan">0</p>
+
+<div class="number" id="totalPesanan">
+0
+</div>
+
 </div>
 
 
+
 <div class="card">
+
 <h3>Pesanan Baru</h3>
-<p id="pesananBaru">0</p>
+
+<div class="number" id="pesananBaru">
+0
 </div>
+
+</div>
+
 
 
 <div class="card">
+
 <h3>Pelanggan</h3>
-<p id="pelanggan">0</p>
+
+<div class="number" id="pelanggan">
+0
+</div>
+
 </div>
 
 
@@ -57,21 +220,68 @@
 
 
 
-<h2>Daftar Pesanan</h2>
+<h2 id="pesanan">
+Daftar Pesanan
+</h2>
 
 
 <table>
+
+<thead>
+
 <tr>
+
 <th>Nama</th>
+
 <th>Layanan</th>
+
 <th>Status</th>
+
 </tr>
+
+</thead>
+
 
 <tbody id="tabelPesanan">
 
 </tbody>
 
+
 </table>
+
+
+
+<h2 id="layanan">
+Layanan
+</h2>
+
+<div class="card">
+
+<p>Haircut Basic</p>
+
+<p>Rp25.000</p>
+
+<p>Haircut Premium</p>
+
+<p>Rp35.000</p>
+
+</div>
+
+
+
+<h2 id="pelanggan">
+Data Pelanggan
+</h2>
+
+
+<div class="card">
+
+<p id="jumlahPelanggan">
+0 Pelanggan
+</p>
+
+</div>
+
 
 </div>
 
@@ -85,5 +295,7 @@
 
 <script src="admin.js"></script>
 
+
 </body>
 </html>
+
