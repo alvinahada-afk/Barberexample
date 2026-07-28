@@ -1,90 +1,101 @@
-console.log("ADMIN JS AKTIF");
+console.log("ADMIN AKTIF");
+
 
 const db = firebase.firestore();
 
-db.collection("booking").onSnapshot((snapshot)=>{
-
-console.log("DATA MASUK:", snapshot.size);
-
-
-document.getElementById("totalPesanan").innerHTML = snapshot.size;
-document.getElementById("pesananBaru").innerHTML = snapshot.size;
 
 let daftarPelanggan = new Set();
+
+
+db.collection("booking")
+.onSnapshot((snapshot)=>{
+
+
+let total = snapshot.size;
+
+let pending = 0;
+
+let tabel = document.getElementById("tabelPesanan");
+
+
+tabel.innerHTML="";
+
+
+daftarPelanggan.clear();
+
+
+
 snapshot.forEach((doc)=>{
+
 
 let data = doc.data();
 
-let layanan = data.layanan || "Belum memilih";
-let harga = "-";
 
-if(layanan.includes("Premium")){
-harga="Rp35.000";
-}
+let nama = data.nama || "-";
 
-if(layanan.includes("Basic")){
-harga="Rp25.000";
-}
+let layanan = data.layanan || data.service || "-";
+
+let status = data.status || "Pending";
 
 
-let statusClass="";
 
-if(data.status=="Diterima"){
-statusClass="success";
-}
-
-else if(data.status=="Pending"){
-statusClass="pending";
-}
-
-else if(data.status=="Ditolak"){
-statusClass="danger";
+if(status=="Pending"){
+pending++;
 }
 
 
-daftarPelanggan.add(data.nomor);
 
-table.innerHTML += `
+daftarPelanggan.add(nama);
+
+
+
+tabel.innerHTML += `
 
 <tr>
 
-<td>${data.nama || "-"}</td>
+<td>${nama}</td>
+
+<td>${layanan}</td>
 
 <td>
-${d.layanan || d.service || d.jasa || "Belum memilih"}
-</td>
 
-<td>
-<span class="status ${statusClass}">
-${data.status || "Pending"}
+<span class="status ${status}">
+
+${status}
+
 </span>
+
 </td>
 
-</tr>
-
-`;
-
-});
-table.innerHTML += `
-
-<tr>
-
-<td>${data.nama || "-"}</td>
-
-<td>${data.layanan || "-"}</td>
-
-<td>${data.status || "-"}</td>
 
 </tr>
 
 `;
 
+
+
 });
+
+
+
+document.getElementById("totalPesanan").innerHTML = total;
+
+
+document.getElementById("pesananBaru").innerHTML = pending;
 
 
 document.getElementById("pelanggan").innerHTML = daftarPelanggan.size;
 
-},(error)=>{
+
+document.getElementById("jumlahPelanggan").innerHTML =
+daftarPelanggan.size + " Pelanggan";
+
+
+
+})
+
+
+.catch((error)=>{
 
 console.log("FIREBASE ERROR:",error);
 
