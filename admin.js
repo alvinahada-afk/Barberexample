@@ -387,3 +387,67 @@ document.getElementById("bookingList").innerHTML=hasil;
 
 
 }
+
+function searchBooking(){
+
+let keyword = document
+.getElementById("searchBooking")
+.value
+.toLowerCase();
+
+
+let hasil = "";
+
+
+semuaBooking.forEach((data)=>{
+
+
+let nama = (data.nama || "").toLowerCase();
+
+let nomor = (data.nomor || "").toLowerCase();
+
+
+
+if(
+nama.includes(keyword) ||
+nomor.includes(keyword)
+){
+
+
+hasil += `
+
+<div class="card">
+
+<h3>👤 ${data.nama || "-"}</h3>
+
+<p>📱 WhatsApp: ${data.nomor || "-"}</p>
+
+<p>📅 Tanggal: ${data.tanggal || "-"}</p>
+
+<p>⏰ Jam: ${data.jam || "-"}</p>
+
+<p>💈 Capster: ${data.capster || "-"}</p>
+
+<p>✂️ Layanan: ${data.layanan || "-"}</p>
+
+<p>
+Status:
+<span class="${data.status}">
+${data.status}
+</span>
+</p>
+
+</div>
+
+`;
+
+}
+
+
+});
+
+
+document.getElementById("bookingList").innerHTML = hasil;
+
+
+}
