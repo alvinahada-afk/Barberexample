@@ -1,4 +1,6 @@
 function login(){
+alert("Tombol login bekerja");
+}
 
 let email = document.getElementById("email").value;
 let password = document.getElementById("password").value;
