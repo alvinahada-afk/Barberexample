@@ -1,1 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AlvinStudio Admin</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="admin.css">
+
+</head>
+
+<body>
+
+
+<div class="sidebar">
+
+<h1>AlvinStudio</h1>
+
+<a href="#">Dashboard</a>
+<a href="#">Pesanan</a>
+<a href="#">Layanan</a>
+<a href="#">Pelanggan</a>
+
+<button onclick="logout()">Logout</button>
+
+</div>
+
+
+
+<div class="content">
+
+<h2>Dashboard Admin</h2>
+
+
+<div class="card-container">
+
+
+<div class="card">
+<h3>Total Pesanan</h3>
+<p id="totalPesanan">0</p>
+</div>
+
+
+<div class="card">
+<h3>Pesanan Baru</h3>
+<p id="pesananBaru">0</p>
+</div>
+
+
+<div class="card">
+<h3>Pelanggan</h3>
+<p id="pelanggan">0</p>
+</div>
+
+
+</div>
+
+
+
+<h2>Daftar Pesanan</h2>
+
+
+<table>
+
+<tr>
+<th>Nama</th>
+<th>Layanan</th>
+<th>Status</th>
+</tr>
+
+
+<tr>
+<td>-</td>
+<td>-</td>
+<td>Belum ada</td>
+</tr>
+
+
+</table>
+
+
+</div>
+
+
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+<script src="firebase.js"></script>
+
+<script src="admin.js"></script>
+
+
+</body>
+</html>
