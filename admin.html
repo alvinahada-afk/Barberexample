@@ -19,8 +19,24 @@ alert("Tombol berfungsi");
 <h1>Admin Booking</h1>
 <div class="admin-layout">
 <div class="stats">
-<div id="notifBox" class="notif-box">
-🔔 Booking Baru: <span id="notifCount">0</span>
+<div id="notifArea">
+
+<button id="notifButton" onclick="bukaNotif()">
+🔔 <span id="notifCount">0</span>
+</button>
+
+
+<div id="notifBox" class="notif-dropdown">
+
+<h3>Booking Baru</h3>
+
+<div id="notifList">
+Belum ada booking baru
+</div>
+
+</div>
+
+
 </div>
     
 <div class="stat-card">
