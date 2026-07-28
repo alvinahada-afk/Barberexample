@@ -1,52 +1,32 @@
-const bookingRef = db.collection("booking");
+const db = firebase.firestore();
 
-const totalPesanan = document.getElementById("totalPesanan");
-const pesananBaru = document.getElementById("pesananBaru");
-const pelanggan = document.getElementById("pelanggan");
-const tabelPesanan = document.getElementById("tabelPesanan");
+let tabel = document.getElementById("tabelPesanan");
 
+db.collection("booking").onSnapshot((snapshot)=>{
 
-bookingRef.onSnapshot((snapshot)=>{
+let total = 0;
 
-let total = snapshot.size;
-let baru = 0;
-let pelangganData = [];
-
-tabelPesanan.innerHTML="";
-
+tabel.innerHTML = "";
 
 snapshot.forEach((doc)=>{
 
 let data = doc.data();
 
-if(data.status == "Diterima" || data.status == "Pending"){
-baru++;
-}
+total++;
 
-
-if(data.nama){
-pelangganData.push(data.nama);
-}
-
-
-tabelPesanan.innerHTML += `
-
+tabel.innerHTML += `
 <tr>
 <td>${data.nama || "-"}</td>
 <td>${data.layanan || "-"}</td>
-<td>${data.status || "-"}</td>
+<td>${data.status || "Diterima"}</td>
 </tr>
-
 `;
 
 });
 
 
-totalPesanan.innerHTML = total;
-
-pesananBaru.innerHTML = baru;
-
-pelanggan.innerHTML = [...new Set(pelangganData)].length;
+document.getElementById("totalPesanan").innerHTML = total;
+document.getElementById("pesananBaru").innerHTML = total;
 
 
 });
