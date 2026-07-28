@@ -130,8 +130,11 @@ document.getElementById("totalPendapatan").innerHTML =
 
 .catch((error)=>{
 
+console.log("FIREBASE ERROR:", error);
 
-console.log("FIREBASE ERROR:",error);
+alert(error.message);
+
+});
 
 
 list.innerHTML="Gagal mengambil data";
