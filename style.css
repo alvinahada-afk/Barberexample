@@ -1289,3 +1289,32 @@ cursor:pointer;
 background:white;
 
 }
+
+.tanggal-kalender{
+
+background:#222;
+
+color:white;
+
+padding:15px;
+
+border-radius:15px;
+
+text-align:center;
+
+font-size:18px;
+
+font-weight:bold;
+
+box-shadow:0 4px 10px #0005;
+
+}
+
+
+.tanggal-kalender:hover{
+
+background:#d4af37;
+
+color:black;
+
+}
