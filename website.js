@@ -1,54 +1,15 @@
-const tokoRef = db.collection("settings").doc("toko");
+window.onload = function(){
 
+let data = JSON.parse(localStorage.getItem("settingWebsite"));
 
-tokoRef.get().then((doc)=>{
+if(data){
 
+document.getElementById("namaUsaha").innerHTML = data.namaToko;
 
-if(doc.exists){
+document.getElementById("deskripsiUsaha").innerHTML = data.deskripsi;
 
-
-let data = doc.data();
-
-
-
-let nama =
-document.getElementById("namaToko");
-
-
-let deskripsi =
-document.getElementById("deskripsiToko");
-
-
-let jam =
-document.getElementById("jamBuka");
-
-
-
-if(nama){
-
-nama.innerHTML = data.namaToko;
+document.getElementById("jamUsaha").innerHTML = data.jamBuka;
 
 }
 
-
-if(deskripsi){
-
-deskripsi.innerHTML = data.deskripsi;
-
 }
-
-
-if(jam){
-
-jam.innerHTML =
-"🕒 Buka: "+data.jamBuka;
-
-}
-
-
-
-}
-
-
-
-});
