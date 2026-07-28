@@ -43,7 +43,7 @@ let total = 0;
 let pending = 0;
 let diterima = 0;
 let ditolak = 0;
-
+let pendapatan = 0;
 
 list.innerHTML = "";
 
@@ -78,7 +78,29 @@ if(data.status=="Diterima"){
 diterima++;
 }
 
+if(data.status=="Diterima"){
 
+    diterima++;
+
+    let harga = 0;
+
+    if(data.layanan.includes("35.000")){
+        harga = 35000;
+    }
+
+    if(data.layanan.includes("50.000")){
+        harga = 50000;
+    }
+
+    if(data.layanan.includes("70.000")){
+        harga = 70000;
+    }
+
+
+    pendapatan += harga;
+
+}
+    
 if(data.status=="Ditolak"){
 ditolak++;
 }
@@ -101,7 +123,8 @@ document.getElementById("acceptedBooking").innerHTML = diterima;
 
 document.getElementById("rejectedBooking").innerHTML = ditolak;
 
-
+document.getElementById("totalPendapatan").innerHTML =
+"Rp" + pendapatan.toLocaleString("id-ID");
 
 })
 
