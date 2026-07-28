@@ -6,6 +6,8 @@ const notifSound = new Audio("notif.mp3");
 
 let jumlahBookingLama = 0;
 
+let pertamaLoad = true;
+
 
 // CEK LOGIN
 
@@ -33,6 +35,58 @@ db.collection("booking")
 
 
 console.log("JUMLAH DATA:", snapshot.size);
+
+
+
+// NOTIFIKASI BOOKING BARU
+
+if(!pertamaLoad && snapshot.size > jumlahBookingLama){
+
+
+let jumlahBaru = snapshot.size - jumlahBookingLama;
+
+
+
+notifSound.play().catch(()=>{});
+
+
+
+let notif = document.getElementById("notifCount");
+
+
+if(notif){
+
+notif.innerHTML = jumlahBaru;
+
+notif.style.display="inline-block";
+
+}
+
+
+
+let box = document.getElementById("notifBox");
+
+
+if(box){
+
+box.style.display="block";
+
+}
+
+
+
+alert("🔔 Ada "+jumlahBaru+" booking baru!");
+
+
+
+}
+
+
+
+jumlahBookingLama = snapshot.size;
+
+
+pertamaLoad = false;
 
 
 
@@ -89,10 +143,13 @@ diterima++;
 
 let angka = (data.layanan || "").match(/Rp([\d.]+)/);
 
+
 if(angka){
-    pendapatan += Number(
-        angka[1].replace(/\./g,"")
-    );
+
+pendapatan += Number(
+angka[1].replace(/\./g,"")
+);
+
 }
 
 }
@@ -116,7 +173,6 @@ tampilkanBooking(data);
 
 
 
-// STATISTIK
 
 document.getElementById("totalBooking").innerHTML = total;
 
@@ -138,17 +194,14 @@ document.getElementById("totalPendapatan").innerHTML =
 
 
 
-},
+},(error)=>{
 
-(error)=>{
 
 console.log("FIREBASE ERROR:",error);
 
-}
 
 
-
-);
+});
 
 
 
@@ -159,17 +212,10 @@ console.log("FIREBASE ERROR:",error);
 loadBooking();
 
 console.log("ADMIN JS JALAN");
-
-
-
-
-
-
 // TAMPILKAN BOOKING
 
 
 function tampilkanBooking(data){
-
 
 
 list.innerHTML += `
@@ -272,37 +318,47 @@ target="_blank">
 
 
 
-// UPDATE STATUS
+// UPDATE STATUS + WHATSAPP
 
 
 function updateStatus(id,status){
 
+
 db.collection("booking")
+
 .doc(id)
+
 .get()
 
 .then((doc)=>{
 
+
 let data = doc.data();
 
 
+
 db.collection("booking")
+
 .doc(id)
+
 .update({
 
 status:status
 
 })
+
 .then(()=>{
 
 
 let pesan="";
 
 
+
 if(status=="Diterima"){
 
 
 pesan =
+
 "Halo "+data.nama+" 👋\n\n"+
 "Booking Alvin Barber Studio kamu sudah DITERIMA ✅\n\n"+
 "Tanggal : "+data.tanggal+"\n"+
@@ -320,6 +376,7 @@ if(status=="Ditolak"){
 
 
 pesan =
+
 "Halo "+data.nama+" 👋\n\n"+
 "Maaf booking Alvin Barber Studio kamu DITOLAK ❌\n\n"+
 "Silakan hubungi kami untuk jadwal lain.\n\n"+
@@ -348,6 +405,9 @@ window.open(
 
 
 }
+
+
+
 
 
 
@@ -420,9 +480,7 @@ window.location.href="login.html";
 function filterBooking(status){
 
 
-
 let hasil = "";
-
 
 
 
@@ -430,7 +488,6 @@ semuaBooking.forEach((data)=>{
 
 
 if(status=="Semua" || data.status==status){
-
 
 
 hasil += `
@@ -495,12 +552,11 @@ Hapus
 });
 
 
-
 list.innerHTML = hasil;
 
 
-
 }
+
 
 
 
@@ -556,6 +612,7 @@ nomor.includes(keyword)
 ){
 
 
+
 hasil += `
 
 
@@ -580,16 +637,14 @@ hasil += `
 `;
 
 
-}
 
+}
 
 
 });
 
 
-
 list.innerHTML = hasil;
-
 
 
 }
