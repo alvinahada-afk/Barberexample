@@ -811,3 +811,155 @@ box.style.display="block";
 
 
 }
+
+function buatKalender(){
+
+let bulan = document.getElementById("bulanKalender").value;
+
+
+if(!bulan){
+
+return;
+
+}
+
+
+let [tahun,bulanNomor] = bulan.split("-");
+
+
+let tanggalAwal = new Date(
+tahun,
+bulanNomor-1,
+1
+);
+
+
+let jumlahHari = new Date(
+tahun,
+bulanNomor,
+0
+).getDate();
+
+
+
+let html="";
+
+
+for(let i=1;i<=jumlahHari;i++){
+
+
+let tanggal =
+tahun+"-"+bulanNomor+"-"+String(i).padStart(2,"0");
+
+
+
+let jumlah = semuaBooking.filter((data)=>{
+
+return data.tanggal == tanggal;
+
+}).length;
+
+
+
+html += `
+
+<button 
+class="tanggal-kalender"
+onclick="lihatJadwal('${tanggal}')">
+
+${i}
+
+${jumlah>0 ? 
+"<span>🔴 "+jumlah+"</span>" 
+: ""}
+
+</button>
+
+
+`;
+
+}
+
+
+document.getElementById("kalender").innerHTML=html;
+
+
+}
+
+
+
+
+
+function lihatJadwal(tanggal){
+
+
+let hasil="";
+
+
+
+let dataHari = semuaBooking.filter((data)=>{
+
+return data.tanggal==tanggal;
+
+});
+
+
+
+dataHari.sort((a,b)=>{
+
+return a.jam.localeCompare(b.jam);
+
+});
+
+
+
+if(dataHari.length==0){
+
+
+hasil="Tidak ada booking";
+
+
+}else{
+
+
+dataHari.forEach((data)=>{
+
+
+hasil += `
+
+
+<div class="card">
+
+
+<h3>👤 ${data.nama}</h3>
+
+
+<p>⏰ ${data.jam}</p>
+
+
+<p>💈 ${data.capster}</p>
+
+
+<p>✂️ ${data.layanan}</p>
+
+
+<p>Status : ${data.status}</p>
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+}
+
+
+
+document.getElementById("jadwalHari").innerHTML=hasil;
+
+
+}
