@@ -12,15 +12,9 @@ const list = document.getElementById("bookingList");
 
 
 db.collection("booking")
-.onSnapshot((snapshot)=>{if(snapshot.docChanges().length > 0){
-
-let suara = new Audio("notif.mp3");
-
-suara.play();
-
-}
+.get()
 .then((snapshot)=>{
-
+    
     let total = 0;
     let pending = 0;
     let diterima = 0;
