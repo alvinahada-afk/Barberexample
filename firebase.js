@@ -1,4 +1,4 @@
-// For Firebase JS SDK v7.20.0 and later
+// Firebase Config
 
 const firebaseConfig = {
   apiKey: "AIzaSyBkpSsKQ1oUkcMaqfz2Im9tVj8Yl9XkpYI",
@@ -6,11 +6,12 @@ const firebaseConfig = {
   projectId: "alvin-website-cc21f",
   storageBucket: "alvin-website-cc21f.firebasestorage.app",
   messagingSenderId: "1031795933286",
-  appId: "1:1031795933286:web:7bff285fc6589271f76da7",
-  measurementId: "G-6ZL4L1RK"
+  appId: "1:1031795933286:web:7bf285fc6589271f76da7"
 };
 
+
 firebase.initializeApp(firebaseConfig);
+
 
 const auth = firebase.auth();
 const db = firebase.firestore();
