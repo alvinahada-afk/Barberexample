@@ -73,3 +73,25 @@ font-size:13px;
 }
 
 }
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+border-radius:15px;
+overflow:hidden;
+}
+
+td,th{
+padding:12px 8px;
+text-align:left;
+}
+
+td{
+font-size:14px;
+}
+
+td:nth-child(2){
+max-width:120px;
+word-wrap:break-word;
+}
