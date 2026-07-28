@@ -6,18 +6,22 @@ const list = document.getElementById("bookingList");
 // CEK LOGIN
 firebase.auth().onAuthStateChanged((user)=>{
 
-if(!user){
-window.location.href="login.html";
-}
+    if(!user){
+        window.location.href="login.html";
+    }
 
 });
 
 
 
-// AMBIL DATA BOOKING
+// LOAD DATA BOOKING
+
+function loadBooking(){
+
 
 db.collection("booking")
 .get()
+
 .then((snapshot)=>{
 
 
@@ -27,7 +31,7 @@ let diterima = 0;
 let ditolak = 0;
 
 
-list.innerHTML="";
+list.innerHTML = "";
 
 semuaBooking = [];
 
@@ -45,6 +49,7 @@ id:doc.id,
 ...data
 
 });
+
 
 
 total++;
@@ -66,8 +71,7 @@ ditolak++;
 
 
 
-
-tampilkanBooking(data);
+tampilkanBooking(data,doc.id);
 
 
 
@@ -75,30 +79,44 @@ tampilkanBooking(data);
 
 
 
-document.getElementById("totalBooking").innerHTML=total;
+document.getElementById("totalBooking").innerHTML = total;
 
-document.getElementById("pendingBooking").innerHTML=pending;
+document.getElementById("pendingBooking").innerHTML = pending;
 
-document.getElementById("acceptedBooking").innerHTML=diterima;
+document.getElementById("acceptedBooking").innerHTML = diterima;
 
-document.getElementById("rejectedBooking").innerHTML=ditolak;
+document.getElementById("rejectedBooking").innerHTML = ditolak;
 
 
 
 })
+
 .catch((error)=>{
 
-console.log(error.message);
+
+console.log("FIREBASE ERROR:",error);
+
+
+list.innerHTML="Gagal mengambil data";
+
 
 });
 
 
+}
 
 
 
-// TAMPILKAN CARD
+loadBooking();
 
-function tampilkanBooking(data){
+
+
+
+
+// TAMPILKAN BOOKING
+
+function tampilkanBooking(data,id){
+
 
 
 list.innerHTML += `
@@ -112,19 +130,26 @@ list.innerHTML += `
 
 <p>📱 WhatsApp: ${data.nomor || "-"}</p>
 
+
 <p>📅 Tanggal: ${data.tanggal || "-"}</p>
+
 
 <p>⏰ Jam: ${data.jam || "-"}</p>
 
+
 <p>💈 Capster: ${data.capster || "-"}</p>
 
+
 <p>✂️ Layanan: ${data.layanan || "-"}</p>
+
 
 <p>📝 Catatan: ${data.catatan || "-"}</p>
 
 
+
 <p>
 Status:
+
 <span class="${data.status}">
 ${data.status}
 </span>
@@ -133,7 +158,7 @@ ${data.status}
 
 
 
-<button onclick="updateStatus('${data.id}','Diterima')">
+<button onclick="updateStatus('${id}','Diterima')">
 
 Terima Booking
 
@@ -141,7 +166,7 @@ Terima Booking
 
 
 
-<button onclick="updateStatus('${data.id}','Ditolak')">
+<button onclick="updateStatus('${id}','Ditolak')">
 
 Tolak Booking
 
@@ -149,15 +174,15 @@ Tolak Booking
 
 
 
-<button onclick="hapusBooking('${data.id}')">
+<button onclick="hapusBooking('${id}')">
 
 Hapus
 
 </button>
 
 
-<br><br>
 
+<br><br>
 
 
 <a class="wa-button"
@@ -168,11 +193,31 @@ target="_blank">
 
 💬 Chat WhatsApp
 
-</
+</a>
+
+
+
+</div>
+
+
+
+`;
+
+
+
+}
+
+
+
+
+
+
 
 // UPDATE STATUS + WHATSAPP
 
+
 function updateStatus(id,status){
+
 
 
 db.collection("booking")
@@ -205,12 +250,13 @@ if(status=="Diterima"){
 
 
 pesan =
+
 "Halo "+data.nama+" 👋\n\n"+
 "Booking Alvin Barber Studio kamu sudah DITERIMA ✅\n\n"+
 "Tanggal : "+data.tanggal+"\n"+
 "Jam : "+data.jam+"\n"+
-"Layanan : "+(data.layanan || "-")+"\n"+
-"Capster : "+(data.capster || "-")+"\n\n"+
+"Layanan : "+data.layanan+"\n"+
+"Capster : "+data.capster+"\n\n"+
 "Kami tunggu kedatangannya 🙏";
 
 
@@ -222,6 +268,7 @@ if(status=="Ditolak"){
 
 
 pesan =
+
 "Halo "+data.nama+" 👋\n\n"+
 "Maaf booking Alvin Barber Studio kamu DITOLAK ❌\n\n"+
 "Silakan hubungi kami untuk jadwal lain.\n\n"+
@@ -233,16 +280,21 @@ pesan =
 
 
 window.open(
+
 "https://wa.me/"+data.nomor+
 "?text="+encodeURIComponent(pesan),
+
 "_blank"
+
 );
 
 
 
-alert("Status berhasil diubah!");
+setTimeout(()=>{
 
 location.reload();
+
+},1000);
 
 
 
@@ -258,7 +310,10 @@ location.reload();
 
 
 
+
+
 // HAPUS BOOKING
+
 
 function hapusBooking(id){
 
@@ -275,6 +330,7 @@ db.collection("booking")
 
 alert("Booking berhasil dihapus");
 
+
 location.reload();
 
 
@@ -284,181 +340,17 @@ location.reload();
 }
 
 
-}
-
-
-
-
-
-// FILTER BOOKING
-
-function filterBooking(status){
-
-
-let hasil="";
-
-
-semuaBooking.forEach((data)=>{
-
-
-if(status=="Semua" || data.status==status){
-
-
-hasil += `
-
-
-<div class="card">
-
-
-<h3>👤 ${data.nama || "-"}</h3>
-
-
-<p>📱 WhatsApp: ${data.nomor || "-"}</p>
-
-<p>📅 Tanggal: ${data.tanggal || "-"}</p>
-
-<p>⏰ Jam: ${data.jam || "-"}</p>
-
-<p>💈 Capster: ${data.capster || "-"}</p>
-
-<p>✂️ Layanan: ${data.layanan || "-"}</p>
-
-<p>📝 Catatan: ${data.catatan || "-"}</p>
-
-
-<p>
-Status:
-
-<span class="${data.status}">
-${data.status}
-</span>
-
-</p>
-
-
-<button onclick="updateStatus('${data.id}','Diterima')">
-Terima Booking
-</button>
-
-
-<button onclick="updateStatus('${data.id}','Ditolak')">
-Tolak Booking
-</button>
-
-
-<button onclick="hapusBooking('${data.id}')">
-Hapus
-</button>
-
-
-</div>
-
-
-`;
 
 }
 
 
-});
-
-
-
-document.getElementById("bookingList").innerHTML=hasil;
-
-
-}
-
-
-
-
-
-
-// SEARCH
-
-function searchBooking(){
-
-
-let keyword =
-document.getElementById("searchBooking")
-.value
-.toLowerCase();
-
-
-
-let hasil="";
-
-
-
-semuaBooking.forEach((data)=>{
-
-
-let nama =
-(data.nama || "")
-.toLowerCase();
-
-
-
-let nomor =
-(data.nomor || "")
-.toLowerCase();
-
-
-
-if(
-nama.includes(keyword) ||
-nomor.includes(keyword)
-){
-
-
-hasil += `
-
-
-<div class="card">
-
-
-<h3>👤 ${data.nama || "-"}</h3>
-
-
-<p>📱 WhatsApp: ${data.nomor || "-"}</p>
-
-
-<p>📅 Tanggal: ${data.tanggal || "-"}</p>
-
-
-<p>⏰ Jam: ${data.jam || "-"}</p>
-
-
-<p>Status:
-<span class="${data.status}">
-${data.status}
-</span>
-
-</p>
-
-
-</div>
-
-
-`;
-
-
-}
-
-
-});
-
-
-
-document.getElementById("bookingList").innerHTML=hasil;
-
-
-}
 
 
 
 
 
 // LOGOUT
+
 
 function logout(){
 
@@ -473,6 +365,204 @@ window.location.href="login.html";
 
 
 });
+
+
+}
+
+
+
+
+
+
+
+// FILTER BOOKING
+
+
+function filterBooking(status){
+
+
+let hasil="";
+
+
+
+semuaBooking.forEach((data)=>{
+
+
+
+if(status=="Semua" || data.status==status){
+
+
+
+hasil += `
+
+
+<div class="card">
+
+
+<h3>👤 ${data.nama || "-"}</h3>
+
+
+<p>📱 WhatsApp: ${data.nomor || "-"}</p>
+
+
+<p>📅 Tanggal: ${data.tanggal || "-"}</p>
+
+
+<p>⏰ Jam: ${data.jam || "-"}</p>
+
+
+<p>💈 Capster: ${data.capster || "-"}</p>
+
+
+<p>✂️ Layanan: ${data.layanan || "-"}</p>
+
+
+
+<p>
+Status:
+
+<span class="${data.status}">
+${data.status}
+</span>
+
+</p>
+
+
+
+<button onclick="updateStatus('${data.id}','Diterima')">
+
+Terima Booking
+
+</button>
+
+
+
+<button onclick="updateStatus('${data.id}','Ditolak')">
+
+Tolak Booking
+
+</button>
+
+
+
+<button onclick="hapusBooking('${data.id}')">
+
+Hapus
+
+</button>
+
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+});
+
+
+
+list.innerHTML = hasil;
+
+
+
+}
+
+
+
+
+
+
+
+
+// SEARCH BOOKING
+
+
+function searchBooking(){
+
+
+let keyword = document
+.getElementById("searchBooking")
+.value
+.toLowerCase();
+
+
+
+let hasil="";
+
+
+
+semuaBooking.forEach((data)=>{
+
+
+let nama =
+(data.nama || "").toLowerCase();
+
+
+let nomor =
+(data.nomor || "").toLowerCase();
+
+
+
+if(
+nama.includes(keyword) ||
+nomor.includes(keyword)
+){
+
+
+
+hasil += `
+
+
+<div class="card">
+
+
+<h3>👤 ${data.nama || "-"}</h3>
+
+
+<p>📱 WhatsApp: ${data.nomor || "-"}</p>
+
+
+<p>📅 Tanggal: ${data.tanggal || "-"}</p>
+
+
+<p>⏰ Jam: ${data.jam || "-"}</p>
+
+
+<p>💈 Capster: ${data.capster || "-"}</p>
+
+
+<p>✂️ Layanan: ${data.layanan || "-"}</p>
+
+
+<p>Status:
+${data.status}
+</p>
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+});
+
+
+
+list.innerHTML = hasil;
+
 
 
 }
