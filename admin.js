@@ -87,12 +87,13 @@ if(data.status=="Diterima"){
 diterima++;
 
 
-if(data.harga){
+let angka = (data.layanan || "").match(/Rp([\d.]+)/);
 
-pendapatan += Number(data.harga);
-
+if(angka){
+    pendapatan += Number(
+        angka[1].replace(/\./g,"")
+    );
 }
-
 
 }
 
@@ -276,40 +277,77 @@ target="_blank">
 
 function updateStatus(id,status){
 
+db.collection("booking")
+.doc(id)
+.get()
+
+.then((doc)=>{
+
+let data = doc.data();
+
 
 db.collection("booking")
-
 .doc(id)
-
 .update({
 
 status:status
 
 })
-
 .then(()=>{
 
 
-alert("Status berhasil diubah");
+let pesan="";
 
 
-
-})
-
-.catch((error)=>{
+if(status=="Diterima"){
 
 
-console.log(error);
-
-
-});
+pesan =
+"Halo "+data.nama+" 👋\n\n"+
+"Booking Alvin Barber Studio kamu sudah DITERIMA ✅\n\n"+
+"Tanggal : "+data.tanggal+"\n"+
+"Jam : "+data.jam+"\n"+
+"Layanan : "+data.layanan+"\n"+
+"Capster : "+data.capster+"\n\n"+
+"Kami tunggu kedatangannya 🙏";
 
 
 }
 
 
 
+if(status=="Ditolak"){
 
+
+pesan =
+"Halo "+data.nama+" 👋\n\n"+
+"Maaf booking Alvin Barber Studio kamu DITOLAK ❌\n\n"+
+"Silakan hubungi kami untuk jadwal lain.\n\n"+
+"Terima kasih 🙏";
+
+
+}
+
+
+
+window.open(
+
+"https://wa.me/"+data.nomor+
+"?text="+encodeURIComponent(pesan),
+
+"_blank"
+
+);
+
+
+
+});
+
+
+});
+
+
+}
 
 
 
