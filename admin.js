@@ -963,3 +963,119 @@ document.getElementById("jadwalHari").innerHTML=hasil;
 
 
 }
+
+function buatKalender(){
+
+let input = document.getElementById("bulanKalender");
+
+let kalender = document.getElementById("kalender");
+
+
+if(!input.value){
+
+return;
+
+}
+
+
+let [tahun,bulan] = input.value.split("-");
+
+
+let tanggalAwal = new Date(
+tahun,
+bulan-1,
+1
+);
+
+
+let jumlahHari = new Date(
+tahun,
+bulan,
+0
+).getDate();
+
+
+
+let html="";
+
+
+for(let i=1;i<=jumlahHari;i++){
+
+
+html += `
+
+<div 
+class="tanggal-kalender"
+onclick="pilihTanggal('${tahun}-${bulan}-${i}')">
+
+${i}
+
+</div>
+
+`;
+
+
+}
+
+
+
+kalender.innerHTML=html;
+
+
+}
+
+
+
+
+function pilihTanggal(tanggal){
+
+
+let area=document.getElementById("jadwalHari");
+
+
+let hasil="";
+
+
+semuaBooking.forEach((data)=>{
+
+
+if(data.tanggal==tanggal){
+
+
+hasil += `
+
+<div class="card">
+
+<h3>
+👤 ${data.nama}
+</h3>
+
+<p>⏰ ${data.jam}</p>
+
+<p>✂️ ${data.layanan}</p>
+
+<p>Status : ${data.status}</p>
+
+</div>
+
+
+`;
+
+}
+
+
+});
+
+
+
+if(hasil==""){
+
+hasil="Tidak ada booking pada tanggal ini";
+
+}
+
+
+area.innerHTML=hasil;
+
+
+}
