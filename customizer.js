@@ -1,3 +1,9 @@
+function simpanSetting(){
+
+alert("Tes tombol berhasil!");
+
+}
+
 const settingRef = db.collection("settings").doc("toko");
 
 
