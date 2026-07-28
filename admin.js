@@ -11,29 +11,63 @@ document.getElementById("totalPesanan").innerHTML = snapshot.size;
 document.getElementById("pesananBaru").innerHTML = snapshot.size;
 
 
-let pelanggan = new Set();
-
-let table = document.querySelector("table");
-
-table.innerHTML = `
-<tr>
-<th>Nama</th>
-<th>Layanan</th>
-<th>Status</th>
-</tr>
-`;
-
-
 snapshot.forEach((doc)=>{
 
 let data = doc.data();
 
-console.log(data);
+let layanan = data.layanan || "Belum memilih";
+let harga = "-";
+
+if(layanan.includes("Premium")){
+harga="Rp35.000";
+}
+
+if(layanan.includes("Basic")){
+harga="Rp25.000";
+}
+
+
+let statusClass="";
+
+if(data.status=="Diterima"){
+statusClass="success";
+}
+
+else if(data.status=="Pending"){
+statusClass="pending";
+}
+
+else if(data.status=="Ditolak"){
+statusClass="danger";
+}
 
 
 pelanggan.add(data.nomor);
 
 
+table.innerHTML += `
+
+<tr>
+
+<td>${data.nama || "-"}</td>
+
+<td>
+${layanan}
+<br>
+<span class="harga">${harga}</span>
+</td>
+
+<td>
+<span class="status ${statusClass}">
+${data.status || "Pending"}
+</span>
+</td>
+
+</tr>
+
+`;
+
+});
 table.innerHTML += `
 
 <tr>
