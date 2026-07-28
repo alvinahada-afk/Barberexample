@@ -9,7 +9,7 @@ firebase.auth().onAuthStateChanged((user)=>{
 
 
 const list = document.getElementById("bookingList");
-
+let semuaBooking = [];
 
 db.collection("booking")
 .get()
@@ -297,7 +297,8 @@ window.location.href="login.html";
 
 
 function filterBooking(status){
-
+console.log("Filter dipencet:", status);
+console.log(semuaBooking);
 let hasil = "";
 
 semuaBooking.forEach((data)=>{
