@@ -4,6 +4,7 @@ const list = document.getElementById("bookingList");
 const notifSound = new Audio("notif.mp3");
 
 let jumlahBookingLama = 0;
+let bookingBaru = 0;
 
 // CEK LOGIN
 firebase.auth().onAuthStateChanged((user)=>{
