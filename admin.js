@@ -1,32 +1,31 @@
-const db = firebase.firestore();
+firebase.firestore()
+.collection("booking")
+.onSnapshot((snapshot)=>{
 
 let tabel = document.getElementById("tabelPesanan");
 
-db.collection("booking").onSnapshot((snapshot)=>{
+tabel.innerHTML="";
 
-let total = 0;
-
-tabel.innerHTML = "";
+let jumlah = 0;
 
 snapshot.forEach((doc)=>{
 
 let data = doc.data();
 
-total++;
+jumlah++;
 
 tabel.innerHTML += `
 <tr>
-<td>${data.nama || "-"}</td>
-<td>${data.layanan || "-"}</td>
-<td>${data.status || "Diterima"}</td>
+<td>${data.nama}</td>
+<td>${data.layanan}</td>
+<td>${data.status}</td>
 </tr>
 `;
 
 });
 
 
-document.getElementById("totalPesanan").innerHTML = total;
-document.getElementById("pesananBaru").innerHTML = total;
-
+document.getElementById("totalPesanan").innerHTML = jumlah;
+document.getElementById("pesananBaru").innerHTML = jumlah;
 
 });
