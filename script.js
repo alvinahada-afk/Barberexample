@@ -363,3 +363,9 @@ alert(
 
 
 }
+
+document.getElementById("saveBtn").onclick = function(){
+
+alert("Berhasil disimpan!");
+
+};
