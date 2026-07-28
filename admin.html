@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,120 +11,213 @@
 <link rel="stylesheet" href="style.css">
 
 </head>
-<script>
-function testLogout(){
-alert("Tombol berfungsi");
-}
-</script>
+
+
 <body>
 
+
 <h1>Admin Booking</h1>
+
+
 <div class="admin-layout">
+
+
 <div class="stats">
+
+
+<!-- NOTIFIKASI -->
+
 <div id="notifArea">
 
 <button id="notifButton" onclick="bukaNotif()">
+
 🔔 <span id="notifCount">0</span>
+
 </button>
 
 
 <div id="notifBox" class="notif-dropdown">
 
+
 <h3>Booking Baru</h3>
 
+
 <div id="notifList">
+
 Belum ada booking baru
-</div>
 
 </div>
 
 
 </div>
-    
+
+
+</div>
+
+
+
+
+<!-- STATISTIK -->
+
+
 <div class="stat-card">
+
 <h2 id="totalBooking">0</h2>
+
 <p>Total Booking</p>
+
 </div>
 
 
+
 <div class="stat-card">
+
 <h2 id="pendingBooking">0</h2>
+
 <p>Pending</p>
+
 </div>
 
 
+
 <div class="stat-card">
+
 <h2 id="acceptedBooking">0</h2>
+
 <p>Diterima</p>
+
 </div>
+
 
 
 <div class="stat-card">
+
 <h2 id="rejectedBooking">0</h2>
+
 <p>Ditolak</p>
+
 </div>
+
+
 
 <div class="stat-card">
 
 <h2 id="totalPendapatan">
+
 Rp0
+
 </h2>
 
 <p>Total Pendapatan</p>
 
 </div>
 
-</div>
-    
-</div>
+
 
 </div>
+
+
+</div>
+
+
+
+
 <button onclick="logout()">
+
 Logout
+
 </button>
 
-  <div class="filter">
+
+
+
+
+<!-- FILTER -->
+
+
+<div class="filter">
+
 
 <button onclick="filterBooking('Semua')">
+
 Semua
+
 </button>
+
 
 <button onclick="filterBooking('Pending')">
+
 Pending
+
 </button>
+
+
 
 <button onclick="filterBooking('Diterima')">
+
 Diterima
+
 </button>
+
+
 
 <button onclick="filterBooking('Ditolak')">
+
 Ditolak
+
 </button>
 
+
 </div>
-  
+
+
+
+
+
 <div class="booking-area">
 
-<input 
-type="text" 
-id="searchBooking"
-placeholder="🔍 Cari nama atau nomor WhatsApp..."
-onkeyup="searchBooking()">
 
-<div id="notification"></div>
-    
-<h2>📅 Jadwal Booking</h2>
+
+<input
+
+type="text"
+
+id="searchBooking"
+
+placeholder="🔍 Cari nama atau nomor WhatsApp..."
+
+onkeyup="searchBooking()"
+
+>
+
+
+
+
+
+
+<!-- KALENDER -->
 
 
 <div class="calendar-box">
 
-<h2>📅 Kalender Booking</h2>
 
-<input 
-type="month" 
+<h2>
+📅 Kalender Booking
+</h2>
+
+
+
+<input
+
+type="month"
+
 id="bulanKalender"
+
 onchange="buatKalender()"
+
 >
+
+
 
 
 <div id="kalender">
@@ -130,10 +225,20 @@ onchange="buatKalender()"
 </div>
 
 
+
 </div>
 
 
-<h2>📋 Jadwal Booking</h2>
+
+
+
+<h2>
+
+📋 Jadwal Booking
+
+</h2>
+
+
 
 
 <div id="jadwalHari">
@@ -144,11 +249,22 @@ Pilih tanggal kalender
 
 
 
+
 <div id="bookingList">
+
 Memuat data...
-</div>
 
 </div>
+
+
+
+
+</div>
+
+
+
+
+
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 
@@ -156,6 +272,13 @@ Memuat data...
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
+
 <script src="firebase.js"></script>
 
+
 <script src="admin.js"></script>
+
+
+</body>
+
+</html>
