@@ -964,3 +964,42 @@ padding:10px;
 border-bottom:1px solid #ddd;
 
 }
+
+.calendar-box{
+
+margin:20px;
+
+}
+
+
+#kalender{
+
+display:grid;
+
+grid-template-columns:repeat(7,1fr);
+
+gap:8px;
+
+}
+
+
+
+.tanggal-kalender{
+
+padding:15px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+}
+
+
+
+.tanggal-kalender span{
+
+display:block;
+
+font-size:12px;
+
+}
