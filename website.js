@@ -1,15 +1,25 @@
-window.onload = function(){
+const settingRef = db.collection("settings").doc("toko");
 
-let data = JSON.parse(localStorage.getItem("settingWebsite"));
 
-if(data){
+settingRef.get().then((doc)=>{
 
-document.getElementById("namaUsaha").innerHTML = data.namaToko;
+if(doc.exists){
 
-document.getElementById("deskripsiUsaha").innerHTML = data.deskripsi;
+let data = doc.data();
 
-document.getElementById("jamUsaha").innerHTML = data.jamBuka;
+
+document.getElementById("namaToko").innerHTML =
+data.namaToko;
+
+
+document.getElementById("deskripsiToko").innerHTML =
+data.deskripsi;
+
+
+document.getElementById("jamBuka").innerHTML =
+"Jam Buka : " + data.jamBuka;
+
 
 }
 
-}
+});
