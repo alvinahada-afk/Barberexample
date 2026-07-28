@@ -169,3 +169,310 @@ target="_blank">
 💬 Chat WhatsApp
 
 </
+
+// UPDATE STATUS + WHATSAPP
+
+function updateStatus(id,status){
+
+
+db.collection("booking")
+.doc(id)
+.get()
+
+.then((doc)=>{
+
+
+let data = doc.data();
+
+
+
+db.collection("booking")
+.doc(id)
+.update({
+
+status:status
+
+})
+
+.then(()=>{
+
+
+let pesan="";
+
+
+
+if(status=="Diterima"){
+
+
+pesan =
+"Halo "+data.nama+" 👋\n\n"+
+"Booking Alvin Barber Studio kamu sudah DITERIMA ✅\n\n"+
+"Tanggal : "+data.tanggal+"\n"+
+"Jam : "+data.jam+"\n"+
+"Layanan : "+(data.layanan || "-")+"\n"+
+"Capster : "+(data.capster || "-")+"\n\n"+
+"Kami tunggu kedatangannya 🙏";
+
+
+}
+
+
+
+if(status=="Ditolak"){
+
+
+pesan =
+"Halo "+data.nama+" 👋\n\n"+
+"Maaf booking Alvin Barber Studio kamu DITOLAK ❌\n\n"+
+"Silakan hubungi kami untuk jadwal lain.\n\n"+
+"Terima kasih 🙏";
+
+
+}
+
+
+
+window.open(
+"https://wa.me/"+data.nomor+
+"?text="+encodeURIComponent(pesan),
+"_blank"
+);
+
+
+
+alert("Status berhasil diubah!");
+
+location.reload();
+
+
+
+});
+
+
+});
+
+
+}
+
+
+
+
+
+// HAPUS BOOKING
+
+function hapusBooking(id){
+
+
+if(confirm("Hapus booking ini?")){
+
+
+db.collection("booking")
+.doc(id)
+.delete()
+
+.then(()=>{
+
+
+alert("Booking berhasil dihapus");
+
+location.reload();
+
+
+});
+
+
+}
+
+
+}
+
+
+
+
+
+// FILTER BOOKING
+
+function filterBooking(status){
+
+
+let hasil="";
+
+
+semuaBooking.forEach((data)=>{
+
+
+if(status=="Semua" || data.status==status){
+
+
+hasil += `
+
+
+<div class="card">
+
+
+<h3>👤 ${data.nama || "-"}</h3>
+
+
+<p>📱 WhatsApp: ${data.nomor || "-"}</p>
+
+<p>📅 Tanggal: ${data.tanggal || "-"}</p>
+
+<p>⏰ Jam: ${data.jam || "-"}</p>
+
+<p>💈 Capster: ${data.capster || "-"}</p>
+
+<p>✂️ Layanan: ${data.layanan || "-"}</p>
+
+<p>📝 Catatan: ${data.catatan || "-"}</p>
+
+
+<p>
+Status:
+
+<span class="${data.status}">
+${data.status}
+</span>
+
+</p>
+
+
+<button onclick="updateStatus('${data.id}','Diterima')">
+Terima Booking
+</button>
+
+
+<button onclick="updateStatus('${data.id}','Ditolak')">
+Tolak Booking
+</button>
+
+
+<button onclick="hapusBooking('${data.id}')">
+Hapus
+</button>
+
+
+</div>
+
+
+`;
+
+}
+
+
+});
+
+
+
+document.getElementById("bookingList").innerHTML=hasil;
+
+
+}
+
+
+
+
+
+
+// SEARCH
+
+function searchBooking(){
+
+
+let keyword =
+document.getElementById("searchBooking")
+.value
+.toLowerCase();
+
+
+
+let hasil="";
+
+
+
+semuaBooking.forEach((data)=>{
+
+
+let nama =
+(data.nama || "")
+.toLowerCase();
+
+
+
+let nomor =
+(data.nomor || "")
+.toLowerCase();
+
+
+
+if(
+nama.includes(keyword) ||
+nomor.includes(keyword)
+){
+
+
+hasil += `
+
+
+<div class="card">
+
+
+<h3>👤 ${data.nama || "-"}</h3>
+
+
+<p>📱 WhatsApp: ${data.nomor || "-"}</p>
+
+
+<p>📅 Tanggal: ${data.tanggal || "-"}</p>
+
+
+<p>⏰ Jam: ${data.jam || "-"}</p>
+
+
+<p>Status:
+<span class="${data.status}">
+${data.status}
+</span>
+
+</p>
+
+
+</div>
+
+
+`;
+
+
+}
+
+
+});
+
+
+
+document.getElementById("bookingList").innerHTML=hasil;
+
+
+}
+
+
+
+
+
+// LOGOUT
+
+function logout(){
+
+
+firebase.auth()
+.signOut()
+
+.then(()=>{
+
+
+window.location.href="login.html";
+
+
+});
+
+
+}
