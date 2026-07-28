@@ -1,45 +1,51 @@
-function login(){
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Admin Login</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
 
 
-let email = document.getElementById("email").value;
-
-let password = document.getElementById("password").value;
+<body>
 
 
-auth.signInWithEmailAndPassword(email,password)
+<div class="login-box">
 
-.then(()=>{
-
-
-window.location.href="admin.html";
+<h1>Admin Login</h1>
 
 
-})
+<input id="email" type="email" placeholder="Email">
 
 
-.catch((error)=>{
+<input id="password" type="password" placeholder="Password">
 
 
-document.getElementById("pesan").innerHTML =
-"Login gagal: " + error.message;
+<button onclick="login()">Login</button>
 
 
-});
+<p id="pesan"></p>
 
 
-}
+</div>
 
 
-// cek kalau sudah login
 
-auth.onAuthStateChanged((user)=>{
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
-if(user){
-
-window.location.href="admin.html";
-
-}
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 
-});
+<script src="firebase.js"></script>
+
+<script src="login.js"></script>
+
+
+</body>
+</html>
