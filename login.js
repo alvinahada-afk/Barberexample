@@ -1,31 +1,21 @@
 function login(){
 
-
 let email = document.getElementById("email").value;
-
 let password = document.getElementById("password").value;
-
-
 
 auth.signInWithEmailAndPassword(email,password)
 
-.then(()=>{
+.then((user)=>{
 
-
-window.location.href = "admin.html";
-
+window.location.href="admin.html";
 
 })
 
-
 .catch((error)=>{
 
-
 document.getElementById("pesan").innerHTML =
-"Login gagal: " + error.message;
-
+"Login gagal : " + error.message;
 
 });
-
 
 }
