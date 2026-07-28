@@ -1,6 +1,4 @@
 function login(){
-alert("Tombol login bekerja");
-}
 
 let email = document.getElementById("email").value;
 let password = document.getElementById("password").value;
@@ -8,7 +6,7 @@ let password = document.getElementById("password").value;
 
 firebase.auth().signInWithEmailAndPassword(email,password)
 
-.then((user)=>{
+.then(function(){
 
 alert("Login berhasil");
 
@@ -17,10 +15,10 @@ window.location.href="admin.html";
 })
 
 
-.catch((error)=>{
+.catch(function(error){
 
 document.getElementById("pesan").innerHTML =
-"Login gagal : " + error.message;
+"Login gagal: " + error.message;
 
 });
 
