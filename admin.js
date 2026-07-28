@@ -8,6 +8,8 @@ let jumlahBookingLama = 0;
 
 let pertamaLoad = true;
 
+let daftarNotif = [];
+
 
 // CEK LOGIN
 
@@ -134,7 +136,11 @@ pending++;
 
 }
 
+if(data.status=="Pending"){
 
+daftarNotif.push(data);
+
+}
 
 if(data.status=="Diterima"){
 
@@ -645,6 +651,75 @@ hasil += `
 
 
 list.innerHTML = hasil;
+
+
+}
+
+function bukaNotif(){
+
+let box = document.getElementById("notifBox");
+
+
+if(box.style.display=="block"){
+
+box.style.display="none";
+
+return;
+
+}
+
+
+
+let area = document.getElementById("notifList");
+
+
+if(daftarNotif.length==0){
+
+area.innerHTML="Tidak ada booking baru";
+
+}else{
+
+
+let html="";
+
+
+daftarNotif.forEach((data)=>{
+
+
+html += `
+
+<div class="notif-item">
+
+<b>${data.nama}</b>
+
+<br>
+
+📅 ${data.tanggal}
+
+<br>
+
+⏰ ${data.jam}
+
+<br>
+
+✂️ ${data.layanan}
+
+</div>
+
+`;
+
+
+});
+
+
+area.innerHTML=html;
+
+
+}
+
+
+
+box.style.display="block";
 
 
 }
