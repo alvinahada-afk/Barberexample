@@ -1,4 +1,3 @@
-alert("ADMIN JS TERBACA");
 let semuaBooking = [];
 
 const list = document.getElementById("bookingList");
