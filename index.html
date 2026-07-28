@@ -344,44 +344,24 @@ Kirim Booking
 
 
 
-<script>
+
+<!-- SCRIPT -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script src="firebase.js"></script>
+
+<script src="website.js"></script>
+
+<script src="script.js"></script>
+
+<script src="services.js"></script>
 
 
-// AMBIL DATA CUSTOMIZER
-
-window.onload = function(){
-
-
-let data = JSON.parse(
-localStorage.getItem("settingWebsite")
-);
-
-
-
-if(data){
-
-
-document.getElementById("namaToko").innerHTML =
-data.namaToko;
-
-
-document.getElementById("deskripsiToko").innerHTML =
-data.deskripsi;
-
-
-document.getElementById("jamBuka").innerHTML =
-"Jam Buka : " + data.jamBuka;
-
-
-}
-
-
-}
-
-
-
-</script>
-
+</body>
+</html>
 
 
 </body>
