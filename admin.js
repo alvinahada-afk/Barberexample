@@ -10,7 +10,7 @@ console.log("DATA MASUK:", snapshot.size);
 document.getElementById("totalPesanan").innerHTML = snapshot.size;
 document.getElementById("pesananBaru").innerHTML = snapshot.size;
 
-
+let daftarPelanggan = new Set();
 snapshot.forEach((doc)=>{
 
 let data = doc.data();
@@ -42,8 +42,7 @@ statusClass="danger";
 }
 
 
-pelanggan.add(data.nomor);
-
+daftarPelanggan.add(data.nomor);
 
 table.innerHTML += `
 
@@ -83,8 +82,7 @@ table.innerHTML += `
 });
 
 
-document.getElementById("pelanggan").innerHTML = pelanggan.size;
-
+document.getElementById("pelanggan").innerHTML = daftarPelanggan.size;
 
 },(error)=>{
 
