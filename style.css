@@ -881,3 +881,15 @@ font-size:16px;
 margin-bottom:20px;
 
 }
+
+#notification{
+
+display:none;
+background:#27ae60;
+color:white;
+padding:15px;
+border-radius:12px;
+margin-bottom:20px;
+font-weight:bold;
+
+}
