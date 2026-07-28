@@ -2,7 +2,9 @@ alert("ADMIN JS TERBACA");
 let semuaBooking = [];
 
 const list = document.getElementById("bookingList");
+const notifSound = new Audio("notif.mp3");
 
+let jumlahBookingLama = 0;
 
 // CEK LOGIN
 firebase.auth().onAuthStateChanged((user)=>{
@@ -21,10 +23,13 @@ function loadBooking(){
 
 
 db.collection("booking")
-.get()
+.onSnapshot((snapshot)=>{if(snapshot.size > jumlahBookingLama){
 
-.then((snapshot)=>{
+    notifSound.play();
 
+}
+
+jumlahBookingLama = snapshot.size;
 
 let total = 0;
 let pending = 0;
