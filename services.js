@@ -1,26 +1,44 @@
 import { db } from "./firebase.js";
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+collection,
+getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 const serviceList = document.getElementById("service-list");
 
+
 async function loadServices(){
 
-const data = await getDocs(collection(db,"services"));
+const snapshot = await getDocs(collection(db,"services"));
 
-serviceList.innerHTML = "";
+serviceList.innerHTML="";
 
-data.forEach((doc)=>{
 
-console.log(doc.data());
+snapshot.forEach((doc)=>{
+
+const data = doc.data();
+
 
 serviceList.innerHTML += `
-<h2>${doc.data().nama}</h2>
-<p>${doc.data().deskripsi}</p>
-<p>${doc.data().harga}</p>
+
+<div class="service-card">
+
+<h3>${data.nama}</h3>
+
+<p>${data.deskripsi}</p>
+
+<p>Rp ${data.harga}</p>
+
+</div>
+
 `;
 
 });
 
+
 }
+
 
 loadServices();
