@@ -1,67 +1,40 @@
-// Ambil data toko dari Firebase
+window.onload = function(){
 
 const settingRef = db.collection("settings").doc("toko");
 
 
-settingRef.get()
-.then((doc)=>{
+settingRef.get().then((doc)=>{
 
 
-    if(doc.exists){
+if(doc.exists){
 
-        let data = doc.data();
-
-
-        document.getElementById("namaToko").innerHTML =
-        data.namaToko || "Alvin Barber Studio";
+let data = doc.data();
 
 
-        document.getElementById("deskripsiToko").innerHTML =
-        data.deskripsi || "Premium barber dengan style modern";
+document.getElementById("namaToko").innerHTML =
+data.namaToko;
 
 
-        document.getElementById("jamBuka").innerHTML =
-        "Jam Buka : " + (data.jamBuka || "10:00 - 23:00");
+document.getElementById("deskripsiToko").innerHTML =
+data.deskripsi;
 
 
-    }else{
+document.getElementById("jamBuka").innerHTML =
+"Jam Buka : " + data.jamBuka;
 
 
-        // Jika dokumen Firebase tidak ditemukan
+}else{
 
-        document.getElementById("namaToko").innerHTML =
-        "Alvin Barber Studio";
+console.log("Data toko tidak ditemukan");
 
-
-        document.getElementById("deskripsiToko").innerHTML =
-        "Premium barber dengan style modern";
+}
 
 
-        document.getElementById("jamBuka").innerHTML =
-        "Jam Buka : 10:00 - 23:00";
+}).catch((error)=>{
 
-
-    }
-
-
-})
-
-.catch((error)=>{
-
-
-    console.log("Firebase error:", error);
-
-
-    document.getElementById("namaToko").innerHTML =
-    "Alvin Barber Studio";
-
-
-    document.getElementById("deskripsiToko").innerHTML =
-    "Premium barber dengan style modern";
-
-
-    document.getElementById("jamBuka").innerHTML =
-    "Jam Buka : 10:00 - 23:00";
-
+console.log("Firebase Error:",error);
 
 });
+
+
+};
