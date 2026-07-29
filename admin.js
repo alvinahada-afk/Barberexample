@@ -436,3 +436,4 @@ area.innerHTML =
 
 
 console.log("ADMIN JS AKTIF");
+alert("ADMIN JS AKTIF");
