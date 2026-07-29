@@ -385,46 +385,41 @@ ${data.status || "-"}
 
 
 
-<button 
-class="btn-terima"
-onclick="ubahStatus('${data.id}','Diterima')">
+${data.status === "Pending" ? `
 
+<button onclick="ubahStatus('${data.id}','Diterima')">
 Terima
-
 </button>
 
-
-
-
-
-<button
-class="btn-tolak"
-onclick="ubahStatus('${data.id}','Ditolak')">
-
+<button onclick="ubahStatus('${data.id}','Ditolak')">
 Tolak
-
 </button>
 
+` : ""}
 
 
 
-
-<button
-class="btn-hapus"
-onclick="hapusBooking('${data.id}')">
-
+<button onclick="hapusBooking('${data.id}')">
 Hapus
-
 </button>
 
 
 
+<a class="wa-button" 
+href="https://wa.me/${data.nomor}?text=${encodeURIComponent(
+`Halo Kak ${data.nama || ""},
 
+Booking di Alvin Barber Studio sudah kami ${data.status}.
 
-<a 
-class="wa-button"
-target="_blank"
-href="https://wa.me/${data.nomor}">
+Detail Booking:
+💈 Layanan: ${data.layanan || "-"}
+👤 Capster: ${data.capster || "-"}
+📅 Tanggal: ${data.tanggal || "-"}
+⏰ Jam: ${data.jam || "-"}
+
+Terima kasih 🙏`
+)}"
+target="_blank">
 
 WhatsApp
 
