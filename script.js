@@ -1,21 +1,23 @@
 alert("SCRIPT JALAN");
-const settingRef = db.collection("settings").doc("toko");
 
-settingRef.get().then((doc)=>{
+db.collection("settings")
+.doc("toko")
+.get()
+.then((doc)=>{
+
+alert("Firebase terbaca");
 
 if(doc.exists){
 
 let data = doc.data();
 
-document.getElementById("namaToko").innerHTML = data.namaToko;
-
-document.getElementById("deskripsiToko").innerHTML = data.deskripsi;
-
-document.getElementById("jamBuka").innerHTML =
-"Jam Buka : " + data.jamBuka;
+alert(JSON.stringify(data));
 
 }
 
-}).catch((error)=>{
-console.log(error);
+})
+.catch((error)=>{
+
+alert(error.message);
+
 });
