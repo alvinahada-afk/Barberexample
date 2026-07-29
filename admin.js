@@ -37,6 +37,7 @@ db.collection("booking")
 
 
 console.log("JUMLAH DATA:", snapshot.size);
+console.log(snapshot.docs.map(doc=>doc.data()));
 
 
 
