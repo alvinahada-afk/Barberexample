@@ -469,31 +469,44 @@ tampilkanBooking();
 
 window.ubahStatus = async function(id,status){
 
+let pesan = "";
+
+if(status === "Diterima"){
+pesan = "Terima booking ini?";
+}
+
+if(status === "Ditolak"){
+pesan = "Tolak booking ini?";
+}
 
 
-let data =
-semuaBooking.find(
-(item)=>item.id==id
+if(!confirm(pesan)) return;
+
+
+try{
+
+await updateDoc(
+doc(db,"booking",id),
+{
+status: status
+}
 );
 
 
+alert(
+"Booking berhasil diubah menjadi " + status
+);
 
-if(!data) return;
 
+}catch(error){
 
+console.log(error);
 
-
-await updateDoc(
-
-doc(db,"booking",id),
-
-{
-
-status:status
+alert("Gagal mengubah status");
 
 }
 
-);
+}
 
 
 
