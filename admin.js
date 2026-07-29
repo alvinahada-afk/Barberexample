@@ -30,9 +30,9 @@ window.location.href="login.html";
 
 function loadBooking(){
 
+console.log("DB CEK:", db);
 
 db.collection("booking")
-
 .onSnapshot((snapshot)=>{
 
 
