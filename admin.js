@@ -3,9 +3,9 @@
 // BAGIAN 1/3
 // =================================
 
-alert("Data masuk: " + snapshot.size);
-import { db, auth } from "./firebase.js";
 
+import { db, auth } from "./firebase.js";
+alert("ADMIN JS TERLOAD");
 
 import {
 collection,
