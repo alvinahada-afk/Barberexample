@@ -1,14 +1,24 @@
-window.onload = function(){
+document.addEventListener("DOMContentLoaded", function(){
 
-const settingRef = db.collection("settings").doc("toko");
+setTimeout(()=>{
+
+if(typeof db === "undefined"){
+console.log("DB TIDAK TERBACA");
+return;
+}
 
 
-settingRef.get().then((doc)=>{
+db.collection("settings")
+.doc("toko")
+.get()
+.then((doc)=>{
 
 
 if(doc.exists){
 
 let data = doc.data();
+
+console.log(data);
 
 
 document.getElementById("namaToko").innerHTML =
@@ -25,18 +35,20 @@ document.getElementById("jamBuka").innerHTML =
 
 }else{
 
-console.log("Data toko tidak ditemukan");
+console.log("Dokumen toko tidak ada");
 
 }
 
 
-}).catch((error)=>{
+})
+.catch((error)=>{
 
-console.log("Firebase Error:",error);
+console.log(error);
 
 });
 
 
-};
+},1000);
 
-console.log(db);
+
+});
