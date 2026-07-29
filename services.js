@@ -1,28 +1,56 @@
 import { db } from "./firebase.js";
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const serviceList = document.getElementById("service-list");
+
+const serviceList = document.getElementById("serviceList");
+
 
 async function loadServices(){
 
-    const querySnapshot = await getDocs(collection(db, "services"));
+    try {
 
-    serviceList.innerHTML = "";
+        const querySnapshot = await getDocs(collection(db, "services"));
 
-    querySnapshot.forEach((doc)=>{
+        serviceList.innerHTML = "";
 
-        const data = doc.data();
 
-        serviceList.innerHTML += `
-        <div class="service-card">
-            <h3>${data.nama}</h3>
-            <p>Rp${data.harga.toLocaleString()}</p>
-            <p>${data.deskripsi || ""}</p>
-        </div>
-        `;
+        querySnapshot.forEach((doc)=>{
 
-    });
+            const data = doc.data();
+
+
+            serviceList.innerHTML += `
+
+            <div class="card">
+
+                <h3>${data.nama}</h3>
+
+                <p>
+                Rp${Number(data.harga).toLocaleString("id-ID")}
+                </p>
+
+                <p>
+                ${data.deskripsi || ""}
+                </p>
+
+
+            </div>
+
+            `;
+
+        });
+
+
+    } catch(error){
+
+        console.log("Error:", error);
+
+        serviceList.innerHTML =
+        "<p>Gagal memuat layanan</p>";
+
+    }
 
 }
+
 
 loadServices();
