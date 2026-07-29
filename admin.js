@@ -992,3 +992,21 @@ window.location.href =
 console.log(
 "ADMIN FINAL AKTIF"
 );
+
+window.toggleKalender=function(){
+
+let area =
+document.getElementById("areaKalender");
+
+
+if(area.style.display=="none"){
+
+area.style.display="block";
+
+}else{
+
+area.style.display="none";
+
+}
+
+}
