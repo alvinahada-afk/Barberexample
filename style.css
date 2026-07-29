@@ -1343,3 +1343,24 @@ background:#181818;
 color:white;
 
 }
+
+#service-list{
+display:flex;
+flex-direction:column;
+gap:20px;
+align-items:center;
+}
+
+.service-card{
+background:#181818;
+border:1px solid #333;
+border-radius:20px;
+padding:25px;
+width:80%;
+text-align:center;
+color:white;
+}
+
+.service-card h3{
+color:#d4af37;
+}
