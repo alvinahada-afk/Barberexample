@@ -1,6 +1,8 @@
 const serviceList = document.getElementById("serviceList");
 
-db.collection("services").get().then((snapshot)=>{
+db.collection("services")
+.get()
+.then((snapshot)=>{
 
 serviceList.innerHTML="";
 
@@ -8,10 +10,8 @@ snapshot.forEach((doc)=>{
 
 let data = doc.data();
 
-
 serviceList.innerHTML += `
-
-<div class="service-card">
+<div class="card">
 
 <h3>${data.nama}</h3>
 
@@ -20,14 +20,11 @@ serviceList.innerHTML += `
 <p>${data.deskripsi}</p>
 
 </div>
-
 `;
 
 });
 
-
-}).catch((error)=>{
-
+})
+.catch((error)=>{
 console.log(error);
-
 });
