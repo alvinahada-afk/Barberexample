@@ -64,7 +64,8 @@ const ref = collection(db,"booking");
 
 onSnapshot(ref,(snapshot)=>{
 
-
+console.log("Jumlah data Firebase:", snapshot.size);
+    
 semuaBooking=[];
 
 
