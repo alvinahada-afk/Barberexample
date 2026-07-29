@@ -1364,3 +1364,32 @@ color:white;
 .service-card h3{
 color:#d4af37;
 }
+
+#service-list {
+  display: grid;
+  gap: 25px;
+  padding: 20px;
+}
+
+.service-card {
+  background: #1c1c1c;
+  border-radius: 20px;
+  padding: 25px;
+  text-align: center;
+  border: 1px solid #333;
+}
+
+.service-card h3 {
+  color: #d4af37;
+  font-size: 25px;
+}
+
+.service-card p {
+  color: white;
+  font-size: 16px;
+}
+
+.service-card p:last-child {
+  color: #d4af37;
+  font-weight: bold;
+}
