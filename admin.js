@@ -144,27 +144,28 @@ if(data.status === "Diterima"){
 
 if(data.harga){
 
-pendapatan += Number(data.harga);
+if(data.harga){
+
+let angka = String(data.harga)
+.replace(/[^\d]/g,"");
+
+pendapatan += Number(angka);
 
 
 }else if(data.layanan){
 
-
-let harga =
-data.layanan.match(/[\d.]+/);
+let angka = data.layanan.match(/[\d.]+/);
 
 
-if(harga){
+if(angka){
 
 pendapatan += Number(
-harga[0].replace(/\./g,"")
+angka[0].replace(/\./g,"")
 );
 
 }
 
-
 }
-
 
 }
 
