@@ -1010,3 +1010,29 @@ area.style.display="none";
 }
 
 }
+
+// ===============================
+// TOGGLE KALENDER
+// ===============================
+
+window.toggleKalender = function(){
+
+const area = document.getElementById("areaKalender");
+
+if(!area){
+    console.log("areaKalender tidak ditemukan");
+    return;
+}
+
+
+if(area.style.display === "none" || area.style.display === ""){
+
+    area.style.display = "block";
+
+}else{
+
+    area.style.display = "none";
+
+}
+
+}
