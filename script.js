@@ -1,3 +1,4 @@
+alert("SCRIPT JALAN");
 const settingRef = db.collection("settings").doc("toko");
 
 settingRef.get().then((doc)=>{
