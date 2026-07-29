@@ -1,35 +1,33 @@
 const serviceList = document.getElementById("serviceList");
 
-async function loadServices(){
+db.collection("services").get().then((snapshot)=>{
 
-    const querySnapshot = await db.collection("services").get();
+serviceList.innerHTML="";
 
-    serviceList.innerHTML = "";
+snapshot.forEach((doc)=>{
 
-    querySnapshot.forEach((doc)=>{
+let data = doc.data();
 
-        let data = doc.data();
 
-        serviceList.innerHTML += `
-        
-        <div class="card">
+serviceList.innerHTML += `
 
-            <h3>${data.nama}</h3>
+<div class="service-card">
 
-            <p>
-            Rp${Number(data.harga).toLocaleString("id-ID")}
-            </p>
+<h3>${data.nama}</h3>
 
-            <p>
-            ${data.deskripsi}
-            </p>
+<p>Rp${data.harga.toLocaleString()}</p>
 
-        </div>
+<p>${data.deskripsi}</p>
 
-        `;
+</div>
 
-    });
+`;
 
-}
+});
 
-loadServices();
+
+}).catch((error)=>{
+
+console.log(error);
+
+});
