@@ -7,48 +7,48 @@ const serviceList = document.getElementById("serviceList");
 
 async function loadServices(){
 
-    try {
+try{
 
-        const querySnapshot = await getDocs(collection(db, "services"));
-
-        serviceList.innerHTML = "";
+const snapshot = await getDocs(collection(db,"services"));
 
 
-        querySnapshot.forEach((doc)=>{
-
-            const data = doc.data();
+serviceList.innerHTML="";
 
 
-            serviceList.innerHTML += `
-
-            <div class="card">
-
-                <h3>${data.nama}</h3>
-
-                <p>
-                Rp${Number(data.harga).toLocaleString("id-ID")}
-                </p>
-
-                <p>
-                ${data.deskripsi || ""}
-                </p>
+snapshot.forEach((doc)=>{
 
 
-            </div>
-
-            `;
-
-        });
+let data = doc.data();
 
 
-    } catch(error){
+serviceList.innerHTML += `
 
-        console.log("Error:", error);
+<div class="card">
 
-        serviceList.innerHTML =
-        "<p>Gagal memuat layanan</p>";
+<h3>${data.nama}</h3>
 
-    }
+<p>
+Rp ${data.harga.toLocaleString("id-ID")}
+</p>
+
+<p>
+${data.deskripsi}
+</p>
+
+</div>
+
+`;
+
+
+});
+
+
+}catch(error){
+
+console.log(error);
+
+}
+
 
 }
 
