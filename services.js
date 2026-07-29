@@ -7,7 +7,11 @@ async function loadServices(){
 
     try {
 
-        const snapshot = await getDocs(collection(db,"services"));
+        alert("services.js jalan");
+        
+        const snapshot = await getDocs(collection(db, "services"));
+
+console.log("jumlah data:", snapshot.size);
 
         serviceList.innerHTML = "";
 
