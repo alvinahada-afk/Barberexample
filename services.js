@@ -1,14 +1,13 @@
-alert("services aktif");
 import { db } from "./firebase.js";
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+alert("services jalan");
 
 const serviceList = document.getElementById("service-list");
 
 async function loadServices(){
 
     try {
-
-        alert("services.js jalan");
         
         const snapshot = await getDocs(collection(db, "services"));
 
