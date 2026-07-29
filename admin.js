@@ -138,37 +138,32 @@ diterima++;
 
 
 // ambil harga
-
 if(data.status === "Diterima"){
 
+    if(data.harga){
 
-if(data.harga){
+        let angka = String(data.harga)
+        .replace(/[^\d]/g,"");
 
-if(data.harga){
+        pendapatan += Number(angka);
 
-let angka = String(data.harga)
-.replace(/[^\d]/g,"");
+    }
 
-pendapatan += Number(angka);
+    else if(data.layanan){
 
+        let angka = data.layanan.match(/[\d.]+/);
 
-}else if(data.layanan){
+        if(angka){
 
-let angka = data.layanan.match(/[\d.]+/);
+            pendapatan += Number(
+                angka[0].replace(/\./g,"")
+            );
 
+        }
 
-if(angka){
-
-pendapatan += Number(
-angka[0].replace(/\./g,"")
-);
-
-}
-
-}
+    }
 
 }
-
 
 
 if(data.status === "Ditolak"){
