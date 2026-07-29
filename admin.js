@@ -671,32 +671,16 @@ ${data.status || "-"}
 
 
 
-<button
-class="btn-terima"
-onclick="ubahStatus('${data.id}','Diterima')">
-
+<button class="btn-terima">
 Terima
-
 </button>
 
-
-
-<button
-class="btn-tolak"
-onclick="ubahStatus('${data.id}','Ditolak')">
-
+<button class="btn-tolak">
 Tolak
-
 </button>
 
-
-
-<button
-class="btn-hapus"
-onclick="hapusBooking('${data.id}')">
-
+<button class="btn-hapus">
 Hapus
-
 </button>
 
 
