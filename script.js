@@ -1,5 +1,3 @@
-alert("SCRIPT JALAN");
-
 db.collection("settings")
 .doc("toko")
 .get()
