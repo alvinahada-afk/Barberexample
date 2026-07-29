@@ -1,40 +1,54 @@
 import { db } from "./firebase.js";
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  collection,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 const serviceList = document.getElementById("service-list");
 
+
 async function loadServices(){
 
-    try {
+try {
 
-        const snapshot = await getDocs(collection(db,"services"));
+const snapshot = await getDocs(collection(db,"services"));
 
-        console.log("Jumlah service:", snapshot.size);
+serviceList.innerHTML = "";
 
-        serviceList.innerHTML = "";
 
-        snapshot.forEach((doc)=>{
+snapshot.forEach((doc)=>{
 
-            const data = doc.data();
+const data = doc.data();
 
-            console.log(data);
 
-            serviceList.innerHTML += `
-            <div class="service-card">
-                <h3>${data.nama}</h3>
-                <p>Rp ${data.harga.toLocaleString("id-ID")}</p>
-                <p>${data.deskripsi}</p>
-            </div>
-            `;
+serviceList.innerHTML += `
 
-        });
+<div class="service-card">
 
-    } catch(error){
+<h3>${data.nama}</h3>
 
-        console.log(error);
+<p>Rp ${data.harga}</p>
 
-    }
+<p>${data.deskripsi}</p>
+
+</div>
+
+`;
+
+});
+
+
+console.log("Service masuk:", snapshot.size);
+
+
+}catch(error){
+
+console.log("Firebase error:",error);
 
 }
+
+}
+
 
 loadServices();
