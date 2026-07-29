@@ -1,28 +1,58 @@
-import { db } from "./firebase.js";
+// ===============================
+// ADMIN.JS FINAL - BAGIAN 1
+// ===============================
+
+import { db, auth } from "./firebase.js";
 
 import {
-collection,
-onSnapshot,
-updateDoc,
-deleteDoc,
-doc
+  collection,
+  onSnapshot,
+  updateDoc,
+  deleteDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+import {
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 
 
 let semuaBooking = [];
 let filterAktif = "Semua";
 
 
-// ======================
-// LOAD DATA FIREBASE
-// ======================
+
+// ===============================
+// CEK LOGIN ADMIN
+// ===============================
+
+onAuthStateChanged(auth,(user)=>{
+
+  if(!user){
+
+    window.location.href = "login.html";
+
+  }
+
+});
+
+
+
+
+// ===============================
+// AMBIL DATA BOOKING
+// ===============================
 
 function loadBooking(){
 
-const bookingRef = collection(db,"booking");
+
+const ref = collection(db,"booking");
 
 
-onSnapshot(bookingRef,(snapshot)=>{
+onSnapshot(ref,(snapshot)=>{
 
 
 semuaBooking = [];
@@ -30,13 +60,16 @@ semuaBooking = [];
 
 snapshot.forEach((item)=>{
 
+
 let data = item.data();
 
 data.id = item.id;
 
 semuaBooking.push(data);
 
+
 });
+
 
 
 updateDashboard();
@@ -47,7 +80,12 @@ tampilkanBooking();
 },
 (error)=>{
 
-console.log("Firebase error:",error);
+
+console.log(
+"Firestore Error:",
+error
+);
+
 
 });
 
@@ -56,9 +94,14 @@ console.log("Firebase error:",error);
 
 
 
-// ======================
+loadBooking();
+
+
+
+
+// ===============================
 // DASHBOARD
-// ======================
+// ===============================
 
 
 function updateDashboard(){
@@ -67,7 +110,9 @@ function updateDashboard(){
 let total = semuaBooking.length;
 
 let pending = 0;
+
 let diterima = 0;
+
 let ditolak = 0;
 
 let pendapatan = 0;
@@ -77,7 +122,7 @@ let pendapatan = 0;
 semuaBooking.forEach((data)=>{
 
 
-if(data.status=="Pending"){
+if(data.status === "Pending"){
 
 pending++;
 
@@ -85,42 +130,50 @@ pending++;
 
 
 
-if(data.status=="Diterima"){
+if(data.status === "Diterima"){
 
 diterima++;
 
+}
 
 
 // ambil harga
+
+if(data.status === "Diterima"){
+
 
 if(data.harga){
 
 pendapatan += Number(data.harga);
 
-}
 
-else if(data.layanan){
+}else if(data.layanan){
 
-let angka = data.layanan.match(/\d+/);
 
-if(angka){
+let harga =
+data.layanan.match(/\d+/);
 
-pendapatan += Number(angka[0]);
 
-}
+if(harga){
 
-}
-
+pendapatan += Number(harga[0]);
 
 }
 
 
+}
 
-if(data.status=="Ditolak"){
+
+}
+
+
+
+if(data.status === "Ditolak"){
 
 ditolak++;
 
 }
+
 
 
 });
@@ -136,11 +189,11 @@ const pendingEl =
 document.getElementById("pendingBooking");
 
 
-const diterimaEl =
+const acceptedEl =
 document.getElementById("acceptedBooking");
 
 
-const ditolakEl =
+const rejectedEl =
 document.getElementById("rejectedBooking");
 
 
@@ -157,57 +210,58 @@ if(pendingEl)
 pendingEl.innerHTML = pending;
 
 
-if(diterimaEl)
-diterimaEl.innerHTML = diterima;
+if(acceptedEl)
+acceptedEl.innerHTML = diterima;
 
 
-if(ditolakEl)
-ditolakEl.innerHTML = ditolak;
+if(rejectedEl)
+rejectedEl.innerHTML = ditolak;
 
 
 if(pendapatanEl)
 pendapatanEl.innerHTML =
-"Rp "+pendapatan.toLocaleString("id-ID");
+"Rp " + pendapatan.toLocaleString("id-ID");
+
 
 
 }
 
-
-
-
-
-loadBooking();
-// ======================
+// ===============================
 // TAMPILKAN BOOKING
-// ======================
+// ===============================
 
 function tampilkanBooking(){
 
-const area = document.getElementById("bookingList");
+const area =
+document.getElementById("bookingList");
+
 
 if(!area) return;
 
 
-area.innerHTML="";
+area.innerHTML = "";
 
 
 let dataTampil = semuaBooking;
 
 
-if(filterAktif!="Semua"){
+
+if(filterAktif !== "Semua"){
+
 
 dataTampil =
 semuaBooking.filter((data)=>{
 
-return data.status == filterAktif;
+return data.status === filterAktif;
 
 });
+
 
 }
 
 
 
-if(dataTampil.length==0){
+if(dataTampil.length === 0){
 
 area.innerHTML =
 "<p>Belum ada booking</p>";
@@ -225,19 +279,26 @@ area.innerHTML += `
 
 <div class="booking-card">
 
+
 <h3>${data.nama || "-"}</h3>
+
 
 <p>📱 ${data.nomor || "-"}</p>
 
+
 <p>💈 ${data.layanan || "-"}</p>
+
 
 <p>👤 Capster: ${data.capster || "-"}</p>
 
+
 <p>📅 ${data.tanggal || "-"} ${data.jam || ""}</p>
+
 
 <p>Status:
 <b>${data.status || "-"}</b>
 </p>
+
 
 
 <button onclick="ubahStatus('${data.id}','Diterima')">
@@ -255,9 +316,10 @@ Hapus
 </button>
 
 
-<a target="_blank" href="https://wa.me/${data.nomor}">
+<a href="https://wa.me/${data.nomor}" target="_blank">
 WhatsApp
 </a>
+
 
 
 </div>
@@ -273,13 +335,13 @@ WhatsApp
 
 
 
-// ======================
+// ===============================
 // FILTER
-// ======================
+// ===============================
 
-window.filterBooking=function(status){
+window.filterBooking = function(status){
 
-filterAktif=status;
+filterAktif = status;
 
 tampilkanBooking();
 
@@ -288,12 +350,14 @@ tampilkanBooking();
 
 
 
-
-// ======================
+// ===============================
 // UPDATE STATUS
-// ======================
+// ===============================
 
-window.ubahStatus=async function(id,status){
+window.ubahStatus = async function(id,status){
+
+
+try{
 
 
 await updateDoc(
@@ -301,34 +365,41 @@ await updateDoc(
 doc(db,"booking",id),
 
 {
-status:status
+status: status
 }
 
 );
 
 
+
+}catch(error){
+
+console.log(error);
+
+}
+
+
 }
 
 
 
 
 
-// ======================
-// HAPUS
-// ======================
+// ===============================
+// HAPUS BOOKING
+// ===============================
 
-window.hapusBooking=async function(id){
-
-
-let yakin =
-confirm("Hapus booking ini?");
+window.hapusBooking = async function(id){
 
 
-if(!yakin) return;
+if(!confirm("Hapus booking ini?")) return;
+
 
 
 await deleteDoc(
+
 doc(db,"booking",id)
+
 );
 
 
@@ -338,14 +409,14 @@ doc(db,"booking",id)
 
 
 
-// ======================
+// ===============================
 // SEARCH
-// ======================
+// ===============================
 
 window.searchBooking=function(){
 
 
-let input =
+const input =
 document.getElementById("searchBooking");
 
 
@@ -383,7 +454,8 @@ const area =
 document.getElementById("bookingList");
 
 
-area.innerHTML="";
+area.innerHTML = "";
+
 
 
 hasil.forEach((data)=>{
@@ -393,19 +465,33 @@ area.innerHTML += `
 
 <div class="booking-card">
 
-<h3>${data.nama}</h3>
+<h3>${data.nama || "-"}</h3>
 
-<p>${data.nomor}</p>
+<p>📱 ${data.nomor || "-"}</p>
 
-<p>${data.layanan}</p>
+<p>💈 ${data.layanan || "-"}</p>
 
-<p>Status: ${data.status}</p>
+<p>Status: ${data.status || "-"}</p>
+
+
+<button onclick="ubahStatus('${data.id}','Diterima')">
+Terima
+</button>
+
+
+<button onclick="ubahStatus('${data.id}','Ditolak')">
+Tolak
+</button>
+
+
+<button onclick="hapusBooking('${data.id}')">
+Hapus
+</button>
 
 
 </div>
 
 `;
-
 
 });
 
@@ -416,9 +502,9 @@ area.innerHTML += `
 
 
 
-// ======================
+// ===============================
 // NOTIFIKASI
-// ======================
+// ===============================
 
 function loadNotif(){
 
@@ -430,16 +516,14 @@ collection(db,"booking");
 onSnapshot(ref,(snapshot)=>{
 
 
-let jumlah = snapshot.size;
-
-
 const count =
 document.getElementById("notifCount");
 
 
 if(count){
 
-count.innerHTML=jumlah;
+count.innerHTML =
+snapshot.size;
 
 }
 
@@ -464,12 +548,10 @@ let data=item.data();
 list.innerHTML += `
 
 <p>
-🔔 ${data.nama || "-"} 
-(${data.status || "-"})
+🔔 ${data.nama || "-"} (${data.status || "-"})
 </p>
 
 `;
-
 
 });
 
@@ -489,9 +571,9 @@ loadNotif();
 
 
 
-// ======================
+// ===============================
 // BUKA NOTIF
-// ======================
+// ===============================
 
 window.bukaNotif=function(){
 
@@ -504,7 +586,7 @@ if(box){
 
 
 box.style.display =
-box.style.display=="block"
+box.style.display === "block"
 ?
 "none"
 :
@@ -520,17 +602,30 @@ box.style.display=="block"
 
 
 
-// ======================
+// ===============================
 // LOGOUT
-// ======================
+// ===============================
 
-window.logout=function(){
-
-
-localStorage.removeItem("admin");
+window.logout = async function(){
 
 
-location.href="index.html";
+try{
+
+
+await signOut(auth);
+
+
+window.location.href =
+"login.html";
+
+
+}catch(error){
+
+
+console.log(error);
+
+
+}
 
 
 }
@@ -538,4 +633,5 @@ location.href="index.html";
 
 
 
-console.log("ADMIN BERHASIL AKTIF");
+
+console.log("ADMIN FINAL AKTIF");
