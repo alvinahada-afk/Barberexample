@@ -1436,3 +1436,18 @@ color:white;
 font-size:16px;
 
 }
+
+.btn-terima{
+background:#2ecc71 !important;
+color:white;
+}
+
+.btn-tolak{
+background:#e74c3c !important;
+color:white;
+}
+
+.btn-hapus{
+background:#555 !important;
+color:white;
+}
