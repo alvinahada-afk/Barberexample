@@ -1,11 +1,11 @@
 import { db } from "./firebase.js";
 
 import {
-  collection,
-  onSnapshot,
-  updateDoc,
-  deleteDoc,
-  doc
+collection,
+onSnapshot,
+updateDoc,
+deleteDoc,
+doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -13,44 +13,53 @@ let semuaBooking = [];
 let filterAktif = "Semua";
 
 
-// LOAD BOOKING REALTIME
+// ======================
+// LOAD DATA FIREBASE
+// ======================
 
 function loadBooking(){
 
-  const bookingRef = collection(db, "booking");
+const bookingRef = collection(db,"booking");
 
 
-  onSnapshot(bookingRef, (snapshot)=>{
+onSnapshot(bookingRef,(snapshot)=>{
 
 
-    semuaBooking = [];
+semuaBooking = [];
 
 
-    snapshot.forEach((item)=>{
+snapshot.forEach((item)=>{
 
-      semuaBooking.push({
-        id:item.id,
-        ...item.data()
-      });
+let data = item.data();
 
-    });
+data.id = item.id;
+
+semuaBooking.push(data);
+
+});
 
 
-    updateDashboard();
+updateDashboard();
 
-    tampilkanBooking();
+tampilkanBooking();
 
-  });
+
+},
+(error)=>{
+
+console.log("Firebase error:",error);
+
+});
 
 
 }
 
 
 
-loadBooking();
+// ======================
+// DASHBOARD
+// ======================
 
-
-// UPDATE STATISTIK DASHBOARD
 
 function updateDashboard(){
 
@@ -58,9 +67,7 @@ function updateDashboard(){
 let total = semuaBooking.length;
 
 let pending = 0;
-
 let diterima = 0;
-
 let ditolak = 0;
 
 let pendapatan = 0;
@@ -70,24 +77,49 @@ let pendapatan = 0;
 semuaBooking.forEach((data)=>{
 
 
-if(data.status === "Pending"){
+if(data.status=="Pending"){
+
 pending++;
+
 }
 
 
-if(data.status === "Diterima"){
+
+if(data.status=="Diterima"){
 
 diterima++;
 
-let harga = data.harga || 0;
 
-pendapatan += Number(harga);
+
+// ambil harga
+
+if(data.harga){
+
+pendapatan += Number(data.harga);
+
+}
+
+else if(data.layanan){
+
+let angka = data.layanan.match(/\d+/);
+
+if(angka){
+
+pendapatan += Number(angka[0]);
+
+}
 
 }
 
 
-if(data.status === "Ditolak"){
+}
+
+
+
+if(data.status=="Ditolak"){
+
 ditolak++;
+
 }
 
 
@@ -95,38 +127,92 @@ ditolak++;
 
 
 
-document.getElementById("totalBooking").innerHTML = total;
 
-document.getElementById("pendingBooking").innerHTML = pending;
+const totalEl =
+document.getElementById("totalBooking");
 
-document.getElementById("acceptedBooking").innerHTML = diterima;
 
-document.getElementById("rejectedBooking").innerHTML = ditolak;
+const pendingEl =
+document.getElementById("pendingBooking");
 
-document.getElementById("totalPendapatan").innerHTML =
-"Rp " + pendapatan.toLocaleString("id-ID");
+
+const diterimaEl =
+document.getElementById("acceptedBooking");
+
+
+const ditolakEl =
+document.getElementById("rejectedBooking");
+
+
+const pendapatanEl =
+document.getElementById("totalPendapatan");
+
+
+
+if(totalEl)
+totalEl.innerHTML = total;
+
+
+if(pendingEl)
+pendingEl.innerHTML = pending;
+
+
+if(diterimaEl)
+diterimaEl.innerHTML = diterima;
+
+
+if(ditolakEl)
+ditolakEl.innerHTML = ditolak;
+
+
+if(pendapatanEl)
+pendapatanEl.innerHTML =
+"Rp "+pendapatan.toLocaleString("id-ID");
 
 
 }
+
+
+
+
+
+loadBooking();
+// ======================
 // TAMPILKAN BOOKING
+// ======================
 
 function tampilkanBooking(){
 
 const area = document.getElementById("bookingList");
 
-area.innerHTML = "";
+if(!area) return;
+
+
+area.innerHTML="";
 
 
 let dataTampil = semuaBooking;
 
 
-if(filterAktif !== "Semua"){
+if(filterAktif!="Semua"){
 
-dataTampil = semuaBooking.filter((data)=>{
+dataTampil =
+semuaBooking.filter((data)=>{
 
-return data.status === filterAktif;
+return data.status == filterAktif;
 
 });
+
+}
+
+
+
+if(dataTampil.length==0){
+
+area.innerHTML =
+"<p>Belum ada booking</p>";
+
+return;
 
 }
 
@@ -139,18 +225,18 @@ area.innerHTML += `
 
 <div class="booking-card">
 
-<h3>${data.nama}</h3>
+<h3>${data.nama || "-"}</h3>
 
-<p>📱 ${data.nomor}</p>
+<p>📱 ${data.nomor || "-"}</p>
 
-<p>💈 ${data.layanan}</p>
+<p>💈 ${data.layanan || "-"}</p>
 
-<p>👤 Capster: ${data.capster}</p>
+<p>👤 Capster: ${data.capster || "-"}</p>
 
-<p>📅 ${data.tanggal} - ${data.jam}</p>
+<p>📅 ${data.tanggal || "-"} ${data.jam || ""}</p>
 
 <p>Status:
-<b>${data.status}</b>
+<b>${data.status || "-"}</b>
 </p>
 
 
@@ -169,7 +255,7 @@ Hapus
 </button>
 
 
-<a href="https://wa.me/${data.nomor}" target="_blank">
+<a target="_blank" href="https://wa.me/${data.nomor}">
 WhatsApp
 </a>
 
@@ -185,11 +271,15 @@ WhatsApp
 
 
 
+
+
+// ======================
 // FILTER
+// ======================
 
-window.filterBooking = function(status){
+window.filterBooking=function(status){
 
-filterAktif = status;
+filterAktif=status;
 
 tampilkanBooking();
 
@@ -197,16 +287,23 @@ tampilkanBooking();
 
 
 
-// UPDATE STATUS
 
-window.ubahStatus = async function(id,status){
+
+// ======================
+// UPDATE STATUS
+// ======================
+
+window.ubahStatus=async function(id,status){
 
 
 await updateDoc(
+
 doc(db,"booking",id),
+
 {
 status:status
 }
+
 );
 
 
@@ -214,12 +311,20 @@ status:status
 
 
 
-// HAPUS BOOKING
-
-window.hapusBooking = async function(id){
 
 
-if(confirm("Hapus booking ini?")){
+// ======================
+// HAPUS
+// ======================
+
+window.hapusBooking=async function(id){
+
+
+let yakin =
+confirm("Hapus booking ini?");
+
+
+if(!yakin) return;
 
 
 await deleteDoc(
@@ -230,40 +335,58 @@ doc(db,"booking",id)
 }
 
 
-}
-
-// SEARCH BOOKING
-
-window.searchBooking = function(){
-
-let keyword = document
-.getElementById("searchBooking")
-.value
-.toLowerCase();
 
 
-let area = document.getElementById("bookingList");
 
-area.innerHTML = "";
+// ======================
+// SEARCH
+// ======================
+
+window.searchBooking=function(){
 
 
-semuaBooking
-.filter((data)=>{
+let input =
+document.getElementById("searchBooking");
+
+
+if(!input) return;
+
+
+let keyword =
+input.value.toLowerCase();
+
+
+
+let hasil =
+semuaBooking.filter((data)=>{
 
 
 return (
 
-data.nama.toLowerCase().includes(keyword)
+(data.nama || "")
+.toLowerCase()
+.includes(keyword)
 
 ||
 
-data.nomor.includes(keyword)
+(data.nomor || "")
+.includes(keyword)
 
 );
 
 
-})
-.forEach((data)=>{
+});
+
+
+
+const area =
+document.getElementById("bookingList");
+
+
+area.innerHTML="";
+
+
+hasil.forEach((data)=>{
 
 
 area.innerHTML += `
@@ -272,37 +395,17 @@ area.innerHTML += `
 
 <h3>${data.nama}</h3>
 
-<p>📱 ${data.nomor}</p>
+<p>${data.nomor}</p>
 
-<p>💈 ${data.layanan}</p>
+<p>${data.layanan}</p>
 
-<p>👤 Capster: ${data.capster}</p>
-
-<p>📅 ${data.tanggal} - ${data.jam}</p>
-
-<p>Status:
-<b>${data.status}</b>
-</p>
-
-
-<button onclick="ubahStatus('${data.id}','Diterima')">
-Terima
-</button>
-
-
-<button onclick="ubahStatus('${data.id}','Ditolak')">
-Tolak
-</button>
-
-
-<button onclick="hapusBooking('${data.id}')">
-Hapus
-</button>
+<p>Status: ${data.status}</p>
 
 
 </div>
 
 `;
+
 
 });
 
@@ -311,37 +414,35 @@ Hapus
 
 
 
-// LOGOUT
 
-window.logout = function(){
 
-localStorage.removeItem("admin");
-
-window.location.href="index.html";
-
-}
-// NOTIFIKASI BOOKING BARU
+// ======================
+// NOTIFIKASI
+// ======================
 
 function loadNotif(){
 
-const bookingRef = collection(db,"booking");
+
+const ref =
+collection(db,"booking");
 
 
-onSnapshot(bookingRef,(snapshot)=>{
+onSnapshot(ref,(snapshot)=>{
 
 
-let count = snapshot.size;
+let jumlah = snapshot.size;
 
 
-const notifCount =
+const count =
 document.getElementById("notifCount");
 
 
-if(notifCount){
+if(count){
 
-notifCount.innerHTML = count;
+count.innerHTML=jumlah;
 
 }
+
 
 
 const list =
@@ -363,8 +464,8 @@ let data=item.data();
 list.innerHTML += `
 
 <p>
-🔔 ${data.nama}
-- ${data.status}
+🔔 ${data.nama || "-"} 
+(${data.status || "-"})
 </p>
 
 `;
@@ -374,7 +475,6 @@ list.innerHTML += `
 
 
 }
-
 
 
 });
@@ -387,9 +487,14 @@ loadNotif();
 
 
 
-// BUKA TUTUP NOTIFIKASI
+
+
+// ======================
+// BUKA NOTIF
+// ======================
 
 window.bukaNotif=function(){
+
 
 const box =
 document.getElementById("notifBox");
@@ -397,37 +502,16 @@ document.getElementById("notifBox");
 
 if(box){
 
+
 box.style.display =
-box.style.display === "block"
+box.style.display=="block"
 ?
 "none"
 :
 "block";
 
-}
 
 }
-
-
-
-// KALENDER SEDERHANA
-
-window.buatKalender=function(){
-
-const area =
-document.getElementById("kalender");
-
-
-if(!area) return;
-
-
-let bulan =
-document.getElementById("bulanKalender").value;
-
-
-area.innerHTML =
-"<p>Pilih tanggal untuk melihat booking</p>";
-
 
 
 }
@@ -435,5 +519,23 @@ area.innerHTML =
 
 
 
-console.log("ADMIN JS AKTIF");
-alert("ADMIN JS AKTIF");
+
+// ======================
+// LOGOUT
+// ======================
+
+window.logout=function(){
+
+
+localStorage.removeItem("admin");
+
+
+location.href="index.html";
+
+
+}
+
+
+
+
+console.log("ADMIN BERHASIL AKTIF");
