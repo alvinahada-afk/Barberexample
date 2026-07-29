@@ -5,23 +5,21 @@ const serviceList = document.getElementById("service-list");
 
 async function loadServices(){
 
-  const querySnapshot = await getDocs(collection(db, "services"));
+const data = await getDocs(collection(db,"services"));
 
-  serviceList.innerHTML = "";
+serviceList.innerHTML = "";
 
-  querySnapshot.forEach((doc)=>{
+data.forEach((doc)=>{
 
-    const data = doc.data();
+console.log(doc.data());
 
-    serviceList.innerHTML += `
-      <div class="service-card">
-        <h3>${data.nama}</h3>
-        <p>${data.deskripsi}</p>
-        <p>Rp ${data.harga}</p>
-      </div>
-    `;
+serviceList.innerHTML += `
+<h2>${doc.data().nama}</h2>
+<p>${doc.data().deskripsi}</p>
+<p>${doc.data().harga}</p>
+`;
 
-  });
+});
 
 }
 
