@@ -124,126 +124,55 @@ loadBooking();
 
 function updateDashboard(){
 
-
-
 let total = semuaBooking.length;
 
-
 let pending = 0;
-
 let diterima = 0;
-
 let ditolak = 0;
-
-
 let pendapatan = 0;
-
-
 
 
 semuaBooking.forEach((data)=>{
 
 
-
-if(data.status=="Pending"){
-
+if(data.status === "Pending"){
 pending++;
-
 }
 
 
-
-if(data.status=="Diterima"){
-
-
+if(data.status === "Diterima"){
 diterima++;
-
-
-
-let harga = 0;
-
-
 
 if(data.harga){
 
+let angka = String(data.harga)
+.replace(/\D/g,"");
 
-harga = Number(
-String(data.harga)
-.replace(/[^\d]/g,"")
-);
-
-
+pendapatan += Number(angka);
 
 }
 
-else if(data.layanan){
-
-
-
-let angka =
-data.layanan.match(/[\d.]+/);
-
-
-
-if(angka){
-
-
-harga =
-Number(
-angka[0].replace(/\./g,"")
-);
-
-
 }
 
-
-
-}
-
-
-
-pendapatan += harga;
-
-
-
-}
-
-
-
-
-if(data.status=="Ditolak"){
-
+if(data.status === "Ditolak"){
 ditolak++;
-
 }
-
 
 
 });
 
 
 
+document.getElementById("totalBooking").innerHTML = total;
 
+document.getElementById("pendingBooking").innerHTML = pending;
 
-document.getElementById("totalBooking").innerHTML =
-total;
+document.getElementById("acceptedBooking").innerHTML = diterima;
 
-
-document.getElementById("pendingBooking").innerHTML =
-pending;
-
-
-document.getElementById("acceptedBooking").innerHTML =
-diterima;
-
-
-document.getElementById("rejectedBooking").innerHTML =
-ditolak;
-
+document.getElementById("rejectedBooking").innerHTML = ditolak;
 
 document.getElementById("totalPendapatan").innerHTML =
 "Rp " + pendapatan.toLocaleString("id-ID");
-
 
 
 }
