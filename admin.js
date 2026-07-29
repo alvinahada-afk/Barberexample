@@ -1,3 +1,4 @@
+console.log("ADMIN JS AKTIF");
 let semuaBooking = [];
 
 const list = document.getElementById("bookingList");
