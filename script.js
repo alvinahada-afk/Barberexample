@@ -1,15 +1,10 @@
-window.onload = function(){
+const settingRef = db.collection("settings").doc("toko");
 
-db.collection("settings")
-.doc("toko")
-.get()
-.then((doc)=>{
-
-console.log("Firebase jalan");
+settingRef.get().then((doc)=>{
 
 if(doc.exists){
 
-const data = doc.data();
+let data = doc.data();
 
 document.getElementById("namaToko").innerHTML = data.namaToko;
 
@@ -20,9 +15,6 @@ document.getElementById("jamBuka").innerHTML =
 
 }
 
-})
-.catch((error)=>{
+}).catch((error)=>{
 console.log(error);
 });
-
-};
