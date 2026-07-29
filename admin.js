@@ -151,12 +151,14 @@ pendapatan += Number(data.harga);
 
 
 let harga =
-data.layanan.match(/\d+/);
+data.layanan.match(/[\d.]+/);
 
 
 if(harga){
 
-pendapatan += Number(harga[0]);
+pendapatan += Number(
+harga[0].replace(/\./g,"")
+);
 
 }
 
