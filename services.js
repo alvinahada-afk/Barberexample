@@ -5,31 +5,29 @@ const serviceList = document.getElementById("service-list");
 
 async function loadServices(){
 
-    try {
+    console.log("MULAI AMBIL DATA");
 
-        const snapshot = await getDocs(collection(db,"services"));
+    const snapshot = await getDocs(collection(db,"services"));
 
-        serviceList.innerHTML = "";
+    console.log("JUMLAH DATA:", snapshot.size);
 
-        snapshot.forEach((doc)=>{
+    serviceList.innerHTML = "";
 
-            const data = doc.data();
+    snapshot.forEach((doc)=>{
 
-            serviceList.innerHTML += `
-            <div class="service-card">
-                <h3>${data.nama}</h3>
-                <p>Rp ${data.harga}</p>
-                <p>${data.deskripsi}</p>
-            </div>
-            `;
+        console.log(doc.data());
 
-        });
+        const data = doc.data();
 
-    } catch(error){
+        serviceList.innerHTML += `
+        <div class="service-card">
+            <h3>${data.nama}</h3>
+            <p>Rp ${data.harga}</p>
+            <p>${data.deskripsi}</p>
+        </div>
+        `;
 
-        console.log(error);
-
-    }
+    });
 
 }
 
