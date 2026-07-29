@@ -38,3 +38,5 @@ console.log("Firebase Error:",error);
 
 
 };
+
+console.log(db);
