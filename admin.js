@@ -957,3 +957,5 @@ if(area.style.display === "none" || area.style.display === ""){
 }
 
 }
+
+console.log("ADMIN JS BERJALAN");
