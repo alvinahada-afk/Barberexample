@@ -246,15 +246,15 @@ if(data.status==="Pending"){
 
 tombol=`
 
-<button onclick="ubahStatus('${data.id}','Diterima')">
+${data.status === "Pending" ? `
+<button class="btn-terima" onclick="terimaBooking('${id}')">
 Terima
 </button>
 
-
-<button onclick="ubahStatus('${data.id}','Ditolak')">
+<button class="btn-tolak" onclick="tolakBooking('${id}')">
 Tolak
 </button>
-
+` : ""}
 `;
 
 }
