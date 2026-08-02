@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - BarberPro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    tailwind.config = {theme:{extend:{colors:{gelap:'#050505',gelap2:'#121212',emas:'#D4AF37'}}}}
+  </script>
+</head>
+<body class="bg-gelap text-white">
+<div class="min-h-screen flex">
+  <!-- Sidebar -->
+  <div class="w-64 bg-gelap2 p-5 hidden md:block">
+    <div class="text-xl font-bold text-emas mb-8">BARBERPRO ADMIN</div>
+    <nav class="space-y-3">
+      <a href="#" class="block p-3 rounded-lg bg-emas text-gelap font-bold"><i class="fa fa-home mr-2"></i> Dasbor</a>
+      <a href="#" class="block p-3 rounded-lg hover:bg-gray-700"><i class="fa fa-calendar mr-2"></i> Reservasi</a>
+      <a href="#" class="block p-3 rounded-lg hover:bg-gray-700"><i class="fa fa-cut mr-2"></i> Layanan</a>
+      <a href="#" class="block p-3 rounded-lg hover:bg-gray-700"><i class="fa fa-users mr-2"></i> Tim Barber</a>
+      <a href="#" class="block p-3 rounded-lg hover:bg-gray-700"><i class="fa fa-cog mr-2"></i> Pengaturan</a>
+      <a href="#" class="block p-3 rounded-lg hover:bg-red-700 mt-8"><i class="fa fa-sign-out mr-2"></i> Keluar</a>
+    </nav>
+  </div>
+
+  <!-- Konten Utama -->
+  <div class="flex-1 p-6">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-2xl font-bold">Selamat Datang Pemilik Toko</h1>
+      <button class="md:hidden bg-gelap2 p-2 rounded"><i class="fa fa-bars"></i></button>
+    </div>
+
+    <!-- Kartu Statistik -->
+    <div class="grid md:grid-cols-4 gap-4 mb-8">
+      <div class="bg-gelap2 p-5 rounded-xl border-l-4 border-emas">
+        <p class="text-gray-400 text-sm">Reservasi Hari Ini</p>
+        <h3 class="text-2xl font-bold mt-1">0</h3>
+      </div>
+      <div class="bg-gelap2 p-5 rounded-xl border-l-4 border-blue-500">
+        <p class="text-gray-400 text-sm">Total Pelanggan</p>
+        <h3 class="text-2xl font-bold mt-1">0</h3>
+      </div>
+      <div class="bg-gelap2 p-5 rounded-xl border-l-4 border-green-500">
+        <p class="text-gray-400 text-sm">Pendapatan</p>
+        <h3 class="text-2xl font-bold mt-1">Rp 0</h3>
+      </div>
+      <div class="bg-gelap2 p-5 rounded-xl border-l-4 border-purple-500">
+        <p class="text-gray-400 text-sm">Layanan Populer</p>
+        <h3 class="text-lg font-bold mt-1">-</h3>
+      </div>
+    </div>
+
+    <!-- Daftar Reservasi -->
+    <div class="bg-gelap2 p-6 rounded-xl">
+      <h2 class="text-xl font-bold mb-4 text-emas">Daftar Reservasi Terbaru</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-gray-700 text-left">
+              <th class="py-3 px-2">Nama</th>
+              <th class="py-3 px-2">Layanan</th>
+              <th class="py-3 px-2">Tanggal</th>
+              <th class="py-3 px-2">Jam</th>
+              <th class="py-3 px-2">Status</th>
+              <th class="py-3 px-2">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="isiReservasi">
+            <tr><td colspan="6" class="py-4 text-center text-gray-400">Belum ada reservasi masuk</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
