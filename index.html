@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BarberPro Belajar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    tailwind.config = {theme:{extend:{colors:{gelap:'#050505',emas:'#D4AF37'}}}}
+  </script>
+</head>
+<body class="bg-gelap text-white">
+
+<nav class="fixed w-full z-50 py-4 transition-all" id="navbar">
+  <div class="container mx-auto px-4 flex justify-between items-center">
+    <span class="text-xl font-bold text-emas">BarberPro</span>
+    <div class="hidden md:flex gap-6">
+      <a href="#beranda" class="hover:text-emas">Beranda</a>
+      <a href="#layanan" class="hover:text-emas">Layanan</a>
+      <a href="#booking" class="bg-emas text-black px-4 py-2 rounded font-bold">Booking</a>
+    </div>
+  </div>
+</nav>
+
+<section id="beranda" class="min-h-screen flex items-center pt-20 px-4">
+  <div class="container mx-auto">
+    <h1 class="text-4xl md:text-6xl font-bold mb-6">Tampil Ganteng <br><span class="text-emas">Gaya Premium</span></h1>
+    <p class="text-gray-300 mb-8 max-w-lg">Sistem reservasi canggih tanpa double booking, siap pakai untuk bisnismu.</p>
+    <a href="#booking" class="bg-emas text-black px-6 py-3 rounded font-bold inline-block">Reservasi Sekarang</a>
+  </div>
+</section>
+
+<section id="booking" class="py-16 px-4">
+  <div class="container mx-auto max-w-xl">
+    <h2 class="text-3xl font-bold text-center text-emas mb-8">Form Reservasi</h2>
+    <form id="formPesan" class="bg-gray-900 p-6 rounded-xl">
+      <input type="text" name="nama" placeholder="Nama Lengkap" required class="w-full p-3 mb-4 bg-gray-800 rounded border-none text-white">
+      <input type="tel" name="wa" placeholder="Nomor WhatsApp" required class="w-full p-3 mb-4 bg-gray-800 rounded border-none text-white">
+      <select name="layanan" id="pilihLayanan" required class="w-full p-3 mb-4 bg-gray-800 rounded border-none text-white">
+        <option value="">Pilih Layanan</option>
+      </select>
+      <select name="barber" id="pilihBarber" required class="w-full p-3 mb-4 bg-gray-800 rounded border-none text-white">
+        <option value="">Pilih Pemangkas</option>
+      </select>
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <input type="date" name="tgl" id="tgl" required class="p-3 bg-gray-800 rounded border-none text-white">
+        <select name="jam" id="jam" required class="p-3 bg-gray-800 rounded border-none text-white">
+          <option value="">Pilih Tanggal Dulu</option>
+        </select>
+      </div>
+      <button type="submit" class="w-full bg-emas text-black py-3 rounded font-bold">Kirim Reservasi</button>
+    </form>
+  </div>
+</section>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
