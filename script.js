@@ -4,17 +4,29 @@ import { getDocs, collection, query, where, addDoc, Timestamp } from "https://ww
 const ID_TOKO_KAMU = "toko001";
 
 async function muatData() {
-  const layanan = await getDocs(query(collection(db,"services"), where("shopId","==",ID_TOKO_KAMU)));
-  layanan.forEach(doc => {
-    const o = new Option(doc.data().name, doc.id);
-    document.getElementById('pilihLayanan').appendChild(o);
-  });
+  try {
+    // Muat Layanan
+    const layananSnap = await getDocs(query(collection(db,"services"), where("shopId","==",ID_TOKO_KAMU)));
+    const pilihLayanan = document.getElementById('pilihLayanan');
+    pilihLayanan.innerHTML = `<option value="">Pilih Layanan</option>`;
+    layananSnap.forEach(doc => {
+      const data = doc.data();
+      pilihLayanan.innerHTML += `<option value="${doc.id}">${data.name}</option>`;
+    });
 
-  const barber = await getDocs(query(collection(db,"barbers"), where("shopId","==",ID_TOKO_KAMU)));
-  barber.forEach(doc => {
-    const o = new Option(doc.data().name, doc.id);
-    document.getElementById('pilihBarber').appendChild(o);
-  });
+    // Muat Barber
+    const barberSnap = await getDocs(query(collection(db,"barbers"), where("shopId","==",ID_TOKO_KAMU)));
+    const pilihBarber = document.getElementById('pilihBarber');
+    pilihBarber.innerHTML = `<option value="">Pilih Pemangkas</option>`;
+    barberSnap.forEach(doc => {
+      const data = doc.data();
+      pilihBarber.innerHTML += `<option value="${doc.id}">${data.name}</option>`;
+    });
+
+  } catch (err) {
+    alert("❌ Error: " + err.message);
+    console.error(err);
+  }
 }
 
 async function cekKetersediaan() {
@@ -22,6 +34,8 @@ async function cekKetersediaan() {
   const idBarber = document.getElementById('pilihBarber').value;
   const semuaJam = ["09:00","10:00","11:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00"];
   
+  if(!tgl || !idBarber) return;
+
   const q = query(
     collection(db,"bookings"),
     where("shopId","==",ID_TOKO_KAMU),
@@ -58,7 +72,7 @@ document.getElementById('formPesan').addEventListener('submit', async e => {
     createdAt: Timestamp.now()
   });
 
-  alert("✅ Berhasil! Data tersimpan di sistem.");
+  alert("✅ Berhasil Reservasi!");
   e.target.reset();
 })
 
