@@ -10,7 +10,7 @@ window.onload = async () => {
 async function muatSemuaData() {
   try {
     // Muat Layanan
-    const layananSnap = await getDocs(query(collection(db,"services"), where("shopId","==",ID_TOKO)));
+    const layananSnap = await getDocs(collection(db,"services"));, where("shopId","==",ID_TOKO)));
     let htmlLayanan = `<option value="">Pilih Layanan</option>`;
     layananSnap.forEach(doc => {
       const d = doc.data();
@@ -33,7 +33,7 @@ async function muatSemuaData() {
     document.getElementById('daftarLayanan').innerHTML = tampilLayanan;
 
     // Muat Barber
-    const barberSnap = await getDocs(query(collection(db,"barbers"), where("shopId","==",ID_TOKO)));
+    const barberSnap = await getDocs(collection(db,"barbers")); where("shopId","==",ID_TOKO)));
     let htmlBarber = `<option value="">Pilih Pemangkas</option>`;
     barberSnap.forEach(doc => {
       const d = doc.data();
