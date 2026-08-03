@@ -4,7 +4,8 @@ import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/
 
 const ID_TOKO = "toko001";
 
-window.onload = async () => {
+// JALANKAN SEMUA SETELAH HALAMAN PENUH DIMUAT
+document.addEventListener('DOMContentLoaded', async () => {
   const halaman = window.location.pathname.split("/").pop();
 
   if(halaman === "" || halaman === "index.html"){
@@ -18,24 +19,33 @@ window.onload = async () => {
       if(!user) return window.location.href = "index.html";
       muatDataAdmin();
     });
-    document.getElementById('btnKeluar')?.addEventListener('click', () => {
-      signOut(auth).then(() => window.location.href = "index.html");
+    
+    // PASANG KLIK KE SEMUA MENU NAVIGASI
+    pasangTombolMenu();
+    
+    // TOMBOL KELUAR
+    document.getElementById('btnKeluar')?.addEventListener('click', async () => {
+      try {
+        await signOut(auth);
+        window.location.href = "index.html";
+      } catch(e) {
+        alert("Gagal keluar: " + e.message);
+      }
     });
-    // Aktifkan menu navigasi admin
-    aktifkanMenuAdmin();
   }
-};
+});
 
-// FUNGSI BARU: AKTIFKAN TOMBOL MENU ADMIN
-function aktifkanMenuAdmin(){
-  const menu = document.querySelectorAll('nav a');
-  menu.forEach(item => {
-    item.addEventListener('click', (e) => {
+// FUNGSI KHUSUS TOMBOL MENU
+function pasangTombolMenu(){
+  const daftarMenu = document.querySelectorAll('nav a');
+  daftarMenu.forEach(menu => {
+    menu.addEventListener('click', (e) => {
       e.preventDefault();
-      menu.forEach(m => m.classList.remove('bg-emas','text-gelap','font-bold'));
-      item.classList.add('bg-emas','text-gelap','font-bold');
-      alert(`Anda membuka menu: ${item.textContent.trim()}`);
-      // Nanti kalau sudah buat halaman masing-masing, ganti alert dengan pindah halaman
+      daftarMenu.forEach(m => {
+        m.classList.remove('bg-emas', 'text-gelap', 'font-bold');
+      });
+      menu.classList.add('bg-emas', 'text-gelap', 'font-bold');
+      alert(`✅ Menu "${menu.textContent.trim()}" sedang dibuka!`);
     });
   });
 }
@@ -147,7 +157,7 @@ async function muatDataAdmin(){
   document.getElementById('jumlahBatal').innerText = hitungBatal;
 }
 
-// PASTIKAN FUNGSI BISA DIPANGGIL DARI DALAM HTML
+// DIBUAT DI LUAR AGAR PASTI TERBACA OLEH HTML
 window.ubahStatus = async function(id, status){
   try {
     await updateDoc(doc(db,"bookings",id), {status: status});
