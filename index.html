@@ -3,95 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BarberPro - Sistem Reservasi Premium</title>
+  <title>BarberPro - Barbershop Premium & Reservasi Online</title>
+  <meta name="description" content="Layanan potong rambut profesional, cukur jenggot, perawatan lengkap. Reservasi mudah, anti bentrok jadwal.">
+  <meta name="keywords" content="potong rambut, barbershop terdekat, reservasi cukur, gaya fade">
+  <meta name="robots" content="index, follow">
+
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            gelap: '#050505',
-            gelap2: '#121212',
-            emas: '#D4AF37',
-            emasTerang: '#F5D372'
-          },
-          fontFamily: {
-            inter: ['Inter', 'sans-serif']
-          }
+          colors: { gelap:'#050505', gelap2:'#121212', emas:'#D4AF37', emasTerang:'#F5D372' }
         }
       }
     }
   </script>
   <style>
-    * { scroll-behavior: smooth; font-family: 'Inter', sans-serif; }
+    * { scroll-behavior: smooth; }
     @keyframes muncul { from {opacity:0; transform:translateY(20px)} to {opacity:1; transform:translateY(0)} }
     .animasi { animation: muncul .8s ease-out forwards; opacity:0; }
-    .animasi1 { animation-delay: .1s; }
-    .animasi2 { animation-delay: .2s; }
-    .animasi3 { animation-delay: .3s; }
+    .animasi1 { animation-delay: .15s; }
+    .animasi2 { animation-delay: .3s; }
   </style>
 </head>
 <body class="bg-gelap text-white">
 
-<!-- Navbar -->
-<nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
-  <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+<nav class="fixed w-full z-50 py-4 transition-all" id="navbar">
+  <div class="container mx-auto px-4 flex justify-between items-center">
     <div class="flex items-center gap-2">
       <i class="fa fa-scissors text-emas text-2xl"></i>
-      <span class="text-xl font-bold tracking-wider">BARBER<span class="text-emas">PRO</span></span>
+      <span class="text-xl font-bold">BARBER<span class="text-emas">PRO</span></span>
     </div>
-    <div class="hidden md:flex gap-6 text-sm">
-      <a href="#beranda" class="hover:text-emas transition-colors">Beranda</a>
-      <a href="#layanan" class="hover:text-emas transition-colors">Layanan</a>
-      <a href="#tim" class="hover:text-emas transition-colors">Tim Kami</a>
-      <a href="#kontak" class="hover:text-emas transition-colors">Kontak</a>
-      <a href="#booking" class="bg-emas text-gelap px-5 py-2 rounded-lg font-bold hover:bg-emasTerang transition-all">Reservasi</a>
+    <div class="hidden md:flex gap-6 items-center">
+      <a href="#beranda" class="hover:text-emas">Beranda</a>
+      <a href="#layanan" class="hover:text-emas">Layanan</a>
+      <a href="#tim" class="hover:text-emas">Tim Kami</a>
+      <a href="#booking" class="bg-emas text-gelap px-5 py-2 rounded-lg font-bold hover:bg-emasTerang">Reservasi</a>
     </div>
-    <button class="md:hidden text-xl" id="btnMenu"><i class="fa fa-bars"></i></button>
+    <button class="md:hidden text-xl"><i class="fa fa-bars"></i></button>
   </div>
 </nav>
 
-<!-- Hero -->
-<section id="beranda" class="min-h-screen flex items-center pt-20 relative overflow-hidden">
-  <div class="absolute inset-0 bg-gradient-to-br from-gelap via-transparent to-gelap opacity-80"></div>
-  <div class="container mx-auto px-4 z-10">
-    <div class="max-w-2xl animasi">
-      <p class="text-emas font-semibold mb-3 animasi animasi1">PENGALAMAN POTONG RAMBUT KELAS DUNIA</p>
-      <h1 class="text-[clamp(2.5rem,8vw,4.5rem)] font-bold leading-tight mb-6 animasi animasi2">
-        Tampil Ganteng <br>
-        <span class="text-emas">Dengan Gaya Terbaik</span>
-      </h1>
-      <p class="text-gray-300 text-lg mb-8 max-w-lg animasi animasi3">Layanan pemangkas profesional, lingkungan nyaman, dan hasil yang selalu memuaskan.</p>
-      <div class="flex flex-wrap gap-4 animasi animasi3">
-        <a href="#booking" class="bg-emas text-gelap px-8 py-3 rounded-lg font-bold hover:bg-emasTerang transition-all transform hover:scale-105">Reservasi Sekarang</a>
-        <a href="https://wa.me/6281234567890" target="_blank" class="border-2 border-emas text-emas px-8 py-3 rounded-lg font-bold hover:bg-emas hover:text-gelap transition-all">Hubungi WA</a>
-      </div>
+<section id="beranda" class="min-h-screen flex items-center pt-20">
+  <div class="container mx-auto px-4 animasi">
+    <p class="text-emas font-semibold animasi animasi1">PENGALAMAN CUKUR KELAS DUNIA</p>
+    <h1 class="text-[clamp(2.2rem,8vw,4rem)] font-bold leading-tight my-4 animasi animasi2">
+      Tampil Ganteng <br>
+      <span class="text-emas">Gaya Paling Pas</span>
+    </h1>
+    <p class="text-gray-300 text-lg mb-8 max-w-md animasi animasi2">Layanan profesional, reservasi teratur, tidak perlu antre lama.</p>
+    <div class="flex flex-wrap gap-4 animasi animasi2">
+      <a href="#booking" class="bg-emas text-gelap px-7 py-3 rounded-lg font-bold">Reservasi Sekarang</a>
+      <a href="https://wa.me/6281234567890" target="_blank" class="border-2 border-emas text-emas px-7 py-3 rounded-lg font-bold hover:bg-emas hover:text-gelap">Hubungi WA</a>
     </div>
   </div>
 </section>
 
-<!-- Layanan -->
 <section id="layanan" class="py-20 bg-gelap2">
   <div class="container mx-auto px-4">
-    <div class="text-center mb-16">
-      <p class="text-emas font-semibold mb-2">PILIHAN PELAYANAN</p>
-      <h2 class="text-3xl md:text-4xl font-bold">Layanan & Harga</h2>
+    <div class="text-center mb-12">
+      <p class="text-emas font-semibold">PILIHAN PAKET</p>
+      <h2 class="text-3xl font-bold mt-2">Layanan & Harga</h2>
     </div>
     <div class="grid md:grid-cols-3 gap-6" id="daftarLayanan">
-      <div class="bg-gelap p-6 rounded-xl border border-gray-800 hover:border-emas transition-all">
-        <h3 class="text-xl font-bold text-emas mb-2">Memuat...</h3>
+      <div class="bg-gelap p-6 rounded-xl border border-gray-700 text-center">
+        <p class="text-emas">Memuat...</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Tim -->
 <section id="tim" class="py-20">
   <div class="container mx-auto px-4">
-    <div class="text-center mb-16">
-      <p class="text-emas font-semibold mb-2">AHLI PROFESIONAL</p>
-      <h2 class="text-3xl md:text-4xl font-bold">Tim Pemangkas</h2>
+    <div class="text-center mb-12">
+      <p class="text-emas font-semibold">AHLI PROFESIONAL</p>
+      <h2 class="text-3xl font-bold mt-2">Tim Pemangkas</h2>
     </div>
     <div class="grid md:grid-cols-3 gap-6" id="daftarBarber">
       <div class="bg-gelap2 p-6 rounded-xl text-center">
@@ -101,35 +88,34 @@
   </div>
 </section>
 
-<!-- Form Booking -->
 <section id="booking" class="py-20 bg-gelap2">
-  <div class="container mx-auto px-4 max-w-2xl">
+  <div class="container mx-auto px-4 max-w-xl">
     <div class="text-center mb-12">
-      <p class="text-emas font-semibold mb-2">MUDAH & CEPAT</p>
-      <h2 class="text-3xl md:text-4xl font-bold">Buat Reservasi</h2>
+      <p class="text-emas font-semibold">MUDAH & CEPAT</p>
+      <h2 class="text-3xl font-bold mt-2">Buat Reservasi</h2>
     </div>
-    <form id="formBooking" class="bg-gelap p-8 rounded-2xl border border-gray-800">
+    <form id="formPesan" class="bg-gelap p-7 rounded-2xl border border-gray-700">
       <div class="grid md:grid-cols-2 gap-4 mb-4">
         <div>
           <label class="font-semibold mb-2 block">Nama Lengkap</label>
-          <input type="text" name="nama" required class="w-full p-3 rounded-lg bg-gelap2 border border-gray-700 text-white focus:border-emas outline-none">
+          <input type="text" name="nama" required class="w-full p-3 rounded-lg bg-gelap2 border border-gray-600 text-white focus:border-emas outline-none">
         </div>
         <div>
           <label class="font-semibold mb-2 block">Nomor WhatsApp</label>
-          <input type="tel" name="wa" required class="w-full p-3 rounded-lg bg-gelap2 border border-gray-700 text-white focus:border-emas outline-none">
+          <input type="tel" name="wa" required class="w-full p-3 rounded-lg bg-gelap2 border border-gray-600 text-white focus:border-emas outline-none">
         </div>
       </div>
 
       <div class="mb-4">
         <label class="font-semibold mb-2 block">Pilih Layanan</label>
-        <select name="layanan" id="pilihLayanan" required class="w-full p-3 rounded-lg bg-gelap2 border border-gray-700 text-white focus:border-emas outline-none">
+        <select name="layanan" id="pilihLayanan" required class="w-full p-3 rounded-lg bg-gelap2 border border-gray-600 text-white focus:border-emas outline-none">
           <option value="">Memuat...</option>
         </select>
       </div>
 
       <div class="mb-4">
         <label class="font-semibold mb-2 block">Pilih Pemangkas</label>
-        <select name="barber" id="pilihBarber" required class="w-full p-3 rounded-lg bg-gelap2 border border-gray-700 text-white focus:border-emas outline-none">
+        <select name="barber" id="pilihBarber" required class="w-full p-3 rounded-lg bg-gelap2 border border-gray-600 text-white focus:border-emas outline-none">
           <option value="">Memuat...</option>
         </select>
       </div>
@@ -137,24 +123,24 @@
       <div class="grid md:grid-cols-2 gap-4 mb-6">
         <div>
           <label class="font-semibold mb-2 block">Tanggal</label>
-          <input type="date" name="tgl" id="tgl" min="<?php echo date('Y-m-d'); ?>" required class="w-full p-3 rounded-lg bg-gelap2 border border-gray-700 text-white focus:border-emas outline-none">
+          <input type="date" name="tgl" id="tgl" required class="w-full p-3 rounded-lg bg-gelap2 border border-gray-600 text-white focus:border-emas outline-none">
         </div>
         <div>
           <label class="font-semibold mb-2 block">Jam</label>
-          <select name="jam" id="jam" required class="w-full p-3 rounded-lg bg-gelap2 border border-gray-700 text-white focus:border-emas outline-none">
+          <select name="jam" id="jam" required class="w-full p-3 rounded-lg bg-gelap2 border border-gray-600 text-white focus:border-emas outline-none">
             <option value="">Pilih Tanggal Dulu</option>
           </select>
         </div>
       </div>
 
-      <button type="submit" class="w-full bg-emas text-gelap py-3 rounded-lg font-bold text-lg hover:bg-emasTerang transition-all">Kirim Reservasi</button>
+      <button type="submit" class="w-full bg-emas text-gelap py-3 rounded-lg font-bold text-lg hover:bg-emasTerang">Kirim Reservasi</button>
     </form>
   </div>
 </section>
 
-<footer class="py-8 text-center text-gray-400 text-sm border-t border-gray-800">
+<footer class="py-8 text-center text-gray-400 border-t border-gray-800">
   <p>&copy; 2026 BarberPro. Semua Hak Dilindungi.</p>
-  <p class="mt-2"><a href="admin.html" class="text-emas hover:underline">Masuk Admin</a></p>
+  <p class="mt-2"><a href="admin.html" class="text-emas hover:underline">Masuk Panel Admin</a></p>
 </footer>
 
 <script type="module" src="script.js"></script>
