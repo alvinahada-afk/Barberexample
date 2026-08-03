@@ -9,8 +9,8 @@ window.onload = async () => {
 
   if(halaman === "" || halaman === "index.html"){
     await muatLayananBarber();
-    document.getElementById('tgl').addEventListener('change', cekJamTersedia);
-    document.getElementById('formPesan').addEventListener('submit', simpanReservasi);
+    document.getElementById('tgl')?.addEventListener('change', cekJamTersedia);
+    document.getElementById('formPesan')?.addEventListener('submit', simpanReservasi);
   }
 
   if(halaman === "admin.html"){
@@ -18,11 +18,27 @@ window.onload = async () => {
       if(!user) return window.location.href = "index.html";
       muatDataAdmin();
     });
-    document.getElementById('btnKeluar').addEventListener('click', () => {
+    document.getElementById('btnKeluar')?.addEventListener('click', () => {
       signOut(auth).then(() => window.location.href = "index.html");
     });
+    // Aktifkan menu navigasi admin
+    aktifkanMenuAdmin();
   }
 };
+
+// FUNGSI BARU: AKTIFKAN TOMBOL MENU ADMIN
+function aktifkanMenuAdmin(){
+  const menu = document.querySelectorAll('nav a');
+  menu.forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      menu.forEach(m => m.classList.remove('bg-emas','text-gelap','font-bold'));
+      item.classList.add('bg-emas','text-gelap','font-bold');
+      alert(`Anda membuka menu: ${item.textContent.trim()}`);
+      // Nanti kalau sudah buat halaman masing-masing, ganti alert dengan pindah halaman
+    });
+  });
+}
 
 async function muatLayananBarber(){
   try{
@@ -117,9 +133,9 @@ async function muatDataAdmin(){
       <td class="py-3 px-2">${b.bookingDate}</td>
       <td class="py-3 px-2">${b.bookingTime}</td>
       <td class="py-3 px-2 font-bold ${b.status==='pending'?'text-yellow-400':b.status==='confirmed'?'text-green-400':'text-red-400'}">${b.status}</td>
-      <td class="py-3 px-2 space-x-1">
-        <button class="text-green-400 text-xs hover:text-green-300" onclick="ubahStatus('${d.id}','confirmed')">✅</button>
-        <button class="text-red-400 text-xs hover:text-red-300" onclick="ubahStatus('${d.id}','cancelled')">❌</button>
+      <td class="py-3 px-2 space-x-2">
+        <button class="bg-green-600 px-2 py-1 rounded text-xs hover:bg-green-500" onclick="ubahStatus('${d.id}','confirmed')">Konfirmasi</button>
+        <button class="bg-red-600 px-2 py-1 rounded text-xs hover:bg-red-500" onclick="ubahStatus('${d.id}','cancelled')">Tolak/Batal</button>
       </td>
     </tr>`;
   });
@@ -131,7 +147,13 @@ async function muatDataAdmin(){
   document.getElementById('jumlahBatal').innerText = hitungBatal;
 }
 
+// PASTIKAN FUNGSI BISA DIPANGGIL DARI DALAM HTML
 window.ubahStatus = async function(id, status){
-  await updateDoc(doc(db,"bookings",id), {status: status});
-  muatDataAdmin();
+  try {
+    await updateDoc(doc(db,"bookings",id), {status: status});
+    alert(`✅ Status berhasil diubah jadi: ${status}`);
+    muatDataAdmin();
+  } catch (err) {
+    alert("❌ Gagal ubah status: " + err.message);
+  }
 }
