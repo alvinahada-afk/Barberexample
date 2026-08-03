@@ -12,21 +12,22 @@
 </head>
 <body class="bg-gelap text-white">
 <div class="min-h-screen flex flex-col md:flex-row">
+  <!-- SIDEBAR -->
   <div class="w-full md:w-64 bg-gelap2 p-5">
     <div class="text-xl font-bold text-emas mb-8 flex items-center gap-2">
       <i class="fa fa-scissors"></i> BARBERPRO
     </div>
-<nav class="space-y-2">
-  <a href="#" class="block p-3 rounded-lg bg-emas text-gelap font-bold"><i class="fa fa-home mr-2"></i> Dasbor</a>
-  <a href="#" class="block p-3 rounded-lg hover:bg-gray-700"><i class="fa fa-calendar mr-2"></i> Reservasi</a>
-  <a href="#" class="block p-3 rounded-lg hover:bg-gray-700"><i class="fa fa-cut mr-2"></i> Layanan</a>
-  <a href="#" class="block p-3 rounded-lg hover:bg-gray-700"><i class="fa fa-users mr-2"></i> Tim Barber</a>
-  <a href="#" class="block p-3 rounded-lg hover:bg-gray-700 mt-6"><i class="fa fa-cog mr-2"></i> Pengaturan</a>
-  <a href="#" id="btnKeluar" class="block p-3 rounded-lg hover:bg-red-900 mt-2"><i class="fa fa-sign-out mr-2"></i> Keluar</a>
-</nav>
-
+    <nav class="space-y-2">
+      <button onclick="klikMenu(this)" class="w-full text-left p-3 rounded-lg bg-emas text-gelap font-bold"><i class="fa fa-home mr-2"></i> Dasbor</button>
+      <button onclick="klikMenu(this)" class="w-full text-left p-3 rounded-lg hover:bg-gray-700"><i class="fa fa-calendar mr-2"></i> Reservasi</button>
+      <button onclick="klikMenu(this)" class="w-full text-left p-3 rounded-lg hover:bg-gray-700"><i class="fa fa-cut mr-2"></i> Layanan</button>
+      <button onclick="klikMenu(this)" class="w-full text-left p-3 rounded-lg hover:bg-gray-700"><i class="fa fa-users mr-2"></i> Tim Barber</button>
+      <button onclick="klikMenu(this)" class="w-full text-left p-3 rounded-lg hover:bg-gray-700 mt-6"><i class="fa fa-cog mr-2"></i> Pengaturan</button>
+      <button onclick="keluarAkun()" class="w-full text-left p-3 rounded-lg hover:bg-red-900 mt-2"><i class="fa fa-sign-out mr-2"></i> Keluar</button>
+    </nav>
   </div>
 
+  <!-- KONTEN UTAMA -->
   <div class="flex-1 p-5">
     <h1 class="text-2xl font-bold mb-6">Selamat Datang Pemilik Usaha</h1>
 
@@ -74,6 +75,42 @@
   </div>
 </div>
 
+<!-- AMBIL KONEKSI DARI FILE LUAR -->
 <script type="module" src="script.js"></script>
+<!-- FUNGSI LANGSUNG DI DALAM AGAR PASTI BERFUNGSI -->
+<script>
+// FUNGSI MENU NAVIGASI
+function klikMenu(elemen) {
+  const semuaTombol = document.querySelectorAll('nav button');
+  semuaTombol.forEach(b => b.classList.remove('bg-emas','text-gelap','font-bold'));
+  elemen.classList.add('bg-emas','text-gelap','font-bold');
+  alert(`✅ Menu dibuka: ${elemen.textContent.trim()}`);
+}
+
+// FUNGSI KELUAR
+async function keluarAkun() {
+  const { auth } = await import('./firebase.js');
+  const { signOut } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
+  try {
+    await signOut(auth);
+    window.location.href = "index.html";
+  } catch (e) {
+    alert("❌ Gagal keluar: " + e.message);
+  }
+}
+
+// FUNGSI UBAH STATUS RESERVASI
+window.ubahStatus = async function(id, status) {
+  const { db } = await import('./firebase.js');
+  const { doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  try {
+    await updateDoc(doc(db,"bookings",id), {status: status});
+    alert(`✅ Status diubah jadi: ${status}`);
+    setTimeout(() => muatDataAdmin(), 500);
+  } catch (err) {
+    alert("❌ Gagal: " + err.message);
+  }
+}
+</script>
 </body>
 </html>
