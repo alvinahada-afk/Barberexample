@@ -79,12 +79,11 @@
 <script type="module" src="script.js"></script>
 <!-- FUNGSI LANGSUNG DI DALAM AGAR PASTI BERFUNGSI -->
 <script>
-// FUNGSI MENU NAVIGASI
+// FUNGSI MENU NAVIGASI TANPA POP UP
 function klikMenu(elemen) {
   const semuaTombol = document.querySelectorAll('nav button');
   semuaTombol.forEach(b => b.classList.remove('bg-emas','text-gelap','font-bold'));
   elemen.classList.add('bg-emas','text-gelap','font-bold');
-  alert(`✅ Menu dibuka: ${elemen.textContent.trim()}`);
 }
 
 // FUNGSI KELUAR
@@ -105,12 +104,12 @@ window.ubahStatus = async function(id, status) {
   const { doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
   try {
     await updateDoc(doc(db,"bookings",id), {status: status});
-    alert(`✅ Status diubah jadi: ${status}`);
     setTimeout(() => muatDataAdmin(), 500);
   } catch (err) {
     alert("❌ Gagal: " + err.message);
   }
 }
 </script>
+
 </body>
 </html>
