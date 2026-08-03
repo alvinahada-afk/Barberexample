@@ -3,12 +3,12 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-aut
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "GANTI_DENGAN_API_KEY_KAMU",
-  authDomain: "GANTI_DENGAN_AUTH_DOMAIN",
-  projectId: "GANTI_DENGAN_PROJECT_ID",
-  storageBucket: "GANTI_DENGAN_STORAGE_BUCKET",
-  messagingSenderId: "GANTI_DENGAN_SENDER_ID",
-  appId: "GANTI_DENGAN_APP_ID"
+  apiKey: "AIzaSyBkpSsKQ1oUkcMaqfz2Im9tVj8Yl9XkpYI",
+  authDomain: "alvin-website-cc21f.firebaseapp.com",
+  projectId: "alvin-website-cc21f",
+  storageBucket: "alvin-website-cc21f.firebasestorage.app",
+  messagingSenderId: "1031795933286",
+  appId: ""1:1031795933286:web:7bff285fc6589271f76da7"
 };
 
 const app = initializeApp(firebaseConfig);
