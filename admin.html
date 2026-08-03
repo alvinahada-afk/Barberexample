@@ -11,48 +11,43 @@
   </script>
 </head>
 <body class="bg-gelap text-white">
-<div class="min-h-screen flex">
-  <!-- Sidebar -->
-  <div class="w-64 bg-gelap2 p-5 hidden md:block">
-    <div class="text-xl font-bold text-emas mb-8">BARBERPRO ADMIN</div>
-    <nav class="space-y-3">
+<div class="min-h-screen flex flex-col md:flex-row">
+  <div class="w-full md:w-64 bg-gelap2 p-5">
+    <div class="text-xl font-bold text-emas mb-8 flex items-center gap-2">
+      <i class="fa fa-scissors"></i> BARBERPRO
+    </div>
+    <nav class="space-y-2">
       <a href="#" class="block p-3 rounded-lg bg-emas text-gelap font-bold"><i class="fa fa-home mr-2"></i> Dasbor</a>
       <a href="#" class="block p-3 rounded-lg hover:bg-gray-700"><i class="fa fa-calendar mr-2"></i> Reservasi</a>
       <a href="#" class="block p-3 rounded-lg hover:bg-gray-700"><i class="fa fa-cut mr-2"></i> Layanan</a>
       <a href="#" class="block p-3 rounded-lg hover:bg-gray-700"><i class="fa fa-users mr-2"></i> Tim Barber</a>
-      <a href="#" class="block p-3 rounded-lg hover:bg-gray-700"><i class="fa fa-cog mr-2"></i> Pengaturan</a>
-      <a href="#" class="block p-3 rounded-lg hover:bg-red-700 mt-8"><i class="fa fa-sign-out mr-2"></i> Keluar</a>
+      <a href="#" class="block p-3 rounded-lg hover:bg-gray-700 mt-6"><i class="fa fa-cog mr-2"></i> Pengaturan</a>
+      <a href="#" class="block p-3 rounded-lg hover:bg-red-900 mt-2" id="btnKeluar"><i class="fa fa-sign-out mr-2"></i> Keluar</a>
     </nav>
   </div>
 
-  <!-- Konten Utama -->
-  <div class="flex-1 p-6">
-    <div class="flex justify-between items-center mb-8">
-      <h1 class="text-2xl font-bold">Selamat Datang Pemilik Toko</h1>
-      <button class="md:hidden bg-gelap2 p-2 rounded"><i class="fa fa-bars"></i></button>
-    </div>
+  <div class="flex-1 p-5">
+    <h1 class="text-2xl font-bold mb-6">Selamat Datang Pemilik Usaha</h1>
 
-    <!-- Kartu Statistik -->
     <div class="grid md:grid-cols-4 gap-4 mb-8">
       <div class="bg-gelap2 p-5 rounded-xl border-l-4 border-emas">
         <p class="text-gray-400 text-sm">Reservasi Hari Ini</p>
-        <h3 class="text-2xl font-bold mt-1">0</h3>
+        <h3 class="text-2xl font-bold mt-1" id="jumlahHariIni">0</h3>
       </div>
       <div class="bg-gelap2 p-5 rounded-xl border-l-4 border-blue-500">
-        <p class="text-gray-400 text-sm">Total Pelanggan</p>
-        <h3 class="text-2xl font-bold mt-1">0</h3>
+        <p class="text-gray-400 text-sm">Total Masuk</p>
+        <h3 class="text-2xl font-bold mt-1" id="jumlahTotal">0</h3>
       </div>
       <div class="bg-gelap2 p-5 rounded-xl border-l-4 border-green-500">
-        <p class="text-gray-400 text-sm">Pendapatan</p>
-        <h3 class="text-2xl font-bold mt-1">Rp 0</h3>
+        <p class="text-gray-400 text-sm">Dikonfirmasi</p>
+        <h3 class="text-2xl font-bold mt-1" id="jumlahKonfirm">0</h3>
       </div>
       <div class="bg-gelap2 p-5 rounded-xl border-l-4 border-purple-500">
-        <p class="text-gray-400 text-sm">Layanan Populer</p>
-        <h3 class="text-lg font-bold mt-1">-</h3>
+        <p class="text-gray-400 text-sm">Dibatalkan</p>
+        <h3 class="text-2xl font-bold mt-1" id="jumlahBatal">0</h3>
       </div>
     </div>
 
-    <!-- Daftar Reservasi -->
     <div class="bg-gelap2 p-6 rounded-xl">
       <h2 class="text-xl font-bold mb-4 text-emas">Daftar Reservasi Terbaru</h2>
       <div class="overflow-x-auto">
@@ -60,7 +55,9 @@
           <thead>
             <tr class="border-b border-gray-700 text-left">
               <th class="py-3 px-2">Nama</th>
+              <th class="py-3 px-2">WA</th>
               <th class="py-3 px-2">Layanan</th>
+              <th class="py-3 px-2">Pemangkas</th>
               <th class="py-3 px-2">Tanggal</th>
               <th class="py-3 px-2">Jam</th>
               <th class="py-3 px-2">Status</th>
@@ -68,13 +65,14 @@
             </tr>
           </thead>
           <tbody id="isiReservasi">
-            <tr><td colspan="6" class="py-4 text-center text-gray-400">Belum ada reservasi masuk</td></tr>
+            <tr><td colspan="8" class="py-6 text-center text-gray-400">Memuat data...</td></tr>
           </tbody>
         </table>
       </div>
     </div>
-
   </div>
 </div>
+
+<script type="module" src="script.js"></script>
 </body>
 </html>
